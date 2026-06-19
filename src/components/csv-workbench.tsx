@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
+import type { ReactNode } from "react"
 import {
   RiAlertLine,
   RiDownload2Line,
@@ -36,7 +37,6 @@ import type {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
@@ -49,6 +49,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import {
   Select,
   SelectContent,
@@ -160,6 +161,38 @@ function PreviewTable({
         </TableBody>
       </Table>
     </ScrollArea>
+  )
+}
+
+function SectionBlock({
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  eyebrow: string
+  title: string
+  description?: string
+  children: ReactNode
+}) {
+  return (
+    <section className="space-y-6">
+      <div className="space-y-2">
+        <p className="text-xs font-medium tracking-[0.24em] text-muted-foreground uppercase">
+          {eyebrow}
+        </p>
+        <h2 className="text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">
+          {title}
+        </h2>
+        {description ? (
+          <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
+            {description}
+          </p>
+        ) : null}
+      </div>
+      <Separator />
+      <div className="space-y-6">{children}</div>
+    </section>
   )
 }
 
@@ -576,152 +609,160 @@ export function CsvWorkbench() {
 
   return (
     <>
-      <div className="space-y-6">
-        <Card>
-          <CardHeader>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="outline">Local processing</Badge>
-              <Badge variant="outline">No account</Badge>
-              <Badge variant="outline">{preset.name}</Badge>
-            </div>
-            <CardTitle>Start with one CSV.</CardTitle>
-            <p>
-              Load a file, let the preset shape the output, then adjust the
-              advanced rules only if you need them.
-            </p>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="upload">
-              <TabsList>
-                <TabsTrigger value="upload">Upload file</TabsTrigger>
-                <TabsTrigger value="paste">Paste CSV</TabsTrigger>
-              </TabsList>
-              <TabsContent value="upload">
-                <div className="space-y-4">
-                  <div
-                    className="space-y-4 border border-dashed p-6"
-                    onDragOver={(event) => event.preventDefault()}
-                    onDrop={async (event) => {
-                      event.preventDefault()
-                      await handleFileSelection(event.dataTransfer.files?.[0])
-                    }}
-                  >
-                    <div className="flex items-center gap-2">
-                      <RiFileUploadLine />
-                      <p>Drop a CSV here or choose a file.</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <Button onClick={() => fileInputRef.current?.click()}>
-                        Choose CSV
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          setPasteValue(SAMPLE_CSV)
-                          void submitSource(SAMPLE_CSV_FILE_NAME, SAMPLE_CSV)
-                        }}
-                      >
-                        Use sample
-                      </Button>
-                    </div>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".csv,text/csv"
-                      className="hidden"
-                      onChange={(event) =>
-                        void handleFileSelection(event.target.files?.[0])
-                      }
-                    />
+      <div className="space-y-10">
+        <SectionBlock
+          eyebrow="Start"
+          title="Start with one CSV."
+          description="Load a file, let the preset shape the output, then adjust the advanced rules only if you need them."
+        >
+
+          <Tabs defaultValue="upload">
+            <TabsList variant="line" className="h-auto flex-wrap gap-4 p-0">
+              <TabsTrigger value="upload" className="px-0 text-sm">
+                Upload file
+              </TabsTrigger>
+              <TabsTrigger value="paste" className="px-0 text-sm">
+                Paste CSV
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="upload" className="pt-4">
+              <div className="space-y-4">
+                <div
+                  className="space-y-4 border border-dashed border-border/80 px-5 py-6 sm:px-6"
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={async (event) => {
+                    event.preventDefault()
+                    await handleFileSelection(event.dataTransfer.files?.[0])
+                  }}
+                >
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <RiFileUploadLine className="size-4" />
+                    <p>Drop a CSV here or choose a file.</p>
                   </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="paste">
-                <div className="space-y-4">
-                  <Textarea
-                    rows={10}
-                    value={pasteValue}
-                    onChange={(event) => setPasteValue(event.target.value)}
-                    placeholder="Email,First Name,Last Name"
-                  />
                   <div className="flex flex-wrap gap-2">
-                    <Button
-                      onClick={() =>
-                        void submitSource("pasted-import.csv", pasteValue)
-                      }
-                      disabled={
-                        pasteValue.trim().length === 0 || isBusy(status.phase)
-                      }
-                    >
-                      Load pasted CSV
+                    <Button onClick={() => fileInputRef.current?.click()}>
+                      Choose CSV
                     </Button>
                     <Button
                       variant="outline"
-                      onClick={() => setPasteValue("")}
-                      disabled={pasteValue.length === 0}
+                      onClick={() => {
+                        setPasteValue(SAMPLE_CSV)
+                        void submitSource(SAMPLE_CSV_FILE_NAME, SAMPLE_CSV)
+                      }}
                     >
-                      Clear
+                      Use sample
                     </Button>
                   </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".csv,text/csv"
+                    className="hidden"
+                    onChange={(event) =>
+                      void handleFileSelection(event.target.files?.[0])
+                    }
+                  />
                 </div>
-              </TabsContent>
-            </Tabs>
-
-            <div className="mt-6 space-y-3">
-              <Progress value={status.progress} />
-              <div className="flex items-center justify-between gap-3">
-                <p>{status.message}</p>
-                {isBusy(status.phase) ? (
-                  <RiLoader4Line className="animate-spin" />
-                ) : null}
               </div>
+            </TabsContent>
+            <TabsContent value="paste" className="pt-4">
+              <div className="space-y-4">
+                <Textarea
+                  rows={10}
+                  value={pasteValue}
+                  onChange={(event) => setPasteValue(event.target.value)}
+                  placeholder="Email,First Name,Last Name"
+                />
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    onClick={() =>
+                      void submitSource("pasted-import.csv", pasteValue)
+                    }
+                    disabled={
+                      pasteValue.trim().length === 0 || isBusy(status.phase)
+                    }
+                  >
+                    Load pasted CSV
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setPasteValue("")}
+                    disabled={pasteValue.length === 0}
+                  >
+                    Clear
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          <div className="space-y-3">
+            <Progress value={status.progress} />
+            <div className="flex items-center justify-between gap-3 text-sm">
+              <p>{status.message}</p>
+              {isBusy(status.phase) ? (
+                <RiLoader4Line className="size-4 animate-spin" />
+              ) : null}
             </div>
+          </div>
 
-            {error ? (
-              <div className="mt-4">
-                <Alert variant="destructive">
-                  <RiAlertLine />
-                  <AlertTitle>Could not process this CSV</AlertTitle>
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              </div>
-            ) : null}
-          </CardContent>
-        </Card>
+          {error ? (
+            <Alert variant="destructive">
+              <RiAlertLine />
+              <AlertTitle>Could not process this CSV</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : null}
+        </SectionBlock>
 
         {!snapshot ? (
-          <Card>
-            <CardHeader>
-              <CardTitle>How this works</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div>
-                  <p>1. Load a CSV.</p>
-                  <p>The file stays in your browser.</p>
-                </div>
-                <div>
-                  <p>2. Review the output.</p>
-                  <p>
-                    The preset starts with a conservative import-ready plan.
-                  </p>
-                </div>
-                <div>
-                  <p>3. Download the result.</p>
-                  <p>Export one CSV or a ZIP of smaller batch files.</p>
-                </div>
+          <SectionBlock
+            eyebrow="Flow"
+            title="How it works"
+            description="Keep the first pass simple, then tune only the parts that matter for the import you are fixing."
+          >
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="space-y-2">
+                <p className="text-xs font-medium tracking-[0.22em] text-muted-foreground uppercase">
+                  01
+                </p>
+                <h3 className="text-lg font-semibold">Load a CSV.</h3>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  The file stays in your browser.
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="space-y-2">
+                <p className="text-xs font-medium tracking-[0.22em] text-muted-foreground uppercase">
+                  02
+                </p>
+                <h3 className="text-lg font-semibold">Review the output.</h3>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  The preset starts with a conservative import-ready plan.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium tracking-[0.22em] text-muted-foreground uppercase">
+                  03
+                </p>
+                <h3 className="text-lg font-semibold">Download the result.</h3>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  Export one CSV or a ZIP of smaller batch files.
+                </p>
+              </div>
+            </div>
+          </SectionBlock>
         ) : (
           <>
-            <Card>
-              <CardHeader>
-                <CardTitle>Current file</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p>{snapshot.fileName}</p>
+            <SectionBlock
+              eyebrow="File"
+              title="Current file"
+              description="Pick the right preset, refresh the plan, and export when the preview looks right."
+            >
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-xl font-semibold tracking-[-0.02em]">
+                    {snapshot.fileName}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {describeDatasetStats(
                       sourceStats ?? snapshot.sourceStats
@@ -741,135 +782,149 @@ export function CsvWorkbench() {
                       </Badge>
                     ) : null}
                   </div>
-                  <div className="grid gap-4 md:grid-cols-[minmax(0,280px)_1fr] md:items-end">
-                    <div className="space-y-2">
-                      <p>Preset</p>
-                      <Select
-                        value={config.presetId}
-                        onValueChange={handlePresetChange}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {CSV_PRESETS.map((presetOption) => (
-                            <SelectItem
-                              key={presetOption.id}
-                              value={presetOption.id}
-                            >
-                              {presetOption.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        onClick={handleExport}
-                        disabled={isBusy(status.phase)}
-                      >
-                        <RiDownload2Line />
-                        Download result
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => processWithConfig(config)}
-                        disabled={isBusy(status.phase)}
-                      >
-                        Refresh preview
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setAdvancedOpen(true)}
-                        disabled={isBusy(status.phase)}
-                      >
-                        <RiSettings3Line />
-                        Advanced rules
-                      </Button>
-                    </div>
-                  </div>
-                  <p>{preset.summary}</p>
-                  {snapshot.warnings.length > 0 ? (
-                    <Alert>
-                      <RiAlertLine />
-                      <AlertTitle>Before you import</AlertTitle>
-                      <AlertDescription>
-                        {snapshot.warnings.slice(0, 2).join(" ")}
-                      </AlertDescription>
-                    </Alert>
-                  ) : null}
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Preview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Tabs
-                  value={activePreviewTab}
-                  onValueChange={(value) =>
-                    setActivePreviewTab(value as "output" | "source" | "plan")
-                  }
-                >
-                  <TabsList>
-                    <TabsTrigger value="output">Output preview</TabsTrigger>
-                    <TabsTrigger value="source">Source preview</TabsTrigger>
-                    <TabsTrigger value="plan">Export plan</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="output">
-                    <div className="space-y-4">
-                      {renderPreviewControls("processed")}
-                      <PreviewTable
-                        emptyLabel="Run a preview to see the processed rows."
-                        headers={
-                          processedPreviewPage?.headers ??
-                          snapshot.processedPreview?.headers ??
-                          []
-                        }
-                        rows={deferredProcessedRows}
-                      />
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="source">
-                    <div className="space-y-4">
-                      {renderPreviewControls("source")}
-                      <PreviewTable
-                        emptyLabel="Load a CSV to inspect its source rows."
-                        headers={
-                          sourcePreviewPage?.headers ??
-                          snapshot.sourcePreview.headers
-                        }
-                        rows={deferredSourceRows}
-                      />
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="plan">
-                    <div className="space-y-3">
-                      {(snapshot.exportPlan?.files ?? []).length === 0 ? (
-                        <p>Refresh the preview to generate the export plan.</p>
-                      ) : (
-                        snapshot.exportPlan?.files.map((file) => (
-                          <div
-                            key={file.fileName}
-                            className="flex flex-wrap items-center justify-between gap-2 border p-4"
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,280px)_1fr] lg:items-end">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">Preset</p>
+                    <Select
+                      value={config.presetId}
+                      onValueChange={handlePresetChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {CSV_PRESETS.map((presetOption) => (
+                          <SelectItem
+                            key={presetOption.id}
+                            value={presetOption.id}
                           >
-                            <div>
-                              <p>{file.fileName}</p>
-                              <p>{file.rowCount.toLocaleString()} rows</p>
-                            </div>
-                            <Badge variant="outline">
-                              {formatBytes(file.approxBytes)}
-                            </Badge>
+                            {presetOption.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      onClick={handleExport}
+                      disabled={isBusy(status.phase)}
+                    >
+                      <RiDownload2Line />
+                      Download result
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => processWithConfig(config)}
+                      disabled={isBusy(status.phase)}
+                    >
+                      Refresh preview
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setAdvancedOpen(true)}
+                      disabled={isBusy(status.phase)}
+                    >
+                      <RiSettings3Line />
+                      Advanced rules
+                    </Button>
+                  </div>
+                </div>
+
+                <p className="text-sm leading-6 text-muted-foreground">
+                  {preset.summary}
+                </p>
+
+                {snapshot.warnings.length > 0 ? (
+                  <Alert>
+                    <RiAlertLine />
+                    <AlertTitle>Before you import</AlertTitle>
+                    <AlertDescription>
+                      {snapshot.warnings.slice(0, 2).join(" ")}
+                    </AlertDescription>
+                  </Alert>
+                ) : null}
+              </div>
+            </SectionBlock>
+
+            <SectionBlock
+              eyebrow="Preview"
+              title="Review the output"
+              description="Switch between the cleaned rows, the source rows, and the export plan before downloading."
+            >
+              <Tabs
+                value={activePreviewTab}
+                onValueChange={(value) =>
+                  setActivePreviewTab(value as "output" | "source" | "plan")
+                }
+              >
+                <TabsList variant="line" className="h-auto flex-wrap gap-4 p-0">
+                  <TabsTrigger value="output" className="px-0 text-sm">
+                    Output preview
+                  </TabsTrigger>
+                  <TabsTrigger value="source" className="px-0 text-sm">
+                    Source preview
+                  </TabsTrigger>
+                  <TabsTrigger value="plan" className="px-0 text-sm">
+                    Export plan
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="output" className="pt-4">
+                  <div className="space-y-4">
+                    {renderPreviewControls("processed")}
+                    <PreviewTable
+                      emptyLabel="Run a preview to see the processed rows."
+                      headers={
+                        processedPreviewPage?.headers ??
+                        snapshot.processedPreview?.headers ??
+                        []
+                      }
+                      rows={deferredProcessedRows}
+                    />
+                  </div>
+                </TabsContent>
+                <TabsContent value="source" className="pt-4">
+                  <div className="space-y-4">
+                    {renderPreviewControls("source")}
+                    <PreviewTable
+                      emptyLabel="Load a CSV to inspect its source rows."
+                      headers={
+                        sourcePreviewPage?.headers ??
+                        snapshot.sourcePreview.headers
+                      }
+                      rows={deferredSourceRows}
+                    />
+                  </div>
+                </TabsContent>
+                <TabsContent value="plan" className="pt-4">
+                  <div className="space-y-3">
+                    {(snapshot.exportPlan?.files ?? []).length === 0 ? (
+                      <p className="text-sm text-muted-foreground">
+                        Refresh the preview to generate the export plan.
+                      </p>
+                    ) : (
+                      snapshot.exportPlan?.files.map((file) => (
+                        <div
+                          key={file.fileName}
+                          className="flex flex-wrap items-center justify-between gap-3 border border-border/80 px-4 py-3"
+                        >
+                          <div className="space-y-1">
+                            <p className="font-medium">{file.fileName}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {file.rowCount.toLocaleString()} rows
+                            </p>
                           </div>
-                        ))
-                      )}
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
+                          <Badge variant="outline">
+                            {formatBytes(file.approxBytes)}
+                          </Badge>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </SectionBlock>
           </>
         )}
       </div>
