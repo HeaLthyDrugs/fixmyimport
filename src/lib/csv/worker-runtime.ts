@@ -1,4 +1,5 @@
 import {
+  buildPreviewPage,
   buildSessionSnapshot,
   exportProcessedDataset,
   parseCsvText,
@@ -84,6 +85,43 @@ export async function handleCsvWorkerRequest(
             phase: "idle",
             progress: 100,
             message: "Preview refreshed",
+          },
+        },
+      ],
+    }
+  }
+
+  if (request.type === "preview") {
+    const dataset =
+      request.payload.dataset === "processed"
+        ? state.processed
+          ? {
+              headers: state.processed.headers,
+              rows: state.processed.rows,
+            }
+          : {
+              headers: state.parsed.headers,
+              rows: state.parsed.rows,
+            }
+        : {
+            headers: state.parsed.headers,
+            rows: state.parsed.rows,
+          }
+
+    return {
+      state,
+      responses: [
+        {
+          type: "previewed",
+          payload: {
+            dataset: request.payload.dataset,
+            preview: buildPreviewPage(
+              dataset.headers,
+              dataset.rows,
+              request.payload.query,
+              request.payload.page,
+              request.payload.pageSize
+            ),
           },
         },
       ],

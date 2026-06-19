@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { DEFAULT_PROCESS_CONFIG } from "@/lib/csv/presets"
 import {
+  buildPreviewPage,
   exportProcessedDataset,
   parseCsvText,
   processParsedDataset,
@@ -79,5 +80,23 @@ describe("csv engine", () => {
 
     expect(processed.exportPlan.fileCount).toBe(2)
     expect(artifacts[0]?.kind).toBe("zip")
+  })
+
+  it("builds searchable paginated preview pages", () => {
+    const preview = buildPreviewPage(
+      ["Email", "City"],
+      [
+        ["ava@example.com", "Delhi"],
+        ["ben@example.com", "Mumbai"],
+        ["cam@example.com", "Delhi"],
+      ],
+      "delhi",
+      1,
+      1
+    )
+
+    expect(preview.totalMatches).toBe(2)
+    expect(preview.totalPages).toBe(2)
+    expect(preview.rows).toEqual([["ava@example.com", "Delhi"]])
   })
 })

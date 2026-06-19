@@ -1,185 +1,49 @@
 ---
-import Layout from "@/layouts/main.astro"
+import { RiArrowRightUpLine } from "@remixicon/react"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CsvWorkbench } from "@/components/csv-workbench"
+import Layout from "@/layouts/main.astro"
+import ToolIcon from "@/components/tool-icon.astro"
+import { toolCatalog } from "@/lib/tools"
 ---
 
 <Layout
-  title="FixMyImport | Clean, dedupe, and split import-ready CSVs"
-  description="Fix messy CSV exports in your browser. Remove duplicates, split large files, and download import-ready batches with no upload and no account."
+  title="FixMyImport | Browser-based tools for messy imports"
+  description="Discover FixMyImport tools for cleaning, deduping, and splitting import files locally in your browser."
 >
-  <main class="w-full px-4 py-6 sm:px-6 lg:px-8">
-    <section id="tool" class="w-full">
-      <CsvWorkbench client:load />
-    </section>
-
-    <section class="w-full pt-8">
-      <div class="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>What This Tool Does</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              FixMyImport cleans messy CSVs, removes exact duplicates, splits
-              large files into smaller batches, previews the output, and exports
-              the result in one short browser session.
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Why It Starts Simple</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              The first screen focuses on the main workflow only. Cleanup,
-              dedupe, and split details stay inside the advanced dialog until
-              you actually need them.
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Who It Helps First</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Shopify is the first sharp workflow, with presets for Excel,
-              Mailchimp, HubSpot, and Salesforce style import prep already
-              available.
-            </p>
-          </CardContent>
-        </Card>
+  <main class="px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl">
+      <div class="mb-6">
+        <h1 class="text-left text-2xl font-semibold tracking-[-0.05em] sm:text-3xl">
+          Fix My Import
+        </h1>
       </div>
-    </section>
 
-    <section class="w-full pt-8">
-      <div class="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>How It Works</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p>1. Load or paste a CSV.</p>
-            <p>2. Start with an import preset.</p>
-            <p>3. Review the cleaned preview and export plan.</p>
-            <p>
-              4. Open advanced rules only if the default output needs
-              adjustment.
-            </p>
-            <p>5. Download one CSV or a ZIP of smaller batch files.</p>
-          </CardContent>
-        </Card>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          toolCatalog.map((tool) => (
+            <a
+              href={tool.href}
+              class="group flex min-h-40 flex-col border border-border/70 bg-background/88 p-4 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.28)] transition duration-200 hover:-translate-y-0.5 hover:border-foreground/15"
+            >
+              <div class="mb-4 flex items-start justify-between gap-3">
+                <div class="bg-primary/8 p-3 text-primary">
+                  <ToolIcon name={tool.icon} className="size-8" />
+                </div>
+                <RiArrowRightUpLine className="size-4 text-muted-foreground transition group-hover:text-foreground" />
+              </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Privacy And Processing</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p>
-              The default workflow runs in the browser, so the CSV does not need
-              to be uploaded to use the tool.
-            </p>
-            <p>
-              The page is designed for quick import preparation rather than full
-              spreadsheet editing, which keeps the workflow narrow and easier to
-              understand.
-            </p>
-            <p>
-              More detailed notes are available on the
-              <a href="/privacy" class="underline underline-offset-4"
-                >privacy page</a
-              >.
-            </p>
-          </CardContent>
-        </Card>
+              <div class="space-y-1.5">
+                <h2 class="text-base font-semibold tracking-[-0.03em]">
+                  {tool.name}
+                </h2>
+                <p class="text-sm leading-5 text-muted-foreground">
+                  {tool.description}
+                </p>
+              </div>
+            </a>
+          ))
+        }
       </div>
-    </section>
-
-    <section class="w-full pt-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>FAQ</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-6 lg:grid-cols-2">
-          <div class="space-y-2">
-            <p class="font-medium">Does the file get uploaded?</p>
-            <p class="text-muted-foreground">
-              No. The normal workflow is browser-first and local.
-            </p>
-          </div>
-          <div class="space-y-2">
-            <p class="font-medium">Can I change the cleanup rules?</p>
-            <p class="text-muted-foreground">
-              Yes. Open the advanced dialog to adjust cleaning, dedupe, and
-              split settings.
-            </p>
-          </div>
-          <div class="space-y-2">
-            <p class="font-medium">What if the CSV is too large?</p>
-            <p class="text-muted-foreground">
-              The tool supports smaller batch exports, and the Pro unlock path
-              is there for larger local exports.
-            </p>
-          </div>
-          <div class="space-y-2">
-            <p class="font-medium">Which workflows are most supported?</p>
-            <p class="text-muted-foreground">
-              Shopify is the first sharp workflow, with presets for other
-              import-heavy tools already available.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </section>
-
-    <section class="w-full pt-8">
-      <div class="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>About</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              FixMyImport is meant to be a narrow import-prep utility, not a
-              spreadsheet replacement.
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Guides</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <p>
-              <a
-                href="/shopify-csv-cleaner"
-                class="underline underline-offset-4">Shopify import guide</a
-              >
-            </p>
-            <p>
-              <a
-                href="/mailchimp-csv-too-large"
-                class="underline underline-offset-4"
-                >Mailchimp file-too-large guide</a
-              >
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>More Details</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Privacy notes, workflow guidance, and supporting context live
-              below the tool instead of blocking the first-use experience.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
+    </div>
   </main>
 </Layout>

@@ -5,6 +5,18 @@ export interface CsvPreview {
   totalColumns: number
 }
 
+export interface CsvPreviewPage {
+  headers: string[]
+  rows: string[][]
+  totalRows: number
+  totalColumns: number
+  page: number
+  pageSize: number
+  totalPages: number
+  totalMatches: number
+  query: string
+}
+
 export interface CsvStats {
   rowCount: number
   columnCount: number
@@ -133,6 +145,15 @@ export type CsvWorkerRequest =
   | { type: "parse"; payload: CsvSourceInput }
   | { type: "process"; payload: ProcessConfig }
   | {
+      type: "preview"
+      payload: {
+        dataset: "source" | "processed"
+        query: string
+        page: number
+        pageSize: number
+      }
+    }
+  | {
       type: "export"
       payload: { config: ProcessConfig; includeAuditCsv: boolean }
     }
@@ -149,6 +170,13 @@ export type CsvWorkerResponse =
     }
   | { type: "parsed"; payload: CsvSessionSnapshot }
   | { type: "processed"; payload: CsvSessionSnapshot }
+  | {
+      type: "previewed"
+      payload: {
+        dataset: "source" | "processed"
+        preview: CsvPreviewPage
+      }
+    }
   | { type: "exported"; payload: ExportArtifact[] }
   | { type: "cancelled" }
   | { type: "error"; payload: { message: string } }

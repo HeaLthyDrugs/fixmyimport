@@ -26,6 +26,7 @@ import {
 import { describeDatasetStats, formatBytes } from "@/lib/csv/engine"
 import { SAMPLE_CSV, SAMPLE_CSV_FILE_NAME } from "@/lib/csv/sample"
 import type {
+  CsvPreviewPage,
   CsvSessionSnapshot,
   CsvWorkerResponse,
   DedupeMode,
@@ -69,6 +70,7 @@ import { Textarea } from "@/components/ui/textarea"
 const FREE_ROW_LIMIT = 250_000
 const FREE_SIZE_LIMIT = 25 * 1024 * 1024
 const PRO_TOKEN_STORAGE_KEY = "fixmyimport.pro.token"
+const DEFAULT_PAGE_SIZE = 25
 
 type WorkStatus = {
   phase: "idle" | "parsing" | "processing" | "exporting"
@@ -169,6 +171,24 @@ export function CsvWorkbench() {
   const [pasteValue, setPasteValue] = useState("")
   const [advancedOpen, setAdvancedOpen] = useState(false)
   const [proDialogOpen, setProDialogOpen] = useState(false)
+  const [activePreviewTab, setActivePreviewTab] = useState<
+    "output" | "source" | "plan"
+  >("output")
+  const [previewQueries, setPreviewQueries] = useState({
+    source: "",
+    processed: "",
+  })
+  const [previewPageSizes, setPreviewPageSizes] = useState({
+    source: DEFAULT_PAGE_SIZE,
+    processed: DEFAULT_PAGE_SIZE,
+  })
+  const [previewPages, setPreviewPages] = useState<{
+    source: CsvPreviewPage | null
+    processed: CsvPreviewPage | null
+  }>({
+    source: null,
+    processed: null,
+  })
   const [proToken, setProToken] = useState(() =>
     typeof window === "undefined"
       ? ""
@@ -183,7 +203,10 @@ export function CsvWorkbench() {
   const workerRef = useRef<Worker | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const checkoutUrl = import.meta.env.PUBLIC_FIXMYIMPORT_PRO_URL
-  const deferredRows = useDeferredValue(snapshot?.processedPreview?.rows ?? [])
+  const deferredProcessedRows = useDeferredValue(
+    previewPages.processed?.rows ?? []
+  )
+  const deferredSourceRows = useDeferredValue(previewPages.source?.rows ?? [])
   const proEnabled = proToken.trim().length > 0
   const preset = getPresetById(config.presetId)
   const sourceStats = snapshot?.sourceStats
@@ -203,6 +226,25 @@ export function CsvWorkbench() {
       phase: "processing",
       progress: 35,
       message: "Refreshing your output preview.",
+    })
+  }
+
+  const requestPreview = (
+    dataset: "source" | "processed",
+    options?: Partial<{
+      query: string
+      page: number
+      pageSize: number
+    }>
+  ) => {
+    workerRef.current?.postMessage({
+      type: "preview",
+      payload: {
+        dataset,
+        query: options?.query ?? previewQueries[dataset],
+        page: options?.page ?? 1,
+        pageSize: options?.pageSize ?? previewPageSizes[dataset],
+      },
     })
   }
 
@@ -243,9 +285,23 @@ export function CsvWorkbench() {
         startTransition(() => {
           setSnapshot(message.payload)
           setConfig(nextConfig)
+          setPreviewPages({
+            source: null,
+            processed: null,
+          })
+          setPreviewQueries((currentQueries) => ({
+            ...currentQueries,
+            source: "",
+            processed: "",
+          }))
           setError("")
         })
 
+        requestPreview("source", {
+          query: "",
+          page: 1,
+          pageSize: previewPageSizes.source,
+        })
         processWithConfig(nextConfig)
         return
       }
@@ -253,11 +309,31 @@ export function CsvWorkbench() {
       if (message.type === "processed") {
         startTransition(() => {
           setSnapshot(message.payload)
+          setActivePreviewTab("output")
+          setPreviewQueries((currentQueries) => ({
+            ...currentQueries,
+            processed: "",
+          }))
           setError("")
         })
 
+        requestPreview("processed", {
+          query: "",
+          page: 1,
+          pageSize: previewPageSizes.processed,
+        })
         trackAnalyticsEvent("preview_shown", {
           preset: config.presetId,
+        })
+        return
+      }
+
+      if (message.type === "previewed") {
+        startTransition(() => {
+          setPreviewPages((currentPages) => ({
+            ...currentPages,
+            [message.payload.dataset]: message.payload.preview,
+          }))
         })
         return
       }
@@ -341,6 +417,36 @@ export function CsvWorkbench() {
     }
   }
 
+  const handlePreviewQueryChange = (
+    dataset: "source" | "processed",
+    value: string
+  ) => {
+    setPreviewQueries((currentQueries) => ({
+      ...currentQueries,
+      [dataset]: value,
+    }))
+    requestPreview(dataset, {
+      query: value,
+      page: 1,
+    })
+  }
+
+  const handlePreviewPageSizeChange = (
+    dataset: "source" | "processed",
+    value: string
+  ) => {
+    const nextPageSize = Number(value) || DEFAULT_PAGE_SIZE
+
+    setPreviewPageSizes((currentPageSizes) => ({
+      ...currentPageSizes,
+      [dataset]: nextPageSize,
+    }))
+    requestPreview(dataset, {
+      pageSize: nextPageSize,
+      page: 1,
+    })
+  }
+
   const handleExport = () => {
     if (!snapshot) {
       return
@@ -370,6 +476,102 @@ export function CsvWorkbench() {
       progress: 65,
       message: "Packing your files for download.",
     })
+  }
+
+  const sourcePreviewPage = previewPages.source
+  const processedPreviewPage = previewPages.processed
+
+  const renderPreviewControls = (dataset: "source" | "processed") => {
+    const previewPage =
+      dataset === "source" ? sourcePreviewPage : processedPreviewPage
+
+    if (!previewPage) {
+      return null
+    }
+
+    const startRow =
+      previewPage.totalMatches === 0
+        ? 0
+        : (previewPage.page - 1) * previewPage.pageSize + 1
+    const endRow = Math.min(
+      previewPage.page * previewPage.pageSize,
+      previewPage.totalMatches
+    )
+
+    return (
+      <div className="space-y-3">
+        <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_140px_auto] md:items-end">
+          <div className="space-y-2">
+            <p>Search rows</p>
+            <Input
+              value={previewQueries[dataset]}
+              onChange={(event) =>
+                handlePreviewQueryChange(dataset, event.target.value)
+              }
+              placeholder="Search across headers and cell values"
+            />
+          </div>
+          <div className="space-y-2">
+            <p>Rows per page</p>
+            <Select
+              value={String(previewPageSizes[dataset])}
+              onValueChange={(value) =>
+                handlePreviewPageSizeChange(dataset, value)
+              }
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="25">25 rows</SelectItem>
+                <SelectItem value="50">50 rows</SelectItem>
+                <SelectItem value="100">100 rows</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              onClick={() =>
+                requestPreview(dataset, { page: previewPage.page - 1 })
+              }
+              disabled={previewPage.page <= 1}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() =>
+                requestPreview(dataset, { page: previewPage.page + 1 })
+              }
+              disabled={previewPage.page >= previewPage.totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="outline">
+            Showing {startRow}-{endRow} of{" "}
+            {previewPage.totalMatches.toLocaleString()}
+          </Badge>
+          <Badge variant="outline">
+            Page {previewPage.page} of {previewPage.totalPages}
+          </Badge>
+          <Badge variant="outline">
+            {previewPage.totalRows.toLocaleString()} total rows in this dataset
+          </Badge>
+          {previewQueries[dataset] ? (
+            <Button
+              variant="outline"
+              onClick={() => handlePreviewQueryChange(dataset, "")}
+            >
+              Clear search
+            </Button>
+          ) : null}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -605,25 +807,43 @@ export function CsvWorkbench() {
                 <CardTitle>Preview</CardTitle>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue="output">
+                <Tabs
+                  value={activePreviewTab}
+                  onValueChange={(value) =>
+                    setActivePreviewTab(value as "output" | "source" | "plan")
+                  }
+                >
                   <TabsList>
                     <TabsTrigger value="output">Output preview</TabsTrigger>
                     <TabsTrigger value="source">Source preview</TabsTrigger>
                     <TabsTrigger value="plan">Export plan</TabsTrigger>
                   </TabsList>
                   <TabsContent value="output">
-                    <PreviewTable
-                      emptyLabel="Run a preview to see the processed rows."
-                      headers={snapshot.processedPreview?.headers ?? []}
-                      rows={deferredRows}
-                    />
+                    <div className="space-y-4">
+                      {renderPreviewControls("processed")}
+                      <PreviewTable
+                        emptyLabel="Run a preview to see the processed rows."
+                        headers={
+                          processedPreviewPage?.headers ??
+                          snapshot.processedPreview?.headers ??
+                          []
+                        }
+                        rows={deferredProcessedRows}
+                      />
+                    </div>
                   </TabsContent>
                   <TabsContent value="source">
-                    <PreviewTable
-                      emptyLabel="Load a CSV to inspect its source rows."
-                      headers={snapshot.sourcePreview.headers}
-                      rows={snapshot.sourcePreview.rows}
-                    />
+                    <div className="space-y-4">
+                      {renderPreviewControls("source")}
+                      <PreviewTable
+                        emptyLabel="Load a CSV to inspect its source rows."
+                        headers={
+                          sourcePreviewPage?.headers ??
+                          snapshot.sourcePreview.headers
+                        }
+                        rows={deferredSourceRows}
+                      />
+                    </div>
                   </TabsContent>
                   <TabsContent value="plan">
                     <div className="space-y-3">

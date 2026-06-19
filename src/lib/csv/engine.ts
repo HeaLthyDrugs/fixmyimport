@@ -5,6 +5,7 @@ import { getPresetById } from "./presets"
 import type {
   AuditReport,
   CsvPreview,
+  CsvPreviewPage,
   CsvSessionSnapshot,
   CsvStats,
   ExportArtifact,
@@ -14,7 +15,7 @@ import type {
   ProcessedCsvDataset,
 } from "./types"
 
-const PREVIEW_LIMIT = 8
+const PREVIEW_LIMIT = 25
 const textEncoder = new TextEncoder()
 
 function normalizeLineEndings(value: string) {
@@ -77,6 +78,54 @@ function buildPreview(headers: string[], rows: string[][]): CsvPreview {
     rows: rows.slice(0, PREVIEW_LIMIT),
     totalRows: rows.length,
     totalColumns: headers.length,
+  }
+}
+
+function normalizePreviewQuery(query: string) {
+  return query.trim().toLowerCase()
+}
+
+function filterPreviewRows(headers: string[], rows: string[][], query: string) {
+  const normalizedQuery = normalizePreviewQuery(query)
+
+  if (!normalizedQuery) {
+    return rows
+  }
+
+  return rows.filter((row) =>
+    row.some((value, index) => {
+      const cellValue = `${headers[index] ?? ""} ${value}`.toLowerCase()
+
+      return cellValue.includes(normalizedQuery)
+    })
+  )
+}
+
+export function buildPreviewPage(
+  headers: string[],
+  rows: string[][],
+  query: string,
+  page: number,
+  pageSize: number
+): CsvPreviewPage {
+  const safePageSize = Math.max(1, pageSize || PREVIEW_LIMIT)
+  const filteredRows = filterPreviewRows(headers, rows, query)
+  const totalMatches = filteredRows.length
+  const totalPages = Math.max(1, Math.ceil(totalMatches / safePageSize))
+  const safePage = Math.min(Math.max(page, 1), totalPages)
+  const startIndex = (safePage - 1) * safePageSize
+  const endIndex = startIndex + safePageSize
+
+  return {
+    headers,
+    rows: filteredRows.slice(startIndex, endIndex),
+    totalRows: rows.length,
+    totalColumns: headers.length,
+    page: safePage,
+    pageSize: safePageSize,
+    totalPages,
+    totalMatches,
+    query,
   }
 }
 

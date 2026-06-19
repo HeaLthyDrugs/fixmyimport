@@ -46,4 +46,38 @@ describe("csv worker runtime", () => {
       expect(processedMessage.payload.audit?.duplicateRowsRemoved).toBe(1)
     }
   })
+
+  it("returns searchable preview pages from worker state", async () => {
+    const parsed = await handleCsvWorkerRequest(
+      {},
+      {
+        type: "parse",
+        payload: {
+          fileName: "contacts.csv",
+          text: csvInput,
+        },
+      }
+    )
+
+    const previewed = await handleCsvWorkerRequest(parsed.state, {
+      type: "preview",
+      payload: {
+        dataset: "source",
+        query: "ava",
+        page: 1,
+        pageSize: 25,
+      },
+    })
+
+    const previewMessage = previewed.responses.find(
+      (response) => response.type === "previewed"
+    )
+
+    expect(previewMessage?.type).toBe("previewed")
+
+    if (previewMessage?.type === "previewed") {
+      expect(previewMessage.payload.preview.totalMatches).toBe(2)
+      expect(previewMessage.payload.preview.rows).toHaveLength(2)
+    }
+  })
 })

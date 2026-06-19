@@ -1,0 +1,20 @@
+---
+import { RiFileList3Line } from "@remixicon/react"
+
+import type { ToolIconName } from "@/lib/tools"
+
+interface Props {
+  name: ToolIconName
+  className?: string
+}
+
+const { name, className = "size-5" } = Astro.props
+
+const iconMap = {
+  "csv-import": RiFileList3Line,
+}
+
+const Icon = iconMap[name]
+---
+
+<Icon aria-hidden="true" className={className} />
