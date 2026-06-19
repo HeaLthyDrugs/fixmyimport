@@ -1,0 +1,69 @@
+---
+import Layout from "@/layouts/main.astro"
+import { Button } from "@/components/ui/button"
+---
+
+<Layout
+  title="Shopify CSV Cleaner | Prep imports locally with FixMyImport"
+  description="Use FixMyImport to clean, dedupe, and split Shopify CSV imports locally in your browser."
+>
+  <main class="w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+    <div class="p-6 sm:p-8">
+      <div class="max-w-3xl space-y-6">
+        <div class="space-y-3">
+          <p
+            class="text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase"
+          >
+            Shopify workflow
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Prep Shopify CSV imports without a spreadsheet detour.
+          </h1>
+          <p class="max-w-2xl text-sm leading-6 text-muted-foreground">
+            Start with the Shopify preset in FixMyImport when a product,
+            customer, or catalog export needs cleanup before re-import.
+          </p>
+        </div>
+        <div class="grid gap-4 text-sm text-muted-foreground">
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Use the preset first
+            </h2>
+            <p class="mt-2 leading-6">
+              The Shopify preset defaults to size-aware splitting, repeated
+              headers, and conservative batch settings that are easier to retry
+              if an import goes wrong.
+            </p>
+          </div>
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Dedupe with identity columns
+            </h2>
+            <p class="mt-2 leading-6">
+              If your CSV includes email, handle, or SKU columns, select those
+              first for deterministic dedupe instead of deduping by full row.
+            </p>
+          </div>
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Export small, predictable batches
+            </h2>
+            <p class="mt-2 leading-6">
+              ZIP export keeps multi-file downloads tidy while preserving the
+              same header structure in every batch file.
+            </p>
+          </div>
+        </div>
+        <Button asChild>
+          <a href="/#tool">Open the tool</a>
+        </Button>
+      </div>
+    </div>
+  </main>
+</Layout>

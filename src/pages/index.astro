@@ -1,17 +1,185 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { CsvWorkbench } from "@/components/csv-workbench"
 ---
 
-<Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
+<Layout
+  title="FixMyImport | Clean, dedupe, and split import-ready CSVs"
+  description="Fix messy CSV exports in your browser. Remove duplicates, split large files, and download import-ready batches with no upload and no account."
+>
+  <main class="w-full px-4 py-6 sm:px-6 lg:px-8">
+    <section id="tool" class="w-full">
+      <CsvWorkbench client:load />
+    </section>
+
+    <section class="w-full pt-8">
+      <div class="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>What This Tool Does</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              FixMyImport cleans messy CSVs, removes exact duplicates, splits
+              large files into smaller batches, previews the output, and exports
+              the result in one short browser session.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Why It Starts Simple</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              The first screen focuses on the main workflow only. Cleanup,
+              dedupe, and split details stay inside the advanced dialog until
+              you actually need them.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Who It Helps First</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Shopify is the first sharp workflow, with presets for Excel,
+              Mailchimp, HubSpot, and Salesforce style import prep already
+              available.
+            </p>
+          </CardContent>
+        </Card>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <section class="w-full pt-8">
+      <div class="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>How It Works</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p>1. Load or paste a CSV.</p>
+            <p>2. Start with an import preset.</p>
+            <p>3. Review the cleaned preview and export plan.</p>
+            <p>
+              4. Open advanced rules only if the default output needs
+              adjustment.
+            </p>
+            <p>5. Download one CSV or a ZIP of smaller batch files.</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Privacy And Processing</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p>
+              The default workflow runs in the browser, so the CSV does not need
+              to be uploaded to use the tool.
+            </p>
+            <p>
+              The page is designed for quick import preparation rather than full
+              spreadsheet editing, which keeps the workflow narrow and easier to
+              understand.
+            </p>
+            <p>
+              More detailed notes are available on the
+              <a href="/privacy" class="underline underline-offset-4"
+                >privacy page</a
+              >.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+
+    <section class="w-full pt-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>FAQ</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-6 lg:grid-cols-2">
+          <div class="space-y-2">
+            <p class="font-medium">Does the file get uploaded?</p>
+            <p class="text-muted-foreground">
+              No. The normal workflow is browser-first and local.
+            </p>
+          </div>
+          <div class="space-y-2">
+            <p class="font-medium">Can I change the cleanup rules?</p>
+            <p class="text-muted-foreground">
+              Yes. Open the advanced dialog to adjust cleaning, dedupe, and
+              split settings.
+            </p>
+          </div>
+          <div class="space-y-2">
+            <p class="font-medium">What if the CSV is too large?</p>
+            <p class="text-muted-foreground">
+              The tool supports smaller batch exports, and the Pro unlock path
+              is there for larger local exports.
+            </p>
+          </div>
+          <div class="space-y-2">
+            <p class="font-medium">Which workflows are most supported?</p>
+            <p class="text-muted-foreground">
+              Shopify is the first sharp workflow, with presets for other
+              import-heavy tools already available.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+
+    <section class="w-full pt-8">
+      <div class="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>About</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              FixMyImport is meant to be a narrow import-prep utility, not a
+              spreadsheet replacement.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Guides</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <p>
+              <a
+                href="/shopify-csv-cleaner"
+                class="underline underline-offset-4">Shopify import guide</a
+              >
+            </p>
+            <p>
+              <a
+                href="/mailchimp-csv-too-large"
+                class="underline underline-offset-4"
+                >Mailchimp file-too-large guide</a
+              >
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>More Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Privacy notes, workflow guidance, and supporting context live
+              below the tool instead of blocking the first-use experience.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  </main>
 </Layout>

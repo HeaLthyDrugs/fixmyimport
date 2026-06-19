@@ -1,0 +1,68 @@
+---
+import Layout from "@/layouts/main.astro"
+import { Button } from "@/components/ui/button"
+---
+
+<Layout
+  title="Mailchimp CSV Too Large | Split import files with FixMyImport"
+  description="Fix large Mailchimp CSV imports by splitting them into smaller browser-generated batches."
+>
+  <main class="w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+    <div class="p-6 sm:p-8">
+      <div class="max-w-3xl space-y-6">
+        <div class="space-y-3">
+          <p
+            class="text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase"
+          >
+            Mailchimp guide
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+            When the CSV is too large, split it before the import does.
+          </h1>
+          <p class="max-w-2xl text-sm leading-6 text-muted-foreground">
+            FixMyImport keeps this simple: remove duplicates first, then split
+            the list into smaller files that are easier to upload and retry.
+          </p>
+        </div>
+        <div class="grid gap-4 text-sm text-muted-foreground">
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Clean before splitting
+            </h2>
+            <p class="mt-2 leading-6">
+              Trim whitespace and remove empty rows first so each output file
+              uses its row budget on real contacts.
+            </p>
+          </div>
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Use selected-column dedupe
+            </h2>
+            <p class="mt-2 leading-6">
+              Exact-match dedupe on email columns is the fastest way to avoid
+              noisy duplicate imports.
+            </p>
+          </div>
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Export predictable batches
+            </h2>
+            <p class="mt-2 leading-6">
+              Split by size or by rows, keep headers in every file, and download
+              the whole batch as a ZIP when needed.
+            </p>
+          </div>
+        </div>
+        <Button asChild>
+          <a href="/#tool">Open the tool</a>
+        </Button>
+      </div>
+    </div>
+  </main>
+</Layout>

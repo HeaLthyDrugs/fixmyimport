@@ -1,0 +1,64 @@
+---
+import Layout from "@/layouts/main.astro"
+---
+
+<Layout
+  title="FixMyImport Privacy | Browser-first CSV processing"
+  description="How FixMyImport handles CSV files, local processing, and lightweight analytics in the first release."
+>
+  <main class="w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+    <div class="p-6 sm:p-8">
+      <div class="max-w-3xl space-y-6">
+        <div class="space-y-3">
+          <p
+            class="text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase"
+          >
+            Privacy
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Local by default, narrow by design.
+          </h1>
+          <p class="max-w-2xl text-sm leading-6 text-muted-foreground">
+            FixMyImport is built as a browser-first CSV utility. The default
+            experience does not upload files or store CSV contents on a server.
+          </p>
+        </div>
+        <div class="grid gap-4 text-sm text-muted-foreground">
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              CSV handling
+            </h2>
+            <p class="mt-2 leading-6">
+              CSV parsing, cleanup, dedupe, preview generation, splitting, and
+              export preparation all run locally in the browser.
+            </p>
+          </div>
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">Analytics</h2>
+            <p class="mt-2 leading-6">
+              The app is wired for privacy-friendly event hooks only. File
+              contents, column names, and row data are not sent as analytics
+              properties.
+            </p>
+          </div>
+          <div
+            class="rounded-[1.5rem] border border-border/70 bg-background/70 p-4"
+          >
+            <h2 class="text-base font-semibold text-foreground">
+              Commercial layer
+            </h2>
+            <p class="mt-2 leading-6">
+              The no-auth Pro flow stores a lightweight unlock token in local
+              storage. Hosted checkout can be connected later without turning
+              the app into an account system.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
