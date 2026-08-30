@@ -94,9 +94,29 @@ describe("csv engine", () => {
       1,
       1
     )
-
     expect(preview.totalMatches).toBe(2)
     expect(preview.totalPages).toBe(2)
     expect(preview.rows).toEqual([["ava@example.com", "Delhi"]])
+  })
+
+  it("correctly identifies headers with survey and enterprise data", () => {
+    const surveyCsv = `year,industry_code_ANZSIC,industry_name_ANZSIC,rme_size_grp,variable,value,unit,,,,,,,,,
+2011,A,Agriculture Forestry and Fishing,a_0,Activity unit,46134,COUNT,,,,,,,,,
+2012,A,Agriculture Forestry and Fishing,a_0,Activity unit,45264,COUNT,,,,,,,,,
+`
+    const parsed = parseCsvText(surveyCsv, "survey.csv")
+
+    expect(parsed.headers.slice(0, 7)).toEqual([
+      "year",
+      "industry_code_ANZSIC",
+      "industry_name_ANZSIC",
+      "rme_size_grp",
+      "variable",
+      "value",
+      "unit",
+    ])
+    expect(parsed.stats.hasHeader).toBe(true)
+    expect(parsed.rows[0]?.[0]).toBe("2011")
+    expect(parsed.rows[0]?.[1]).toBe("A")
   })
 })

@@ -44,27 +44,50 @@ function isMostlyNumeric(values: string[]) {
 }
 
 function detectHeaderRow(rows: string[][]) {
-  if (rows.length <= 1) {
-    return true
+  if (rows.length === 0) {
+    return false
   }
 
-  const [firstRow, secondRow] = rows
-  const uniqueRatio =
-    new Set(firstRow.map((value) => value.trim().toLowerCase())).size /
-    Math.max(firstRow.length, 1)
+  const firstRow = rows[0]
+  const nonEmptyFirst = firstRow.filter((value) => value.trim().length > 0)
 
-  return uniqueRatio > 0.75 &&
-    !isMostlyNumeric(firstRow) &&
-    isMostlyNumeric(secondRow)
-    ? true
-    : uniqueRatio > 0.75
+  // If first row has no content at all, it's not a header
+  if (nonEmptyFirst.length === 0) {
+    return false
+  }
+
+  // If first row is predominantly numbers/digits, it's a data row, not a header
+  if (isMostlyNumeric(nonEmptyFirst)) {
+    return false
+  }
+
+  // If there are subsequent rows, check if first row is distinctly header-like
+  if (rows.length > 1) {
+    const secondRow = rows[1]
+    const nonEmptySecond = secondRow.filter((value) => value.trim().length > 0)
+
+    // If second row is mostly numeric and first row is text, it's definitely a header
+    if (isMostlyNumeric(nonEmptySecond) && !isMostlyNumeric(nonEmptyFirst)) {
+      return true
+    }
+  }
+
+  // Default for non-numeric text rows in row 0: it is a header row
+  return true
 }
 
 function buildHeaders(row: string[] | undefined, columnCount: number) {
+  const seen = new Map<string, number>()
+
   return Array.from({ length: columnCount }, (_, index) => {
     const rawHeader = row?.[index]?.trim()
+    const baseName =
+      rawHeader && rawHeader.length > 0 ? rawHeader : `Column ${index + 1}`
 
-    return rawHeader && rawHeader.length > 0 ? rawHeader : `Column ${index + 1}`
+    const count = seen.get(baseName) ?? 0
+    seen.set(baseName, count + 1)
+
+    return count === 0 ? baseName : `${baseName}_${count + 1}`
   })
 }
 
