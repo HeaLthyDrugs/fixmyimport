@@ -4,6 +4,13 @@ import {
   RiArrowLeftRightLine,
   RiMergeCellsHorizontal,
   RiShieldCheckLine,
+  RiCodeSSlashLine,
+  RiQrCodeLine,
+  RiText,
+  RiFileCodeLine,
+  RiBracesLine,
+  RiTimeLine,
+  RiFingerprintLine,
 } from "@remixicon/react"
 
 import type { ToolIconName } from "@/lib/tools"
@@ -20,9 +27,16 @@ const iconMap = {
   "column-mapper": RiArrowLeftRightLine,
   "csv-merge": RiMergeCellsHorizontal,
   "import-validator": RiShieldCheckLine,
+  "binary-converter": RiCodeSSlashLine,
+  "text-case": RiText,
+  "base64": RiFileCodeLine,
+  "json-format": RiBracesLine,
+  "qr-generator": RiQrCodeLine,
+  "timestamp": RiTimeLine,
+  "uuid-hash": RiFingerprintLine,
 }
 
-const Icon = iconMap[name]
+const Icon = iconMap[name] ?? RiCodeSSlashLine
 ---
 
 <Icon aria-hidden="true" className={className} />

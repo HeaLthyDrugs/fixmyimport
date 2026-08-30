@@ -1,0 +1,15 @@
+---
+import { BinaryConverter } from "@/components/binary-converter"
+import Layout from "@/layouts/main.astro"
+import { toolCatalog } from "@/lib/tools"
+
+const tool = toolCatalog.find((item) => item.id === "binary-to-text")
+
+if (!tool) {
+  throw new Error("Binary to Text tool metadata is missing.")
+}
+---
+
+<Layout title={tool.seoTitle} description={tool.seoDescription}>
+  <BinaryConverter client:load />
+</Layout>

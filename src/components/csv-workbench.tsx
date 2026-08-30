@@ -93,7 +93,11 @@ function isBusy(phase: WorkStatus["phase"]) {
 
 function downloadArtifact(artifact: ExportArtifact) {
   const payload = new Blob(
-    [typeof artifact.payload === "string" ? artifact.payload : artifact.payload],
+    [
+      typeof artifact.payload === "string"
+        ? artifact.payload
+        : artifact.payload,
+    ],
     { type: artifact.mimeType }
   )
   const url = URL.createObjectURL(payload)
@@ -126,7 +130,7 @@ function SpreadsheetTable({
   }
 
   return (
-    <div className="relative min-w-full inline-block align-top">
+    <div className="relative inline-block min-w-full align-top">
       <table
         className="w-full border-separate text-[12px]"
         style={{ borderSpacing: 0 }}
@@ -134,13 +138,13 @@ function SpreadsheetTable({
         <thead>
           <tr>
             {/* Corner cell — sticky both directions, highest z-index */}
-            <th className="sticky left-0 top-0 z-30 min-w-[56px] max-w-[56px] border-b border-r border-border bg-muted/90 px-2 py-1.5 text-center text-[11px] font-mono font-medium text-muted-foreground select-none">
+            <th className="sticky top-0 left-0 z-30 max-w-[56px] min-w-[56px] border-r border-b border-border bg-muted/90 px-2 py-1.5 text-center font-mono text-[11px] font-medium text-muted-foreground select-none">
               #
             </th>
             {headers.map((header, i) => (
               <th
                 key={`${header}-${i}`}
-                className="sticky top-0 z-20 min-w-[120px] whitespace-nowrap border-b border-r border-border bg-muted/90 px-3 py-1.5 text-left text-[11px] font-semibold text-foreground/80 select-none shadow-[inset_0_-1px_0_var(--border)]"
+                className="sticky top-0 z-20 min-w-[120px] border-r border-b border-border bg-muted/90 px-3 py-1.5 text-left text-[11px] font-semibold whitespace-nowrap text-foreground/80 shadow-[inset_0_-1px_0_var(--border)] select-none"
               >
                 {header}
               </th>
@@ -161,16 +165,16 @@ function SpreadsheetTable({
             rows.map((row, rowIndex) => (
               <tr
                 key={startRow + rowIndex}
-                className="group hover:bg-primary/[0.04] transition-colors"
+                className="group transition-colors hover:bg-primary/[0.04]"
               >
                 {/* Row number — sticky left */}
-                <td className="sticky left-0 z-10 border-b border-r border-border bg-muted/80 group-hover:bg-muted px-2 py-1 text-center text-[11px] font-mono tabular-nums text-muted-foreground select-none">
+                <td className="sticky left-0 z-10 border-r border-b border-border bg-muted/80 px-2 py-1 text-center font-mono text-[11px] text-muted-foreground tabular-nums select-none group-hover:bg-muted">
                   {startRow + rowIndex}
                 </td>
                 {headers.map((header, colIndex) => (
                   <td
                     key={`${header}-${rowIndex}-${colIndex}`}
-                    className="whitespace-nowrap border-b border-r border-border/50 bg-background px-3 py-1 text-[12px] text-foreground"
+                    className="border-r border-b border-border/50 bg-background px-3 py-1 text-[12px] whitespace-nowrap text-foreground"
                   >
                     {row[colIndex] || "\u00A0"}
                   </td>
@@ -256,8 +260,8 @@ export function CsvWorkbench() {
     activePreviewTab === "source"
       ? (sourcePreviewPage?.headers ?? snapshot?.sourcePreview.headers ?? [])
       : (processedPreviewPage?.headers ??
-          snapshot?.processedPreview?.headers ??
-          [])
+        snapshot?.processedPreview?.headers ??
+        [])
   const currentRows =
     activePreviewTab === "source" ? deferredSourceRows : deferredProcessedRows
   const currentStartRow =
@@ -508,13 +512,10 @@ export function CsvWorkbench() {
 
   // ─── Tab button helper ─────────────────────────────────────
 
-  const tabButton = (
-    tab: "output" | "source",
-    label: string
-  ) => (
+  const tabButton = (tab: "output" | "source", label: string) => (
     <button
       key={tab}
-      className={`rounded px-2.5 py-1 text-xs font-medium transition cursor-pointer ${
+      className={`cursor-pointer rounded px-2.5 py-1 text-xs font-medium transition ${
         activePreviewTab === tab
           ? "bg-background text-foreground shadow-sm"
           : "text-muted-foreground hover:text-foreground"
@@ -535,9 +536,7 @@ export function CsvWorkbench() {
         type="file"
         accept=".csv,text/csv"
         className="hidden"
-        onChange={(event) =>
-          void handleFileSelection(event.target.files?.[0])
-        }
+        onChange={(event) => void handleFileSelection(event.target.files?.[0])}
       />
 
       {!snapshot ? (
@@ -553,7 +552,7 @@ export function CsvWorkbench() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setHowItWorksOpen(true)}
-                className="inline-flex items-center gap-1 text-xs text-muted-foreground transition hover:text-foreground cursor-pointer"
+                className="inline-flex cursor-pointer items-center gap-1 text-xs text-muted-foreground transition hover:text-foreground"
               >
                 <RiInformationLine className="size-3.5" />
                 How it works
@@ -569,16 +568,19 @@ export function CsvWorkbench() {
 
           {/* Center content */}
           <div className="flex flex-1 flex-col items-center justify-center gap-5 p-4">
-            <div className="text-center space-y-1">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">CSV Viewer & Cleaner</h1>
+            <div className="space-y-1 text-center">
+              <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
+                CSV Viewer & Cleaner
+              </h1>
               <p className="text-sm text-muted-foreground">
-                Clean, dedupe, and split import-ready CSVs — right in your browser.
+                Clean, dedupe, and split import-ready CSVs — right in your
+                browser.
               </p>
             </div>
 
             {inputMode === "upload" ? (
               <div
-                className={`w-full max-w-xl rounded-xl border-2 border-dashed p-8 sm:p-10 text-center transition-colors shadow-xs ${
+                className={`w-full max-w-xl rounded-xl border-2 border-dashed p-8 text-center shadow-xs transition-colors sm:p-10 ${
                   isDragOver
                     ? "border-primary bg-primary/5"
                     : "border-border/80 bg-card/60"
@@ -603,17 +605,18 @@ export function CsvWorkbench() {
                       Drop your CSV file here
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Also opens .tsv, .tab and .txt · Processed in your browser — your file is never uploaded.
+                      Also opens .tsv, .tab and .txt · Processed in your browser
+                      — your file is never uploaded.
                     </p>
                   </div>
                   <Button
                     onClick={() => fileInputRef.current?.click()}
-                    className="bg-[#0078d4] hover:bg-[#106ebe] text-white px-5 py-2 text-sm font-medium shadow-xs"
+                    className="bg-[#0078d4] px-5 py-2 text-sm font-medium text-white shadow-xs hover:bg-[#106ebe]"
                   >
                     Browse file
                   </Button>
                   <button
-                    className="text-xs text-muted-foreground underline underline-offset-2 transition hover:text-foreground cursor-pointer"
+                    className="cursor-pointer text-xs text-muted-foreground underline underline-offset-2 transition hover:text-foreground"
                     onClick={() => {
                       setPasteValue(SAMPLE_CSV)
                       void submitSource(SAMPLE_CSV_FILE_NAME, SAMPLE_CSV)
@@ -710,13 +713,17 @@ export function CsvWorkbench() {
                 CSV Import Cleaner
               </a>
               <div className="flex min-w-0 items-center gap-1.5 rounded-md border border-border/80 bg-muted/40 px-2 py-0.5 text-xs">
-                <span className="truncate font-medium text-foreground max-w-[200px] sm:max-w-[320px]">
+                <span className="max-w-[200px] truncate font-medium text-foreground sm:max-w-[320px]">
                   {snapshot.fileName}
                 </span>
                 <span className="text-border">|</span>
-                <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">
-                  {describeDatasetStats(sourceStats ?? snapshot.sourceStats).join(" · ")}
-                  {processedStats ? ` · ${processedStats.rowCount.toLocaleString()} output rows` : ""}
+                <span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
+                  {describeDatasetStats(
+                    sourceStats ?? snapshot.sourceStats
+                  ).join(" · ")}
+                  {processedStats
+                    ? ` · ${processedStats.rowCount.toLocaleString()} output rows`
+                    : ""}
                 </span>
               </div>
             </div>
@@ -725,7 +732,7 @@ export function CsvWorkbench() {
             <div className="ml-auto flex shrink-0 items-center gap-1.5">
               <div className="relative">
                 <Input
-                  className="h-7 w-36 sm:w-48 text-xs bg-background"
+                  className="h-7 w-36 bg-background text-xs sm:w-48"
                   placeholder="Search rows…"
                   value={previewQueries[currentDataset]}
                   onChange={(e) =>
@@ -737,7 +744,7 @@ export function CsvWorkbench() {
                 size="xs"
                 variant="ghost"
                 onClick={() => setHowItWorksOpen(true)}
-                className="text-xs text-muted-foreground hover:text-foreground hidden sm:inline-flex"
+                className="hidden text-xs text-muted-foreground hover:text-foreground sm:inline-flex"
               >
                 <RiInformationLine className="size-3.5" />
                 How it works
@@ -746,7 +753,7 @@ export function CsvWorkbench() {
                 size="xs"
                 onClick={handleOpenExportModal}
                 disabled={isBusy(status.phase)}
-                className="bg-[#107c41] hover:bg-[#0e6b37] text-white font-medium shadow-xs gap-1 cursor-pointer"
+                className="cursor-pointer gap-1 bg-[#107c41] font-medium text-white shadow-xs hover:bg-[#0e6b37]"
               >
                 <RiDownload2Line className="size-3.5" />
                 Export
@@ -754,7 +761,7 @@ export function CsvWorkbench() {
               <Button
                 size="xs"
                 onClick={() => fileInputRef.current?.click()}
-                className="bg-[#0078d4] hover:bg-[#106ebe] text-white font-medium shadow-xs gap-1 cursor-pointer"
+                className="cursor-pointer gap-1 bg-[#0078d4] font-medium text-white shadow-xs hover:bg-[#106ebe]"
               >
                 <RiFileUploadLine className="size-3.5" />
                 Open file
@@ -772,12 +779,14 @@ export function CsvWorkbench() {
 
             {/* Right: preset + tools */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[11px] text-muted-foreground hidden sm:inline">Preset:</span>
+              <span className="hidden text-[11px] text-muted-foreground sm:inline">
+                Preset:
+              </span>
               <Select
                 value={config.presetId}
                 onValueChange={handlePresetChange}
               >
-                <SelectTrigger className="h-6 w-[170px] sm:w-[210px] text-xs bg-background">
+                <SelectTrigger className="h-6 w-[170px] bg-background text-xs sm:w-[210px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -793,7 +802,7 @@ export function CsvWorkbench() {
                 variant="outline"
                 onClick={() => processWithConfig(config)}
                 disabled={isBusy(status.phase)}
-                className="text-xs cursor-pointer"
+                className="cursor-pointer text-xs"
               >
                 Refresh
               </Button>
@@ -802,7 +811,7 @@ export function CsvWorkbench() {
                 variant="outline"
                 onClick={() => setAdvancedOpen(true)}
                 disabled={isBusy(status.phase)}
-                className="text-xs gap-1 cursor-pointer"
+                className="cursor-pointer gap-1 text-xs"
               >
                 <RiSettings3Line className="size-3.5" />
                 Advanced
@@ -849,7 +858,7 @@ export function CsvWorkbench() {
           {/* ── Footer: pagination ── */}
           {currentPreviewPage ? (
             <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-t border-border/50 bg-background px-3 py-1">
-              <span className="text-[11px] tabular-nums text-muted-foreground">
+              <span className="text-[11px] text-muted-foreground tabular-nums">
                 {currentStartRow}–{currentEndRow} of{" "}
                 {currentPreviewPage.totalMatches.toLocaleString()} rows
                 {" · "}
@@ -859,10 +868,8 @@ export function CsvWorkbench() {
               <div className="flex items-center gap-1.5">
                 {previewQueries[currentDataset] ? (
                   <button
-                    className="text-[11px] text-muted-foreground underline underline-offset-2 hover:text-foreground cursor-pointer"
-                    onClick={() =>
-                      handlePreviewQueryChange(currentDataset, "")
-                    }
+                    className="cursor-pointer text-[11px] text-muted-foreground underline underline-offset-2 hover:text-foreground"
+                    onClick={() => handlePreviewQueryChange(currentDataset, "")}
                   >
                     Clear search
                   </button>
@@ -938,7 +945,7 @@ export function CsvWorkbench() {
                 value={exportFileName}
                 onChange={(e) => setExportFileName(e.target.value)}
                 placeholder="export-name.csv"
-                className="text-sm font-mono"
+                className="font-mono text-sm"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -952,7 +959,7 @@ export function CsvWorkbench() {
               </p>
             </div>
 
-            <div className="rounded-lg border border-border/60 bg-muted/30 p-3 space-y-2 text-xs">
+            <div className="space-y-2 rounded-lg border border-border/60 bg-muted/30 p-3 text-xs">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Rows to export:</span>
                 <span className="font-medium text-foreground">
@@ -988,15 +995,12 @@ export function CsvWorkbench() {
             </div>
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button
-              variant="outline"
-              onClick={() => setExportModalOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setExportModalOpen(false)}>
               Cancel
             </Button>
             <Button
               onClick={handleConfirmExport}
-              className="bg-[#107c41] hover:bg-[#0e6b37] text-white font-medium shadow-xs gap-1.5 cursor-pointer"
+              className="cursor-pointer gap-1.5 bg-[#107c41] font-medium text-white shadow-xs hover:bg-[#0e6b37]"
             >
               <RiDownload2Line className="size-3.5" />
               Download CSV
@@ -1169,10 +1173,7 @@ export function CsvWorkbench() {
                   {dedupeHeaders.map((header) => {
                     const active = config.dedupe.columns.includes(header)
                     return (
-                      <label
-                        key={header}
-                        className="flex items-center gap-2"
-                      >
+                      <label key={header} className="flex items-center gap-2">
                         <Checkbox
                           checked={active}
                           onCheckedChange={(checked) =>

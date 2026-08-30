@@ -72,8 +72,7 @@ function DialogContent({
               className="absolute top-2 right-2"
               size="icon-sm"
             >
-              <RiCloseLine
-              />
+              <RiCloseLine />
               <span className="sr-only">Close</span>
             </Button>
           </DialogPrimitive.Close>

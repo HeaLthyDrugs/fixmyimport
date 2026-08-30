@@ -628,9 +628,9 @@ export async function exportProcessedDataset(
 ): Promise<ExportArtifact[]> {
   const exportTargetName =
     customFileName && customFileName.trim().length > 0
-      ? (customFileName.trim().endsWith(".csv")
-          ? customFileName.trim()
-          : `${customFileName.trim()}.csv`)
+      ? customFileName.trim().endsWith(".csv")
+        ? customFileName.trim()
+        : `${customFileName.trim()}.csv`
       : processed.fileName
 
   const chunks = splitRows(
