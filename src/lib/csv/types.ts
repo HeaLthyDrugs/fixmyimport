@@ -155,7 +155,11 @@ export type CsvWorkerRequest =
     }
   | {
       type: "export"
-      payload: { config: ProcessConfig; includeAuditCsv: boolean }
+      payload: {
+        config: ProcessConfig
+        includeAuditCsv: boolean
+        fileName?: string
+      }
     }
   | { type: "cancel" }
 

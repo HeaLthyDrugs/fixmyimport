@@ -35,7 +35,6 @@ import type {
   ProcessConfig,
 } from "@/lib/csv/types"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -196,9 +195,11 @@ export function CsvWorkbench() {
   const [advancedOpen, setAdvancedOpen] = useState(false)
   const [proDialogOpen, setProDialogOpen] = useState(false)
   const [howItWorksOpen, setHowItWorksOpen] = useState(false)
-  const [activePreviewTab, setActivePreviewTab] = useState<
-    "output" | "source" | "plan"
-  >("output")
+  const [exportModalOpen, setExportModalOpen] = useState(false)
+  const [exportFileName, setExportFileName] = useState("")
+  const [activePreviewTab, setActivePreviewTab] = useState<"output" | "source">(
+    "output"
+  )
   const [inputMode, setInputMode] = useState<"upload" | "paste">("upload")
   const [previewQueries, setPreviewQueries] = useState({
     source: "",
@@ -462,7 +463,7 @@ export function CsvWorkbench() {
     requestPreview(dataset, { pageSize: nextPageSize, page: 1 })
   }
 
-  const handleExport = () => {
+  const handleOpenExportModal = () => {
     if (!snapshot) return
 
     const sourceTooLarge =
@@ -475,9 +476,28 @@ export function CsvWorkbench() {
       return
     }
 
+    const defaultName = snapshot.fileName.includes(".")
+      ? `${snapshot.fileName.slice(0, snapshot.fileName.lastIndexOf("."))}-cleaned.csv`
+      : `${snapshot.fileName}-cleaned.csv`
+
+    setExportFileName(defaultName)
+    setExportModalOpen(true)
+  }
+
+  const handleConfirmExport = () => {
+    if (!snapshot) return
+
+    setExportModalOpen(false)
+
+    const finalName = exportFileName.trim() || snapshot.fileName
+
     workerRef.current?.postMessage({
       type: "export",
-      payload: { config, includeAuditCsv: proEnabled },
+      payload: {
+        config,
+        includeAuditCsv: proEnabled,
+        fileName: finalName,
+      },
     })
     setStatus({
       phase: "exporting",
@@ -489,12 +509,12 @@ export function CsvWorkbench() {
   // ─── Tab button helper ─────────────────────────────────────
 
   const tabButton = (
-    tab: "output" | "source" | "plan",
+    tab: "output" | "source",
     label: string
   ) => (
     <button
       key={tab}
-      className={`rounded px-2.5 py-1 text-xs font-medium transition ${
+      className={`rounded px-2.5 py-1 text-xs font-medium transition cursor-pointer ${
         activePreviewTab === tab
           ? "bg-background text-foreground shadow-sm"
           : "text-muted-foreground hover:text-foreground"
@@ -703,18 +723,16 @@ export function CsvWorkbench() {
 
             {/* Right: search + actions */}
             <div className="ml-auto flex shrink-0 items-center gap-1.5">
-              {activePreviewTab !== "plan" ? (
-                <div className="relative">
-                  <Input
-                    className="h-7 w-36 sm:w-48 text-xs bg-background"
-                    placeholder="Search rows…"
-                    value={previewQueries[currentDataset]}
-                    onChange={(e) =>
-                      handlePreviewQueryChange(currentDataset, e.target.value)
-                    }
-                  />
-                </div>
-              ) : null}
+              <div className="relative">
+                <Input
+                  className="h-7 w-36 sm:w-48 text-xs bg-background"
+                  placeholder="Search rows…"
+                  value={previewQueries[currentDataset]}
+                  onChange={(e) =>
+                    handlePreviewQueryChange(currentDataset, e.target.value)
+                  }
+                />
+              </div>
               <Button
                 size="xs"
                 variant="ghost"
@@ -726,17 +744,17 @@ export function CsvWorkbench() {
               </Button>
               <Button
                 size="xs"
-                onClick={handleExport}
+                onClick={handleOpenExportModal}
                 disabled={isBusy(status.phase)}
-                className="bg-[#107c41] hover:bg-[#0e6b37] text-white font-medium shadow-xs"
+                className="bg-[#107c41] hover:bg-[#0e6b37] text-white font-medium shadow-xs gap-1 cursor-pointer"
               >
                 <RiDownload2Line className="size-3.5" />
-                Download
+                Export
               </Button>
               <Button
                 size="xs"
                 onClick={() => fileInputRef.current?.click()}
-                className="bg-[#0078d4] hover:bg-[#106ebe] text-white font-medium shadow-xs"
+                className="bg-[#0078d4] hover:bg-[#106ebe] text-white font-medium shadow-xs gap-1 cursor-pointer"
               >
                 <RiFileUploadLine className="size-3.5" />
                 Open file
@@ -750,7 +768,6 @@ export function CsvWorkbench() {
             <div className="flex gap-0.5 rounded-md bg-muted/60 p-0.5">
               {tabButton("output", "Output")}
               {tabButton("source", "Source")}
-              {tabButton("plan", "Export plan")}
             </div>
 
             {/* Right: preset + tools */}
@@ -776,7 +793,7 @@ export function CsvWorkbench() {
                 variant="outline"
                 onClick={() => processWithConfig(config)}
                 disabled={isBusy(status.phase)}
-                className="text-xs"
+                className="text-xs cursor-pointer"
               >
                 Refresh
               </Button>
@@ -785,7 +802,7 @@ export function CsvWorkbench() {
                 variant="outline"
                 onClick={() => setAdvancedOpen(true)}
                 disabled={isBusy(status.phase)}
-                className="text-xs gap-1"
+                className="text-xs gap-1 cursor-pointer"
               >
                 <RiSettings3Line className="size-3.5" />
                 Advanced
@@ -804,7 +821,7 @@ export function CsvWorkbench() {
             </div>
           ) : null}
 
-          {/* ── Error / Warning banners ── */}
+          {/* ── Error banner ── */}
           {error ? (
             <div className="shrink-0 border-b border-destructive/20 px-3 py-2">
               <Alert variant="destructive">
@@ -815,59 +832,22 @@ export function CsvWorkbench() {
             </div>
           ) : null}
 
-          {/* ── Spreadsheet / content area ── */}
-          <div className="flex-1 overflow-auto">
-            {activePreviewTab === "plan" ? (
-              /* Export plan view */
-              <div className="space-y-0 p-3">
-                {(snapshot.exportPlan?.files ?? []).length === 0 ? (
-                  <p className="py-12 text-center text-sm text-muted-foreground">
-                    Refresh the preview to generate the export plan.
-                  </p>
-                ) : (
-                  <div className="space-y-1.5">
-                    <p className="mb-3 text-xs text-muted-foreground">
-                      {snapshot.exportPlan?.fileCount.toLocaleString()} files
-                      will be exported
-                    </p>
-                    {snapshot.exportPlan?.files.map((file) => (
-                      <div
-                        key={file.fileName}
-                        className="flex flex-wrap items-center justify-between gap-3 border border-border/40 px-4 py-2.5"
-                      >
-                        <div className="space-y-0.5">
-                          <p className="text-sm font-medium">
-                            {file.fileName}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {file.rowCount.toLocaleString()} rows
-                          </p>
-                        </div>
-                        <Badge variant="outline" className="text-xs">
-                          {formatBytes(file.approxBytes)}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              /* Spreadsheet table */
-              <SpreadsheetTable
-                headers={currentHeaders}
-                rows={currentRows}
-                startRow={currentStartRow}
-                emptyLabel={
-                  activePreviewTab === "output"
-                    ? "Run a preview to see the processed rows."
-                    : "Load a CSV to inspect its source rows."
-                }
-              />
-            )}
+          {/* ── Spreadsheet table area ── */}
+          <div className="flex-1 overflow-auto bg-muted/10">
+            <SpreadsheetTable
+              headers={currentHeaders}
+              rows={currentRows}
+              startRow={currentStartRow}
+              emptyLabel={
+                activePreviewTab === "output"
+                  ? "Run a preview to see the processed rows."
+                  : "Load a CSV to inspect its source rows."
+              }
+            />
           </div>
 
           {/* ── Footer: pagination ── */}
-          {activePreviewTab !== "plan" && currentPreviewPage ? (
+          {currentPreviewPage ? (
             <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-t border-border/50 bg-background px-3 py-1">
               <span className="text-[11px] tabular-nums text-muted-foreground">
                 {currentStartRow}–{currentEndRow} of{" "}
@@ -879,7 +859,7 @@ export function CsvWorkbench() {
               <div className="flex items-center gap-1.5">
                 {previewQueries[currentDataset] ? (
                   <button
-                    className="text-[11px] text-muted-foreground underline underline-offset-2 hover:text-foreground"
+                    className="text-[11px] text-muted-foreground underline underline-offset-2 hover:text-foreground cursor-pointer"
                     onClick={() =>
                       handlePreviewQueryChange(currentDataset, "")
                     }
@@ -911,6 +891,7 @@ export function CsvWorkbench() {
                     })
                   }
                   disabled={currentPreviewPage.page <= 1}
+                  className="cursor-pointer"
                 >
                   Prev
                 </Button>
@@ -925,6 +906,7 @@ export function CsvWorkbench() {
                   disabled={
                     currentPreviewPage.page >= currentPreviewPage.totalPages
                   }
+                  className="cursor-pointer"
                 >
                   Next
                 </Button>
@@ -937,6 +919,91 @@ export function CsvWorkbench() {
       {/* ════════════════════════════════════════════════════════
           MODALS
           ════════════════════════════════════════════════════════ */}
+
+      {/* ── Export CSV Modal ── */}
+      <Dialog open={exportModalOpen} onOpenChange={setExportModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Export CSV</DialogTitle>
+            <DialogDescription>
+              Name your file and download your cleaned data.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-foreground">
+                File name
+              </label>
+              <Input
+                value={exportFileName}
+                onChange={(e) => setExportFileName(e.target.value)}
+                placeholder="export-name.csv"
+                className="text-sm font-mono"
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault()
+                    handleConfirmExport()
+                  }
+                }}
+              />
+              <p className="text-[11px] text-muted-foreground">
+                Saved with .csv extension (or .zip if split mode is active).
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border/60 bg-muted/30 p-3 space-y-2 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Rows to export:</span>
+                <span className="font-medium text-foreground">
+                  {(
+                    processedStats?.rowCount ??
+                    snapshot?.sourceStats.rowCount ??
+                    0
+                  ).toLocaleString()}{" "}
+                  rows
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Columns:</span>
+                <span className="font-medium text-foreground">
+                  {sourceHeaders.length} columns
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Applied preset:</span>
+                <span className="font-medium text-foreground">
+                  {CSV_PRESETS.find((p) => p.id === config.presetId)?.name ??
+                    "Custom"}
+                </span>
+              </div>
+              {config.split.enabled && config.split.mode !== "none" ? (
+                <div className="flex justify-between text-amber-600 dark:text-amber-400">
+                  <span>Split mode:</span>
+                  <span className="font-medium">
+                    Enabled (exports as .zip batches)
+                  </span>
+                </div>
+              ) : null}
+            </div>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setExportModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleConfirmExport}
+              className="bg-[#107c41] hover:bg-[#0e6b37] text-white font-medium shadow-xs gap-1.5 cursor-pointer"
+            >
+              <RiDownload2Line className="size-3.5" />
+              Download CSV
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* ── How it works ── */}
       <Dialog open={howItWorksOpen} onOpenChange={setHowItWorksOpen}>

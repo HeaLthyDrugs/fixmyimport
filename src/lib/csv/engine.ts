@@ -600,10 +600,18 @@ function toAuditCsv(processed: ProcessedCsvDataset) {
 export async function exportProcessedDataset(
   processed: ProcessedCsvDataset,
   config: ProcessConfig,
-  includeAuditCsv: boolean
+  includeAuditCsv: boolean,
+  customFileName?: string
 ): Promise<ExportArtifact[]> {
+  const exportTargetName =
+    customFileName && customFileName.trim().length > 0
+      ? (customFileName.trim().endsWith(".csv")
+          ? customFileName.trim()
+          : `${customFileName.trim()}.csv`)
+      : processed.fileName
+
   const chunks = splitRows(
-    processed.fileName,
+    exportTargetName,
     processed.headers,
     processed.rows,
     config.split
@@ -641,7 +649,7 @@ export async function exportProcessedDataset(
 
     artifacts.push({
       kind: "zip",
-      fileName: `${processed.fileName.replace(/\.[^.]+$/, "")}-batches.zip`,
+      fileName: `${exportTargetName.replace(/\.[^.]+$/, "")}-batches.zip`,
       mimeType: "application/zip",
       payload,
     })

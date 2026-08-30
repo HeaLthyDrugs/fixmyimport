@@ -134,7 +134,8 @@ export async function handleCsvWorkerRequest(
   const artifacts = await exportProcessedDataset(
     processed,
     request.payload.config,
-    request.payload.includeAuditCsv
+    request.payload.includeAuditCsv,
+    request.payload.fileName
   )
 
   return {
