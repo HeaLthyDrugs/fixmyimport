@@ -1,21 +1,5 @@
 ---
-import {
-  RiArrowLeftLine,
-  RiCheckboxCircleLine,
-  RiFileZipLine,
-  RiShieldCheckLine,
-} from "@remixicon/react"
-
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { CsvWorkbench } from "@/components/csv-workbench"
-import ToolIcon from "@/components/tool-icon.astro"
 import Layout from "@/layouts/main.astro"
 import { toolCatalog } from "@/lib/tools"
 
@@ -24,69 +8,8 @@ const tool = toolCatalog.find((item) => item.id === "csv-import-cleaner")
 if (!tool) {
   throw new Error("CSV Import Cleaner metadata is missing.")
 }
-
-const highlights = [
-  {
-    title: "Clean with preview",
-    description:
-      "Open a CSV, inspect the processed output, and see what changes before you export.",
-    icon: RiCheckboxCircleLine,
-  },
-  {
-    title: "Split oversized files",
-    description:
-      "Create smaller, repeatable batches when an import target is strict about row or file size limits.",
-    icon: RiFileZipLine,
-  },
-  {
-    title: "Keep data local",
-    description:
-      "The default workflow runs in the browser, which keeps sensitive import prep off a server.",
-    icon: RiShieldCheckLine,
-  },
-]
 ---
 
 <Layout title={tool.seoTitle} description={tool.seoDescription}>
-  <main class="px-4 py-8">
-    <div class="mx-auto flex max-w-6xl flex-col gap-10">
-      <a
-        href="/"
-        class="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground"
-      >
-        <RiArrowLeftLine className="size-4" />
-        All tools
-      </a>
-
-      <section class="space-y-4">
-        <div class="space-y-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{tool.name}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <div class="max-w-4xl space-y-4">
-            <h1 class="text-3xl font-semibold tracking-[-0.05em]">
-              {tool.name}
-            </h1>
-            <p
-              class="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg"
-            >
-              {tool.description}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="tool-app" class="space-y-6">
-        <CsvWorkbench client:load />
-      </section>
-    </div>
-  </main>
+  <CsvWorkbench client:load />
 </Layout>

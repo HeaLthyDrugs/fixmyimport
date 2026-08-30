@@ -1,0 +1,66 @@
+---
+import Layout from "@/layouts/main.astro"
+import { Button } from "@/components/ui/button"
+import { toolCatalog } from "@/lib/tools"
+
+const tool = toolCatalog.find((item) => item.id === "csv-merge")
+
+if (!tool) {
+  throw new Error("CSV Merge metadata is missing.")
+}
+---
+
+<Layout title={tool.seoTitle} description={tool.seoDescription}>
+  <main class="w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+    <div class="mx-auto max-w-6xl p-6 sm:p-8">
+      <div class="max-w-3xl space-y-6">
+        <div class="space-y-3">
+          <p
+            class="text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase"
+          >
+            Coming soon
+          </p>
+          <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Combine multiple CSV files into a single import-ready file.
+          </h1>
+          <p class="max-w-2xl text-sm leading-6 text-muted-foreground">
+            Upload several CSVs, line up the columns automatically, and merge
+            everything into one file — right in your browser.
+          </p>
+        </div>
+        <div class="grid gap-4 text-sm text-muted-foreground">
+          <div class="border border-border/70 bg-background/70 p-4">
+            <h2 class="text-base font-semibold text-foreground">
+              Auto-align columns
+            </h2>
+            <p class="mt-2 leading-6">
+              Headers are matched across files so rows end up in the right
+              columns, even if the column order differs.
+            </p>
+          </div>
+          <div class="border border-border/70 bg-background/70 p-4">
+            <h2 class="text-base font-semibold text-foreground">
+              Spot mismatches early
+            </h2>
+            <p class="mt-2 leading-6">
+              Get a warning when files have columns that don't exist in the
+              others, so you can decide what to keep or drop.
+            </p>
+          </div>
+          <div class="border border-border/70 bg-background/70 p-4">
+            <h2 class="text-base font-semibold text-foreground">
+              Undo a batch split
+            </h2>
+            <p class="mt-2 leading-6">
+              If you previously split a large file into parts, merge them back
+              into one whenever you need the full dataset.
+            </p>
+          </div>
+        </div>
+        <Button asChild>
+          <a href="/tools/csv-import-cleaner">Try the CSV Import Cleaner instead</a>
+        </Button>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,5 +1,10 @@
 ---
-import { RiFileList3Line } from "@remixicon/react"
+import {
+  RiFileList3Line,
+  RiArrowLeftRightLine,
+  RiMergeCellsHorizontal,
+  RiShieldCheckLine,
+} from "@remixicon/react"
 
 import type { ToolIconName } from "@/lib/tools"
 
@@ -12,6 +17,9 @@ const { name, className = "size-5" } = Astro.props
 
 const iconMap = {
   "csv-import": RiFileList3Line,
+  "column-mapper": RiArrowLeftRightLine,
+  "csv-merge": RiMergeCellsHorizontal,
+  "import-validator": RiShieldCheckLine,
 }
 
 const Icon = iconMap[name]
