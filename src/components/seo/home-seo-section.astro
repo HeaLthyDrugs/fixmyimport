@@ -31,7 +31,7 @@ const canonicalUrl = getCanonicalUrl(Astro.url, lang, siteUrl)
       </h2>
 
       <p
-        class="text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+        class="font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
       >
         {content.lead}
       </p>
@@ -46,7 +46,7 @@ const canonicalUrl = getCanonicalUrl(Astro.url, lang, siteUrl)
       </h3>
 
       <div
-        class="space-y-3 text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+        class="space-y-3 font-editorial text-base leading-relaxed text-muted-foreground"
       >
         {content.whyContent.map((paragraph) => <p>{paragraph}</p>)}
       </div>
@@ -67,12 +67,12 @@ const canonicalUrl = getCanonicalUrl(Astro.url, lang, siteUrl)
       </div>
 
       <div
-        class="space-y-3 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+        class="space-y-3 font-editorial text-sm leading-relaxed text-muted-foreground"
       >
         {
           content.commonErrors.map((error) => (
             <p>
-              <strong class="font-medium tracking-normal text-foreground">
+              <strong class="font-heading font-semibold tracking-tight text-foreground">
                 {error.title}
               </strong>
               {" — "}
@@ -97,7 +97,7 @@ const canonicalUrl = getCanonicalUrl(Astro.url, lang, siteUrl)
         {content.securityTitle}
       </h3>
       <ul
-        class="space-y-2 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+        class="space-y-2 font-editorial text-sm leading-relaxed text-muted-foreground"
       >
         {
           content.securityPoints.map((point) => (

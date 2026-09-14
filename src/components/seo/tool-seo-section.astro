@@ -40,7 +40,7 @@ const relatedTools = allTools.filter((t) =>
       </h1>
 
       <p
-        class="text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+        class="font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
       >
         {content.lead}
       </p>
@@ -55,7 +55,7 @@ const relatedTools = allTools.filter((t) =>
       </h2>
 
       <div
-        class="space-y-3 text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+        class="space-y-3 font-editorial text-base leading-relaxed text-muted-foreground"
       >
         {content.whatIsContent.map((paragraph) => <p>{paragraph}</p>)}
       </div>
@@ -66,7 +66,7 @@ const relatedTools = allTools.filter((t) =>
             <h3 class="text-sm font-medium tracking-normal text-foreground sm:text-base">
               {content.howItWorksTitle}
             </h3>
-            <ul class="space-y-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            <ul class="space-y-2 font-editorial text-sm leading-relaxed text-muted-foreground">
               {content.howItWorksContent.map((item) => (
                 <li class="flex items-start gap-2.5">
                   <span class="mt-2 size-1 shrink-0 rounded-full bg-foreground/50" />
@@ -88,12 +88,12 @@ const relatedTools = allTools.filter((t) =>
       </h2>
 
       <div
-        class="space-y-3.5 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+        class="space-y-3.5 font-editorial text-sm leading-relaxed text-muted-foreground"
       >
         {
           content.steps.map((step) => (
             <p>
-              <strong class="font-medium tracking-normal text-foreground">
+              <strong class="font-heading font-semibold tracking-tight text-foreground">
                 {step.number}. {step.title}
               </strong>
               {" — "}
@@ -113,12 +113,12 @@ const relatedTools = allTools.filter((t) =>
       </h2>
 
       <div
-        class="space-y-3 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+        class="space-y-3 font-editorial text-sm leading-relaxed text-muted-foreground"
       >
         {
           content.features.map((feature) => (
             <p>
-              <strong class="font-medium tracking-normal text-foreground">
+              <strong class="font-heading font-semibold tracking-tight text-foreground">
                 {feature.title}
               </strong>
               {" — "}
@@ -146,7 +146,7 @@ const relatedTools = allTools.filter((t) =>
         {content.privacyTitle}
       </h2>
       <div
-        class="space-y-3 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+        class="space-y-3 font-editorial text-sm leading-relaxed text-muted-foreground"
       >
         {content.privacyContent.map((p) => <p>{p}</p>)}
       </div>

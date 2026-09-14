@@ -35,7 +35,7 @@ const utilityTools = localizedCatalog.filter(
           <div class="space-y-1">
             <div class="flex items-center justify-between gap-4">
               <h1
-                class="font-heading text-2xl font-bold tracking-wide text-foreground sm:text-3xl lg:text-4xl"
+                class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
               >
                 {t("hero.title")}
               </h1>
@@ -44,7 +44,7 @@ const utilityTools = localizedCatalog.filter(
               </div>
             </div>
             <p
-              class="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+              class="max-w-2xl font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
               {t("hero.subtitle")}
             </p>
@@ -59,7 +59,7 @@ const utilityTools = localizedCatalog.filter(
       {/* SECTION 1: CSV & Data Import Tools */}
       <section class="space-y-4">
         <h2
-          class="font-heading text-xl font-semibold tracking-wide text-foreground sm:text-2xl"
+          class="font-heading text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
         >
           {t("section.csv")}
         </h2>
@@ -90,7 +90,7 @@ const utilityTools = localizedCatalog.filter(
 
                   <div class="space-y-1.5">
                     <div class="flex items-center justify-between gap-2">
-                      <h3 class="font-heading text-base font-semibold tracking-wide text-foreground transition-colors group-hover:text-foreground">
+                      <h3 class="font-heading text-base font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
                         {tool.name}
                       </h3>
                       {!isLive && (
@@ -99,7 +99,7 @@ const utilityTools = localizedCatalog.filter(
                         </span>
                       )}
                     </div>
-                    <p class="text-sm leading-relaxed text-muted-foreground">
+                    <p class="font-editorial text-sm leading-relaxed text-muted-foreground">
                       {tool.description}
                     </p>
                   </div>
@@ -113,7 +113,7 @@ const utilityTools = localizedCatalog.filter(
       {/* SECTION 2: Developer & Everyday Utilities */}
       <section class="space-y-4">
         <h2
-          class="font-heading text-xl font-semibold tracking-wide text-foreground sm:text-2xl"
+          class="font-heading text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
         >
           {t("section.utilities")}
         </h2>
@@ -144,7 +144,7 @@ const utilityTools = localizedCatalog.filter(
 
                   <div class="space-y-1.5">
                     <div class="flex items-center justify-between gap-2">
-                      <h3 class="font-heading text-base font-semibold tracking-wide text-foreground transition-colors group-hover:text-foreground">
+                      <h3 class="font-heading text-base font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
                         {tool.name}
                       </h3>
                       {!isLive && (
@@ -153,7 +153,7 @@ const utilityTools = localizedCatalog.filter(
                         </span>
                       )}
                     </div>
-                    <p class="text-sm leading-relaxed text-muted-foreground">
+                    <p class="font-editorial text-sm leading-relaxed text-muted-foreground">
                       {tool.description}
                     </p>
                   </div>

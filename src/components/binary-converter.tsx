@@ -165,13 +165,10 @@ export function BinaryConverter() {
               <span>All Tools</span>
             </a>
             <span className="text-border">/</span>
-            <span className="text-base font-semibold tracking-wide">
+            <span className="font-heading text-base font-semibold tracking-tight">
               Binary &lt;-&gt; Text Converter
             </span>
-            <Badge
-              variant="outline"
-              className="text-xs font-medium tracking-wide"
-            >
+            <Badge variant="outline" className="font-sans text-xs font-medium">
               100% Client-Side
             </Badge>
           </div>
@@ -366,7 +363,7 @@ export function BinaryConverter() {
           {/* Input Box */}
           <div className="flex flex-col border border-border/80 bg-card shadow-xs">
             <div className="flex items-center justify-between border-b border-border/80 bg-muted/30 px-3.5 py-2">
-              <span className="text-sm font-semibold tracking-wide text-foreground/90">
+              <span className="font-heading text-sm font-semibold tracking-tight text-foreground/90">
                 {mode === "text-to-binary" ? "Input Text" : "Input Binary"}
               </span>
               <div className="flex items-center gap-2">
@@ -409,7 +406,7 @@ export function BinaryConverter() {
           {/* Output Box */}
           <div className="flex flex-col border border-border/80 bg-card shadow-xs">
             <div className="flex items-center justify-between border-b border-border/80 bg-muted/30 px-3.5 py-2">
-              <span className="text-sm font-semibold tracking-wide text-foreground/90">
+              <span className="font-heading text-sm font-semibold tracking-tight text-foreground/90">
                 {mode === "text-to-binary"
                   ? "Binary Output"
                   : "Decoded Text Output"}
@@ -519,7 +516,7 @@ export function BinaryConverter() {
             <button
               type="button"
               onClick={() => setActiveTab("converter")}
-              className={`px-4 py-2.5 text-sm font-semibold tracking-wide transition-colors ${
+              className={`px-4 py-2.5 font-sans text-xs font-medium transition-colors sm:text-sm ${
                 activeTab === "converter"
                   ? "border-b-2 border-primary bg-background text-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -530,7 +527,7 @@ export function BinaryConverter() {
             <button
               type="button"
               onClick={() => setActiveTab("table")}
-              className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold tracking-wide transition-colors ${
+              className={`flex items-center gap-1.5 px-4 py-2.5 font-sans text-xs font-medium transition-colors sm:text-sm ${
                 activeTab === "table"
                   ? "border-b-2 border-primary bg-background text-foreground"
                   : "text-muted-foreground hover:text-foreground"
