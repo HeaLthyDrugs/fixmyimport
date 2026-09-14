@@ -2,6 +2,7 @@
 import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
 import LanguagePicker from "@/components/language-picker.astro"
+import SiteFooter from "@/components/site-footer.astro"
 import ToolSeoSection from "@/components/seo/tool-seo-section.astro"
 import { getLocalizedTool, getLocalizedToolDetail } from "@/i18n/tools"
 import { useTranslations, useTranslatedPath } from "@/i18n/utils"
@@ -79,7 +80,7 @@ if (!tool) {
           </Button>
           <a
             href="#tool-details"
-            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground"
+            class="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground"
           >
             <span>Read specifications &amp; FAQs</span>
             <span aria-hidden="true">↓</span>
@@ -92,40 +93,7 @@ if (!tool) {
         <ToolSeoSection toolId={toolId} lang={lang} />
       </div>
 
-      <footer class="mt-16 border-t border-border/80 pt-8">
-        <div
-          class="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row"
-        >
-          <p>
-            &copy; {new Date().getFullYear()} FixMyImport. {t("footer.tagline")}
-          </p>
-          <div class="flex items-center gap-4">
-            <a
-              href={translatePath("/privacy")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.privacy")}
-            </a>
-            <span>&bull;</span>
-            <a
-              href={translatePath("/shopify-csv-cleaner")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.shopify")}
-            </a>
-            <span>&bull;</span>
-            <a
-              href={translatePath("/mailchimp-csv-too-large")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.mailchimp")}
-            </a>
-          </div>
-        </div>
-        <div class="mt-4 border-t border-border/50 pt-4">
-          <LanguagePicker currentLang={lang} variant="list" />
-        </div>
-      </footer>
+      <SiteFooter lang={lang} className="mt-16" />
     </div>
   </main>
 </Layout>

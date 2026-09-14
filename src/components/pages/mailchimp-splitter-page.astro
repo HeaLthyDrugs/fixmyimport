@@ -2,6 +2,7 @@
 import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
 import LanguagePicker from "@/components/language-picker.astro"
+import SiteFooter from "@/components/site-footer.astro"
 import { type Lang } from "@/i18n/ui"
 import { useTranslations, useTranslatedPath } from "@/i18n/utils"
 
@@ -94,33 +95,7 @@ const translatePath = useTranslatedPath(lang)
         </Button>
       </div>
 
-      <footer class="mt-16 border-t border-border/80 pt-8">
-        <div
-          class="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row"
-        >
-          <p>
-            &copy; {new Date().getFullYear()} FixMyImport. {t("footer.tagline")}
-          </p>
-          <div class="flex items-center gap-4">
-            <a
-              href={translatePath("/privacy")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.privacy")}
-            </a>
-            <span>&bull;</span>
-            <a
-              href={translatePath("/shopify-csv-cleaner")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.shopify")}
-            </a>
-          </div>
-        </div>
-        <div class="mt-4 border-t border-border/50 pt-4">
-          <LanguagePicker currentLang={lang} variant="list" />
-        </div>
-      </footer>
+      <SiteFooter lang={lang} className="mt-16" />
     </div>
   </main>
 </Layout>

@@ -2,6 +2,7 @@
 import { BinaryConverter } from "@/components/binary-converter"
 import Layout from "@/layouts/main.astro"
 import ToolSeoSection from "@/components/seo/tool-seo-section.astro"
+import SiteFooter from "@/components/site-footer.astro"
 import { getLocalizedTool } from "@/i18n/tools"
 import type { Lang } from "@/i18n/ui"
 
@@ -20,4 +21,5 @@ if (!tool) {
 <Layout lang={lang} title={tool.seoTitle} description={tool.seoDescription}>
   <BinaryConverter client:load />
   <ToolSeoSection toolId="binary-to-text" lang={lang} />
+  <SiteFooter lang={lang} />
 </Layout>

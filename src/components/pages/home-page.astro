@@ -4,9 +4,10 @@ import { RiArrowRightUpLine } from "@remixicon/react"
 import Layout from "@/layouts/main.astro"
 import ToolIcon from "@/components/tool-icon.astro"
 import LanguagePicker from "@/components/language-picker.astro"
+import SiteFooter from "@/components/site-footer.astro"
 import HomeSeoSection from "@/components/seo/home-seo-section.astro"
 import { type Lang } from "@/i18n/ui"
-import { useTranslations, useTranslatedPath } from "@/i18n/utils"
+import { useTranslations } from "@/i18n/utils"
 import { getLocalizedCatalog } from "@/i18n/tools"
 
 interface Props {
@@ -15,7 +16,6 @@ interface Props {
 
 const { lang } = Astro.props
 const t = useTranslations(lang)
-const translatePath = useTranslatedPath(lang)
 
 const localizedCatalog = getLocalizedCatalog(lang)
 const csvTools = localizedCatalog.filter((item) => item.category === "csv")
@@ -168,42 +168,7 @@ const utilityTools = localizedCatalog.filter(
       <HomeSeoSection lang={lang} />
 
       {/* Footer */}
-      <footer class="pt-6 pb-12">
-        <div
-          class="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row"
-        >
-          <p>
-            &copy; {new Date().getFullYear()} FixMyImport. {t("footer.tagline")}
-          </p>
-          <div class="flex flex-wrap items-center gap-4">
-            <a
-              href={translatePath("/privacy")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.privacy")}
-            </a>
-            <span class="text-muted-foreground/40">&bull;</span>
-            <a
-              href={translatePath("/shopify-csv-cleaner")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.shopify")}
-            </a>
-            <span class="text-muted-foreground/40">&bull;</span>
-            <a
-              href={translatePath("/mailchimp-csv-too-large")}
-              class="transition-colors hover:text-foreground"
-            >
-              {t("footer.mailchimp")}
-            </a>
-          </div>
-        </div>
-
-        {/* Multi-language selector list */}
-        <div class="mt-4">
-          <LanguagePicker currentLang={lang} variant="list" />
-        </div>
-      </footer>
+      <SiteFooter lang={lang} className="pt-6" maxWidth="max-w-4xl" />
     </div>
   </main>
 </Layout>

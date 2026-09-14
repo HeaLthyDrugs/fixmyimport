@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css"
-import { type Lang, defaultLang } from "@/i18n/ui"
+import { type Lang } from "@/i18n/ui"
 import {
   getLangFromUrl,
   getHreflangList,
@@ -40,6 +40,27 @@ const ogLocale = getOgLocale(currentLang)
       href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap"
       rel="stylesheet"
     />
+
+    {/* Theme initialization script */}
+    <script is:inline>
+      ;(function () {
+        try {
+          const stored = localStorage.getItem("theme")
+          if (
+            stored === "dark" ||
+            (!stored &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+            !stored
+          ) {
+            document.documentElement.classList.add("dark")
+          } else if (stored === "light") {
+            document.documentElement.classList.remove("dark")
+          }
+        } catch (e) {
+          document.documentElement.classList.add("dark")
+        }
+      })()
+    </script>
 
     <title>{title}</title>
     <meta name="description" content={description} />

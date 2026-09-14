@@ -1,0 +1,169 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site-header.astro"
+import SiteFooter from "@/components/site-footer.astro"
+import { type Lang } from "@/i18n/ui"
+import { useTranslatedPath } from "@/i18n/utils"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const translatePath = useTranslatedPath(lang)
+---
+
+<Layout
+  lang={lang}
+  title="About FixMyImport | Privacy-First Spreadsheet & CSV Tools"
+  description="Discover the story and architecture behind FixMyImport: fast, zero-upload, browser-native tools for cleaning and splitting messy CSV data."
+>
+  <div class="flex min-h-screen flex-col bg-background text-foreground">
+    <main
+      class="mx-auto w-full max-w-4xl flex-1 px-4 pt-8 pb-12 sm:px-6 lg:px-8 sm:pt-10 sm:pb-16"
+    >
+      <SiteHeader lang={lang} />
+
+      <!-- Title Header -->
+      <div class="mt-8 space-y-1.5">
+        <h1
+          class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
+        >
+          About FixMyImport
+        </h1>
+        <p class="text-xs text-muted-foreground">Last updated: 2026</p>
+      </div>
+
+      <!-- Content Sections -->
+      <article
+        class="mt-8 space-y-10 font-editorial text-base leading-relaxed text-muted-foreground"
+      >
+        <p class="text-base leading-relaxed text-muted-foreground sm:text-lg">
+          FixMyImport is an independent suite of focused, lightweight web tools
+          designed to solve spreadsheet format headaches, clean messy CSV
+          exports, and handle common developer data tasks — executing 100%
+          locally in your web browser.
+        </p>
+
+        <!-- 1. The Problem We Solve -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            1. The Problem We Solve
+          </h2>
+          <p>
+            Anyone who imports data into platforms like Shopify, Mailchimp, or
+            Klaviyo knows the frustration: unescaped quotes break the parser,
+            European semicolon delimiters confuse standard tools, non-UTF-8
+            characters become gibberish, and file size limits force tedious
+            manual chopping.
+          </p>
+          <p>
+            Standard spreadsheet software often makes these issues worse by
+            auto-formatting numbers (stripping leading zeros from ZIP codes and
+            phone numbers) or crashing entirely on large datasets. FixMyImport
+            provides deterministic, transparent data operations specifically
+            built for import readiness.
+          </p>
+        </section>
+
+        <!-- 2. Zero-Upload Architecture -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            2. The Zero-Upload Philosophy
+          </h2>
+          <p>
+            Customer records, financial ledgers, and subscriber emails are among
+            the most confidential assets any team handles. Uploading these
+            datasets to arbitrary web servers poses real data privacy and
+            regulatory risks under GDPR and CCPA.
+          </p>
+          <p>
+            FixMyImport takes an architectural stand: <strong
+              class="font-semibold text-foreground"
+              >your data never leaves your computer</strong
+            >. All parsing, validation, duplicate detection, splitting, and ZIP
+            bundling run inside your browser session using Web Workers and local
+            RAM. You can even disconnect your internet connection after opening
+            the page and the tools will continue working without interruption.
+          </p>
+        </section>
+
+        <!-- 3. Performance & Modern Web Capabilities -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            3. Built for Speed and Simplicity
+          </h2>
+          <p>
+            By leveraging client-side chunk streaming and dedicated background
+            Web Workers, FixMyImport processes large CSV files without locking
+            the user interface. We emphasize clean defaults:
+          </p>
+          <ul
+            class="list-disc space-y-2 pl-5 font-editorial text-sm leading-relaxed text-muted-foreground sm:text-base"
+          >
+            <li>
+              Instant client-side deduplication by selected identity columns
+              (e.g., email or SKU).
+            </li>
+            <li>
+              Platform presets for Shopify, Mailchimp, and custom batch limits.
+            </li>
+            <li>
+              Safe client-side ZIP generation for multi-part exports.
+            </li>
+            <li>No user accounts, passwords, or mandatory email signups.</li>
+          </ul>
+        </section>
+
+        <!-- 4. Independent & Open -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            4. Independent &amp; Transparent
+          </h2>
+          <p>
+            FixMyImport is built and maintained for engineers, marketers, and
+            data practitioners who need quick, reliable data manipulation
+            without unnecessary friction or intrusive advertising.
+          </p>
+        </section>
+
+        <!-- 5. Get in Touch -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            5. Get in Touch
+          </h2>
+          <p>
+            Have ideas for new utilities, encountered an unusual CSV edge case,
+            or want to share feedback? We would love to hear from you. Visit our{" "}
+            <a
+              href={translatePath("/contact")}
+              class="text-foreground underline underline-offset-4 transition-colors hover:text-foreground/80"
+            >
+              contact page
+            </a>{" "}
+            or write to{" "}
+            <a
+              href="mailto:contact@fixmyimport.com"
+              class="text-foreground underline underline-offset-4 transition-colors hover:text-foreground/80"
+            >
+              contact@fixmyimport.com
+            </a>
+            .
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <SiteFooter lang={lang} />
+  </div>
+</Layout>

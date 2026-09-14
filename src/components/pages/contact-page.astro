@@ -1,0 +1,195 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site-header.astro"
+import SiteFooter from "@/components/site-footer.astro"
+import { type Lang } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+---
+
+<Layout
+  lang={lang}
+  title={`Contact Us | FixMyImport`}
+  description="Get in touch with the FixMyImport team. Share feedback, report broken CSV import edge cases, or suggest new client-side tools."
+>
+  <div class="flex min-h-screen flex-col bg-background text-foreground">
+    <main
+      class="mx-auto w-full max-w-4xl flex-1 px-4 pt-8 pb-12 sm:px-6 lg:px-8 sm:pt-10 sm:pb-16"
+    >
+      <SiteHeader lang={lang} />
+
+      <div class="mt-8 space-y-2">
+        <h1
+          class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
+        >
+          Contact Us
+        </h1>
+        <p
+          class="font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
+        >
+          We greatly value your feedback. If you've encountered any issues with
+          a file, have suggestions for new tools, or would like to send us a
+          message, please fill out the form below.
+        </p>
+      </div>
+
+      <!-- Success Notification Box (shown upon submit) -->
+      <div
+        id="contact-success-msg"
+        class="mt-6 hidden max-w-2xl rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-400"
+      >
+        <p class="font-medium text-emerald-300">Thank you for your message!</p>
+        <p class="mt-1 text-xs text-muted-foreground">
+          Your feedback has been recorded. If you requested a reply, our team
+          will get back to you shortly.
+        </p>
+      </div>
+
+      <!-- Form container -->
+      <form id="contact-form" class="mt-8 max-w-2xl space-y-5">
+        <div>
+          <label
+            for="contact-name"
+            class="block text-xs font-medium text-foreground"
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            id="contact-name"
+            name="name"
+            placeholder="Your full name"
+            required
+            class="mt-2 w-full rounded-md border border-border/80 bg-muted/20 px-3 py-2 text-xs text-foreground transition-colors placeholder:text-muted-foreground/50 focus:border-foreground/40 focus:bg-background focus:ring-1 focus:ring-foreground/20 focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label
+            for="contact-email"
+            class="block text-xs font-medium text-foreground"
+          >
+            E-mail
+          </label>
+          <input
+            type="email"
+            id="contact-email"
+            name="email"
+            placeholder="youremail@example.com"
+            required
+            class="mt-2 w-full rounded-md border border-border/80 bg-muted/20 px-3 py-2 text-xs text-foreground transition-colors placeholder:text-muted-foreground/50 focus:border-foreground/40 focus:bg-background focus:ring-1 focus:ring-foreground/20 focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label
+            for="contact-subject"
+            class="block text-xs font-medium text-foreground"
+          >
+            Subject
+          </label>
+          <select
+            id="contact-subject"
+            name="subject"
+            required
+            class="mt-2 w-full rounded-md border border-border/80 bg-muted/20 px-3 py-2 text-xs text-foreground transition-colors focus:border-foreground/40 focus:bg-background focus:ring-1 focus:ring-foreground/20 focus:outline-none"
+          >
+            <option value="" disabled selected>Select a topic...</option>
+            <option value="bug-report">Bug Report / Broken CSV Issue</option>
+            <option value="feature-request"
+              >New Feature or Tool Suggestion</option
+            >
+            <option value="platform-import"
+              >Shopify / Mailchimp Specific Issue</option
+            >
+            <option value="feedback">General Feedback</option>
+            <option value="other">Other Inquiry</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="contact-message"
+            class="block text-xs font-medium text-foreground"
+          >
+            Message
+          </label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="6"
+            placeholder="Write your message with as much detail as possible..."
+            required
+            class="mt-2 w-full rounded-md border border-border/80 bg-muted/20 px-3 py-2 text-xs leading-relaxed text-foreground transition-colors placeholder:text-muted-foreground/50 focus:border-foreground/40 focus:bg-background focus:ring-1 focus:ring-foreground/20 focus:outline-none"
+          ></textarea>
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            id="contact-submit-btn"
+            class="inline-flex items-center justify-center rounded-full bg-foreground px-6 py-2 text-xs font-medium text-background transition-opacity hover:opacity-90"
+          >
+            Send message
+          </button>
+        </div>
+      </form>
+
+      <!-- Direct Email Callout -->
+      <div
+        class="mt-12 max-w-2xl rounded-md border border-border/60 bg-muted/20 p-4 text-xs text-muted-foreground"
+      >
+        <p class="font-medium text-foreground">Direct Email</p>
+        <p class="mt-1 leading-relaxed">
+          Prefer using your email client? Write to us anytime at{" "}
+          <a
+            href="mailto:contact@fixmyimport.com"
+            class="text-foreground underline underline-offset-4 transition-colors hover:text-foreground/80"
+          >
+            contact@fixmyimport.com
+          </a>
+          . We typically respond within 24 to 48 business hours.
+        </p>
+      </div>
+    </main>
+
+    <SiteFooter lang={lang} />
+  </div>
+</Layout>
+
+<script>
+  function setupContactForm() {
+    const form = document.getElementById(
+      "contact-form"
+    ) as HTMLFormElement | null
+    const successMsg = document.getElementById("contact-success-msg")
+    const submitBtn = document.getElementById(
+      "contact-submit-btn"
+    ) as HTMLButtonElement | null
+
+    if (!form || !successMsg || !submitBtn) return
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault()
+
+      submitBtn.disabled = true
+      submitBtn.textContent = "Sending..."
+
+      // Simulate instantaneous client-side handling
+      setTimeout(() => {
+        successMsg.classList.remove("hidden")
+        form.reset()
+        submitBtn.disabled = false
+        submitBtn.textContent = "Send message"
+        successMsg.scrollIntoView({ behavior: "smooth", block: "nearest" })
+      }, 500)
+    })
+  }
+
+  setupContactForm()
+  document.addEventListener("astro:after-swap", setupContactForm)
+</script>

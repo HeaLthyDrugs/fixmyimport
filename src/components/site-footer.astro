@@ -1,0 +1,90 @@
+---
+import { RiTableLine } from "@remixicon/react"
+import LanguagePicker from "@/components/language-picker.astro"
+import { type Lang } from "@/i18n/ui"
+import { useTranslations, useTranslatedPath } from "@/i18n/utils"
+
+interface Props {
+  lang: Lang
+  className?: string
+  maxWidth?: string
+}
+
+const { lang, className = "", maxWidth = "max-w-4xl" } = Astro.props
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+const currentYear = new Date().getFullYear()
+---
+
+<footer class={`w-full pt-16 pb-20 ${className}`}>
+  <div
+    class={`mx-auto ${maxWidth} space-y-4 px-4 sm:px-6 lg:px-8 text-xs text-muted-foreground/80`}
+  >
+    <!-- Row 1: Brand & Page Links separated by dots -->
+    <div
+      class="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center"
+    >
+      <a
+        href={translatePath("/")}
+        class="group inline-flex items-center gap-1.5 font-semibold tracking-tight text-foreground transition-colors hover:opacity-80"
+      >
+        <div
+          class="flex size-4.5 items-center justify-center rounded-xs bg-muted text-foreground"
+        >
+          <RiTableLine className="size-3 text-foreground" />
+        </div>
+        <span class="font-heading text-xs font-bold tracking-tight"
+          >FixMyImport</span
+        >
+      </a>
+
+      <!-- Page Links with dot separators -->
+      <nav
+        aria-label="Footer navigation"
+        class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground"
+      >
+        <a
+          href={translatePath("/about")}
+          class="transition-colors hover:text-foreground"
+        >
+          {t("footer.about")}
+        </a>
+        <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+        <a
+          href={translatePath("/contact")}
+          class="transition-colors hover:text-foreground"
+        >
+          {t("footer.contact")}
+        </a>
+        <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+        <a
+          href={translatePath("/privacy-policy")}
+          class="transition-colors hover:text-foreground"
+        >
+          {t("footer.privacyPolicy")}
+        </a>
+        <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+        <a
+          href={translatePath("/terms")}
+          class="transition-colors hover:text-foreground"
+        >
+          {t("footer.terms")}
+        </a>
+      </nav>
+    </div>
+
+    <!-- Row 2: Copyright & Tagline with dot separator -->
+    <div
+      class="flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground/70"
+    >
+      <span>&copy; {currentYear} FixMyImport (fixmyimport.com)</span>
+      <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+      <span>{t("footer.copyrightNote")}</span>
+    </div>
+
+    <!-- Row 3: Languages with dot separators -->
+    <div class="pt-1">
+      <LanguagePicker currentLang={lang} variant="list" />
+    </div>
+  </div>
+</footer>

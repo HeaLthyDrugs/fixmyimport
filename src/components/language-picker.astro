@@ -6,7 +6,7 @@ import { RiGlobalLine } from "@remixicon/react"
 interface Props {
   currentLang?: Lang
   className?: string
-  variant?: "select" | "list"
+  variant?: "select" | "list" | "minimal"
 }
 
 const {
@@ -20,7 +20,36 @@ const translatePath = useTranslatedPath(currentLang)
 ---
 
 {
-  variant === "select" ? (
+  variant === "minimal" ? (
+    <div class={`relative inline-flex items-center ${className}`}>
+      <label for="language-select-minimal" class="sr-only">
+        Language
+      </label>
+      <select
+        id="language-select-minimal"
+        aria-label="Select language"
+        data-language-picker
+        class="cursor-pointer appearance-none bg-transparent pr-3 pl-0 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-hidden"
+      >
+        {Object.entries(languages).map(([code, label]) => {
+          const l = code as Lang
+          const targetUrl = translatePath(cleanPath, l)
+          return (
+            <option
+              value={targetUrl}
+              selected={l === currentLang}
+              class="bg-background text-foreground"
+            >
+              {label}
+            </option>
+          )
+        })}
+      </select>
+      <span class="pointer-events-none absolute right-0 text-[9px] text-muted-foreground/60">
+        ▾
+      </span>
+    </div>
+  ) : variant === "select" ? (
     <div class={`relative inline-flex items-center gap-1.5 ${className}`}>
       <label for="language-select" class="sr-only">
         Language

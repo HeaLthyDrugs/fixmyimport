@@ -1,0 +1,218 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site-header.astro"
+import SiteFooter from "@/components/site-footer.astro"
+import { type Lang } from "@/i18n/ui"
+import { useTranslatedPath } from "@/i18n/utils"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const translatePath = useTranslatedPath(lang)
+---
+
+<Layout
+  lang={lang}
+  title="Terms and Conditions of Use | FixMyImport"
+  description="Read the Terms and Conditions of Use for FixMyImport, a client-side suite of free spreadsheet and data utility tools."
+>
+  <div class="flex min-h-screen flex-col bg-background text-foreground">
+    <main
+      class="mx-auto w-full max-w-4xl flex-1 px-4 pt-8 pb-12 sm:px-6 lg:px-8 sm:pt-10 sm:pb-16"
+    >
+      <SiteHeader lang={lang} />
+
+      <!-- Title Header -->
+      <div class="mt-8 space-y-1.5">
+        <h1
+          class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
+        >
+          Terms and Conditions of Use
+        </h1>
+        <p class="text-xs text-muted-foreground">Last updated: 2026</p>
+      </div>
+
+      <!-- Content Sections -->
+      <article
+        class="mt-8 space-y-10 font-editorial text-base leading-relaxed text-muted-foreground"
+      >
+        <p class="text-base leading-relaxed text-muted-foreground sm:text-lg">
+          Please read these Terms and Conditions ("Terms") carefully before using
+          the{" "}
+          <a
+            href={translatePath("/")}
+            class="text-foreground underline underline-offset-4 transition-colors hover:text-foreground/80"
+          >
+            fixmyimport.com
+          </a>{" "}
+          website ("the Service"). By accessing or using the Service, you agree
+          to be bound by these Terms.
+        </p>
+
+        <!-- 1. Use of the Service -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            1. Use of the Service
+          </h2>
+          <p>
+            FixMyImport is available free of charge for personal, educational,
+            and commercial purposes. You can use the Service to clean, inspect,
+            split, convert, and repair spreadsheets and data files using your
+            web browser. No payment or prior registration is required.
+          </p>
+          <p>You agree not to:</p>
+          <ul
+            class="list-disc space-y-2 pl-5 font-editorial text-sm leading-relaxed text-muted-foreground sm:text-base"
+          >
+            <li>
+              Use the Service for any illegal, fraudulent, or infringing
+              purpose.
+            </li>
+            <li>
+              Attempt to reverse engineer, abusively scrape, or perform
+              unauthorized cloning of the Service.
+            </li>
+            <li>
+              Interfere with the integrity of, or overload, the server
+              infrastructure that hosts the Service.
+            </li>
+          </ul>
+        </section>
+
+        <!-- 2. Disclaimer Regarding Critical Accuracy -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            2. Disclaimer Regarding Critical Accuracy &amp; Data Transformation
+          </h2>
+          <p>
+            FixMyImport is designed to provide fast, reliable data sanitization,
+            character encoding normalization, and batch splitting directly
+            within your web browser. However, data accuracy and schema
+            compatibility depend on external factors such as:
+          </p>
+          <ul
+            class="list-disc space-y-2 pl-5 font-editorial text-sm leading-relaxed text-muted-foreground sm:text-base"
+          >
+            <li>
+              The formatting, delimiter integrity, and structural anomalies of
+              your source CSV file
+            </li>
+            <li>
+              Specific schema requirements of target platforms (e.g., Shopify
+              product imports, Mailchimp subscriber formats)
+            </li>
+            <li>
+              User-selected cleaning operations and batch split settings
+            </li>
+          </ul>
+          <p class="font-medium text-foreground">
+            Do not perform irreversible imports into production systems without
+            verifying your data. Always inspect sample rows or test imports on
+            staging environments before updating live databases or customer
+            records.
+          </p>
+        </section>
+
+        <!-- 3. Intellectual Property -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            3. Intellectual Property &amp; File Ownership
+          </h2>
+          <p>
+            <strong class="font-semibold text-foreground">
+              You retain complete and exclusive ownership of any files,
+              datasets, and rows you process with FixMyImport.
+            </strong>{" "}
+            We claim no intellectual property rights or licenses over your data.
+          </p>
+          <p>
+            The design, source code, visual elements, brand assets, and
+            documentation of FixMyImport are our property and protected by
+            copyright law.
+          </p>
+        </section>
+
+        <!-- 4. Disclaimer of Warranties and Limitation of Liability -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            4. Disclaimer of Warranties and Limitation of Liability
+          </h2>
+          <p>
+            The Service is provided "as is," without express or implied
+            warranties of any kind. To the maximum extent permitted by law,
+            FixMyImport and its authors will not be liable for indirect damages,
+            lost profits, lost data, or business interruptions arising from the
+            use of, or inability to use, the tool.
+          </p>
+        </section>
+
+        <!-- 5. Third-Party Trademarks -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            5. Third-Party Trademarks
+          </h2>
+          <p>
+            Shopify, Mailchimp, Klaviyo, and other service names referenced
+            across this website are registered trademarks of their respective
+            holders. FixMyImport is an independent developer utility and is not
+            affiliated with, sponsored by, or endorsed by any of these entities.
+          </p>
+        </section>
+
+        <!-- 6. Changes to the Terms -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            6. Changes to the Terms
+          </h2>
+          <p>
+            We reserve the right to change these Terms at any time. Continued
+            access to the platform after the publication of modifications
+            constitutes full agreement with the updated terms.
+          </p>
+        </section>
+
+        <!-- 7. Contact -->
+        <section class="space-y-3">
+          <h2
+            class="font-heading text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+          >
+            7. Contact
+          </h2>
+          <p>
+            For questions about these Terms and Conditions, please visit our{" "}
+            <a
+              href={translatePath("/contact")}
+              class="text-foreground underline underline-offset-4 transition-colors hover:text-foreground/80"
+            >
+              contact page
+            </a>{" "}
+            or email us directly at{" "}
+            <a
+              href="mailto:contact@fixmyimport.com"
+              class="text-foreground underline underline-offset-4 transition-colors hover:text-foreground/80"
+            >
+              contact@fixmyimport.com
+            </a>
+            .
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <SiteFooter lang={lang} />
+  </div>
+</Layout>

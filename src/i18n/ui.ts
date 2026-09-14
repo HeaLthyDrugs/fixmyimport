@@ -50,11 +50,21 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "Open the CSV Import Cleaner",
     "lang.select": "Language",
 
+    // Header & Navigation
+    "header.openCleaner": "Open CSV Cleaner",
+    "header.backToTools": "Back to Tools",
+    "header.toggleTheme": "Toggle theme",
+
     // Footer
     "footer.tagline": "Built for local, privacy-first data processing.",
     "footer.privacy": "Privacy Policy",
     "footer.shopify": "Shopify Cleaner",
     "footer.mailchimp": "Mailchimp Splitter",
+    "footer.about": "About",
+    "footer.contact": "Contact",
+    "footer.terms": "Terms of Use",
+    "footer.privacyPolicy": "Privacy Policy",
+    "footer.copyrightNote": "Free, client-side and no registration required.",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -139,12 +149,22 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "Abrir el Limpiador de CSV",
     "lang.select": "Idioma",
 
+    // Header & Navigation
+    "header.openCleaner": "Abrir Limpiador de CSV",
+    "header.backToTools": "Volver a las herramientas",
+    "header.toggleTheme": "Cambiar tema",
+
     // Footer
     "footer.tagline":
       "Creado para el procesamiento local de datos con privacidad prioritaria.",
     "footer.privacy": "Política de Privacidad",
     "footer.shopify": "Limpiador Shopify",
     "footer.mailchimp": "Divisor Mailchimp",
+    "footer.about": "Acerca de",
+    "footer.contact": "Contacto",
+    "footer.terms": "Términos de uso",
+    "footer.privacyPolicy": "Política de Privacidad",
+    "footer.copyrightNote": "Gratuito, en el navegador y sin registro.",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -231,12 +251,22 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "CSVインポートクリーナーを開く",
     "lang.select": "言語",
 
+    // Header & Navigation
+    "header.openCleaner": "CSVクリーナーを開く",
+    "header.backToTools": "ツール一覧に戻る",
+    "header.toggleTheme": "テーマ切り替え",
+
     // Footer
     "footer.tagline":
       "プライバシー重視のローカルデータ処理のために設計されました。",
     "footer.privacy": "プライバシーポリシー",
     "footer.shopify": "Shopifyクリーナー",
     "footer.mailchimp": "Mailchimp分割",
+    "footer.about": "概要",
+    "footer.contact": "お問い合わせ",
+    "footer.terms": "利用規約",
+    "footer.privacyPolicy": "プライバシーポリシー",
+    "footer.copyrightNote": "完全無料・ブラウザ完結・登録不要。",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -321,12 +351,23 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "Ouvrir le nettoyeur de CSV",
     "lang.select": "Langue",
 
+    // Header & Navigation
+    "header.openCleaner": "Ouvrir le nettoyeur de CSV",
+    "header.backToTools": "Retour aux outils",
+    "header.toggleTheme": "Changer de thème",
+
     // Footer
     "footer.tagline":
       "Conçu pour un traitement local des données respectueux de la vie privée.",
     "footer.privacy": "Politique de confidentialité",
     "footer.shopify": "Nettoyeur Shopify",
     "footer.mailchimp": "Diviseur Mailchimp",
+    "footer.about": "À propos",
+    "footer.contact": "Contact",
+    "footer.terms": "Conditions d'utilisation",
+    "footer.privacyPolicy": "Politique de confidentialité",
+    "footer.copyrightNote":
+      "Gratuit, 100% dans le navigateur et sans inscription.",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -413,12 +454,22 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "CSV Import Cleaner öffnen",
     "lang.select": "Sprache",
 
+    // Header & Navigation
+    "header.openCleaner": "CSV-Bereiniger öffnen",
+    "header.backToTools": "Zurück zu den Werkzeugen",
+    "header.toggleTheme": "Design umschalten",
+
     // Footer
     "footer.tagline":
       "Entwickelt für lokale, datenschutzorientierte Datenverarbeitung.",
     "footer.privacy": "Datenschutzerklärung",
     "footer.shopify": "Shopify-Bereiniger",
     "footer.mailchimp": "Mailchimp-Teiler",
+    "footer.about": "Über uns",
+    "footer.contact": "Kontakt",
+    "footer.terms": "Nutzungsbedingungen",
+    "footer.privacyPolicy": "Datenschutzerklärung",
+    "footer.copyrightNote": "Kostenlos, clientseitig und ohne Registrierung.",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -504,12 +555,23 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "Abrir o Limpador de CSV",
     "lang.select": "Idioma",
 
+    // Header & Navigation
+    "header.openCleaner": "Abrir Limpador de CSV",
+    "header.backToTools": "Volver às ferramentas",
+    "header.toggleTheme": "Alternar tema",
+
     // Footer
     "footer.tagline":
       "Criado para processamento local de dados focado em privacidade.",
     "footer.privacy": "Política de Privacidade",
     "footer.shopify": "Limpador Shopify",
     "footer.mailchimp": "Divisor Mailchimp",
+    "footer.about": "Sobre",
+    "footer.contact": "Contato",
+    "footer.terms": "Termos de uso",
+    "footer.privacyPolicy": "Política de Privacidade",
+    "footer.copyrightNote":
+      "Gratuito, direto no navegador e sem necessidade de registro.",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -596,12 +658,22 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "CSV 가져오기 정리기 열기",
     "lang.select": "언어",
 
+    // Header & Navigation
+    "header.openCleaner": "CSV 정리기 열기",
+    "header.backToTools": "도구 목록으로 돌아가기",
+    "header.toggleTheme": "테마 전환",
+
     // Footer
     "footer.tagline":
       "개인정보 보호를 우선하는 로컬 데이터 처리를 위해 구축되었습니다.",
     "footer.privacy": "개인정보 처리방침",
     "footer.shopify": "Shopify 정리기",
     "footer.mailchimp": "Mailchimp 분할기",
+    "footer.about": "소개",
+    "footer.contact": "문의하기",
+    "footer.terms": "이용약관",
+    "footer.privacyPolicy": "개인정보 처리방침",
+    "footer.copyrightNote": "무료, 브라우저 로컬 실행, 회원가입 불필요.",
 
     // Shopify Guide
     "shopify.seoTitle":
@@ -685,12 +757,22 @@ export const ui: Record<Lang, Record<string, string>> = {
     "btn.openCleaner": "Apri il Pulitore CSV",
     "lang.select": "Lingua",
 
+    // Header & Navigation
+    "header.openCleaner": "Apri Pulitore CSV",
+    "header.backToTools": "Torna agli strumenti",
+    "header.toggleTheme": "Cambia tema",
+
     // Footer
     "footer.tagline":
       "Progettato per l'elaborazione locale dei dati nel rispetto della privacy.",
     "footer.privacy": "Informativa sulla Privacy",
     "footer.shopify": "Pulitore Shopify",
     "footer.mailchimp": "Divisore Mailchimp",
+    "footer.about": "Chi siamo",
+    "footer.contact": "Contatto",
+    "footer.terms": "Termini di utilizzo",
+    "footer.privacyPolicy": "Informativa sulla Privacy",
+    "footer.copyrightNote": "Gratuito, nel browser e senza registrazione.",
 
     // Shopify Guide
     "shopify.seoTitle":
