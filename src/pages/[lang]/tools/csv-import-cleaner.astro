@@ -1,0 +1,12 @@
+---
+import CsvCleanerPage from "@/components/pages/csv-cleaner-page.astro"
+import { nonDefaultLangs, type Lang } from "@/i18n/ui"
+
+export function getStaticPaths() {
+  return nonDefaultLangs.map((lang) => ({ params: { lang } }))
+}
+
+const { lang } = Astro.params as { lang: Lang }
+---
+
+<CsvCleanerPage lang={lang} />

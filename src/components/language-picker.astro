@@ -1,0 +1,85 @@
+---
+import { languages, type Lang } from "@/i18n/ui"
+import { getLangFromUrl, useTranslatedPath, getCleanPath } from "@/i18n/utils"
+import { RiGlobalLine } from "@remixicon/react"
+
+interface Props {
+  currentLang?: Lang
+  className?: string
+  variant?: "select" | "list"
+}
+
+const {
+  currentLang = getLangFromUrl(Astro.url),
+  className = "",
+  variant = "select",
+} = Astro.props
+
+const cleanPath = getCleanPath(Astro.url.pathname)
+const translatePath = useTranslatedPath(currentLang)
+---
+
+{
+  variant === "select" ? (
+    <div class={`relative inline-flex items-center gap-1.5 ${className}`}>
+      <label for="language-select" class="sr-only">
+        Language
+      </label>
+      <RiGlobalLine className="pointer-events-none size-4 text-muted-foreground" />
+      <select
+        aria-label="Select language"
+        data-language-picker
+        onchange="if (this.value) window.location.href = this.value"
+        class="cursor-pointer appearance-none rounded-none border border-border bg-muted/40 py-1 pr-6 pl-2 text-xs font-medium tracking-wide text-foreground transition-colors hover:border-foreground/30 hover:bg-muted/70 focus:outline-hidden"
+      >
+        {Object.entries(languages).map(([code, label]) => {
+          const l = code as Lang
+          const targetUrl = translatePath(cleanPath, l)
+          return (
+            <option value={targetUrl} selected={l === currentLang}>
+              {label}
+            </option>
+          )
+        })}
+      </select>
+      <span class="pointer-events-none absolute right-2 text-xs text-muted-foreground">
+        ▾
+      </span>
+    </div>
+  ) : (
+    <nav aria-label="Languages" class={`flex flex-wrap items-center gap-2 text-xs ${className}`}>
+      {Object.entries(languages).map(([code, label], index) => {
+        const l = code as Lang
+        const isCurrent = l === currentLang
+        const targetUrl = translatePath(cleanPath, l)
+        return (
+          <>
+            {index > 0 && <span class="text-muted-foreground/50">&bull;</span>}
+            <a
+              href={targetUrl}
+              class={`transition-colors ${
+                isCurrent
+                  ? "font-semibold text-foreground underline underline-offset-4"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              hreflang={l}
+            >
+              {label}
+            </a>
+          </>
+        )
+      })}
+    </nav>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLSelectElement>("[data-language-picker]").forEach((select) => {
+    select.addEventListener("change", (event) => {
+      const target = event.target as HTMLSelectElement
+      if (target?.value) {
+        window.location.href = target.value
+      }
+    })
+  })
+</script>

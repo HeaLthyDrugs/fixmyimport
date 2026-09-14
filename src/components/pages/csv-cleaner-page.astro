@@ -1,0 +1,22 @@
+---
+import { CsvWorkbench } from "@/components/csv-workbench"
+import Layout from "@/layouts/main.astro"
+import { getLocalizedTool } from "@/i18n/tools"
+import type { Lang } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const tool = getLocalizedTool("csv-import-cleaner", lang)
+
+if (!tool) {
+  throw new Error("CSV Import Cleaner metadata is missing.")
+}
+---
+
+<Layout lang={lang} title={tool.seoTitle} description={tool.seoDescription}>
+  <CsvWorkbench client:load />
+</Layout>
+

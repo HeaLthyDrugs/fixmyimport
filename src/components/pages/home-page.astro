@@ -1,0 +1,218 @@
+---
+import {
+  RiArrowRightUpLine,
+  RiShieldCheckLine,
+  RiFlashlightLine,
+} from "@remixicon/react"
+
+import Layout from "@/layouts/main.astro"
+import ToolIcon from "@/components/tool-icon.astro"
+import LanguagePicker from "@/components/language-picker.astro"
+import { type Lang } from "@/i18n/ui"
+import { useTranslations, useTranslatedPath } from "@/i18n/utils"
+import { getLocalizedCatalog } from "@/i18n/tools"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+
+const localizedCatalog = getLocalizedCatalog(lang)
+const csvTools = localizedCatalog.filter((item) => item.category === "csv")
+const utilityTools = localizedCatalog.filter(
+  (item) => item.category === "utilities"
+)
+---
+
+<Layout lang={lang} title={t("site.title")} description={t("site.description")}>
+  <main class="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl space-y-12">
+      {/* Hero Header */}
+      <div class="border-b border-border/80 pt-2 pb-8">
+        <div
+          class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+        >
+          <div class="space-y-2">
+            <h1
+              class="font-heading text-3xl font-bold tracking-wide sm:text-4xl lg:text-5xl"
+            >
+              {t("hero.title")}
+            </h1>
+            <p
+              class="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              {t("hero.subtitle")}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-0">
+            <span
+              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-3 py-1.5 text-sm font-medium tracking-wide text-muted-foreground"
+            >
+              <RiShieldCheckLine
+                className="size-3.5 text-emerald-600 dark:text-emerald-400"
+              />
+              {t("hero.badge.clientSide")}
+            </span>
+            <span
+              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-3 py-1.5 text-sm font-medium tracking-wide text-muted-foreground"
+            >
+              <RiFlashlightLine className="size-3.5 text-amber-500" />
+              {t("hero.badge.zeroUploads")}
+            </span>
+            <LanguagePicker currentLang={lang} variant="select" />
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 1: CSV & Data Import Tools */}
+      <section class="space-y-4">
+        <h2
+          class="font-heading text-xl font-semibold tracking-wide text-foreground sm:text-2xl"
+        >
+          {t("section.csv")}
+        </h2>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            csvTools.map((tool) => {
+              const isLive = tool.status === "Live"
+              const Component = isLive ? "a" : "div"
+
+              return (
+                <Component
+                  href={isLive ? tool.href : undefined}
+                  class={`group flex flex-col justify-start border border-border/80 bg-card p-5 shadow-xs transition-all duration-200 ${
+                    isLive
+                      ? "cursor-pointer hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-sm"
+                      : "cursor-default opacity-60"
+                  }`}
+                >
+                  <div class="mb-3.5 flex items-start justify-between gap-3">
+                    <div class="flex size-10 items-center justify-center border border-border/80 bg-muted/40 text-foreground transition-colors group-hover:border-foreground/30 group-hover:bg-muted/70">
+                      <ToolIcon name={tool.icon} className="size-5" />
+                    </div>
+                    {isLive && (
+                      <RiArrowRightUpLine className="size-4 text-muted-foreground/60 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                    )}
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between gap-2">
+                      <h3 class="font-heading text-base font-semibold tracking-wide text-foreground transition-colors group-hover:text-foreground">
+                        {tool.name}
+                      </h3>
+                      {!isLive && (
+                        <span class="rounded-xs border border-border/80 bg-muted/60 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground uppercase">
+                          {t("badge.comingSoon")}
+                        </span>
+                      )}
+                    </div>
+                    <p class="text-sm leading-relaxed text-muted-foreground">
+                      {tool.description}
+                    </p>
+                  </div>
+                </Component>
+              )
+            })
+          }
+        </div>
+      </section>
+
+      {/* SECTION 2: Developer & Everyday Utilities */}
+      <section class="space-y-4">
+        <h2
+          class="font-heading text-xl font-semibold tracking-wide text-foreground sm:text-2xl"
+        >
+          {t("section.utilities")}
+        </h2>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            utilityTools.map((tool) => {
+              const isLive = tool.status === "Live"
+              const Component = isLive ? "a" : "div"
+
+              return (
+                <Component
+                  href={isLive ? tool.href : undefined}
+                  class={`group flex flex-col justify-start border border-border/80 bg-card p-5 shadow-xs transition-all duration-200 ${
+                    isLive
+                      ? "cursor-pointer hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-sm"
+                      : "cursor-default opacity-60"
+                  }`}
+                >
+                  <div class="mb-3.5 flex items-start justify-between gap-3">
+                    <div class="flex size-10 items-center justify-center border border-border/80 bg-muted/40 text-foreground transition-colors group-hover:border-foreground/30 group-hover:bg-muted/70">
+                      <ToolIcon name={tool.icon} className="size-5" />
+                    </div>
+                    {isLive && (
+                      <RiArrowRightUpLine className="size-4 text-muted-foreground/60 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                    )}
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between gap-2">
+                      <h3 class="font-heading text-base font-semibold tracking-wide text-foreground transition-colors group-hover:text-foreground">
+                        {tool.name}
+                      </h3>
+                      {!isLive && (
+                        <span class="rounded-xs border border-border/80 bg-muted/60 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground uppercase">
+                          {t("badge.comingSoon")}
+                        </span>
+                      )}
+                    </div>
+                    <p class="text-sm leading-relaxed text-muted-foreground">
+                      {tool.description}
+                    </p>
+                  </div>
+                </Component>
+              )
+            })
+          }
+        </div>
+      </section>
+
+      {/* Privacy Guarantee Footer */}
+      <footer class="border-t border-border/80 pt-8 pb-12">
+        <div
+          class="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row"
+        >
+          <p>
+            &copy; {new Date().getFullYear()} FixMyImport. {t("footer.tagline")}
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a
+              href={translatePath("/privacy")}
+              class="transition-colors hover:text-foreground"
+            >
+              {t("footer.privacy")}
+            </a>
+            <span>&bull;</span>
+            <a
+              href={translatePath("/shopify-csv-cleaner")}
+              class="transition-colors hover:text-foreground"
+            >
+              {t("footer.shopify")}
+            </a>
+            <span>&bull;</span>
+            <a
+              href={translatePath("/mailchimp-csv-too-large")}
+              class="transition-colors hover:text-foreground"
+            >
+              {t("footer.mailchimp")}
+            </a>
+          </div>
+        </div>
+
+        {/* Multi-language selector list */}
+        <div class="mt-6 border-t border-border/50 pt-4">
+          <LanguagePicker currentLang={lang} variant="list" />
+        </div>
+      </footer>
+    </div>
+  </main>
+</Layout>

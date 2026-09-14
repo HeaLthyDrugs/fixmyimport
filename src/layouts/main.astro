@@ -1,21 +1,38 @@
 ---
 import "@/styles/global.css"
+import { type Lang, defaultLang } from "@/i18n/ui"
+import {
+  getLangFromUrl,
+  getHreflangList,
+  getCanonicalUrl,
+  getOgLocale,
+  useTranslations,
+} from "@/i18n/utils"
 
 interface Props {
   title?: string
   description?: string
+  lang?: Lang
 }
 
-const {
-  title = "FixMyImport | Clean browser-based tools for fixing imports",
-  description = "FixMyImport is a growing set of browser-based tools for cleaning, splitting, and preparing import files without uploads or accounts.",
-} = Astro.props
+const { lang } = Astro.props
+const currentLang: Lang = lang || getLangFromUrl(Astro.url)
+const t = useTranslations(currentLang)
+
+const title = Astro.props.title || t("site.title")
+const description = Astro.props.description || t("site.description")
+
+const siteUrl = Astro.site?.toString() || "https://fixmyimport.com"
+const hreflangLinks = getHreflangList(Astro.url, siteUrl)
+const canonicalUrl = getCanonicalUrl(Astro.url, currentLang, siteUrl)
+const ogLocale = getOgLocale(currentLang)
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang={currentLang}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,13 +40,31 @@ const {
       href="https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap"
       rel="stylesheet"
     />
+
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {/* Hreflang SEO annotations */}
+    {
+      hreflangLinks.map((link) => (
+        <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+      ))
+    }
+
+    {/* Open Graph */}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:type" content="website" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
   </head>
-  <body>
+  <body class="bg-background text-foreground antialiased selection:bg-foreground selection:text-background">
     <slot />
   </body>
 </html>

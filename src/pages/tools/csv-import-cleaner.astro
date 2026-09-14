@@ -1,15 +1,5 @@
 ---
-import { CsvWorkbench } from "@/components/csv-workbench"
-import Layout from "@/layouts/main.astro"
-import { toolCatalog } from "@/lib/tools"
-
-const tool = toolCatalog.find((item) => item.id === "csv-import-cleaner")
-
-if (!tool) {
-  throw new Error("CSV Import Cleaner metadata is missing.")
-}
+import CsvCleanerPage from "@/components/pages/csv-cleaner-page.astro"
 ---
 
-<Layout title={tool.seoTitle} description={tool.seoDescription}>
-  <CsvWorkbench client:load />
-</Layout>
+<CsvCleanerPage lang="en" />
