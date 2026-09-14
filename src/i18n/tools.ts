@@ -34,8 +34,7 @@ export const toolTranslations: Record<
     },
     "csv-column-mapper": {
       name: "CSV Column Mapper",
-      summary:
-        "Rename, reorder, and drop columns so your CSV fits the target.",
+      summary: "Rename, reorder, and drop columns so your CSV fits the target.",
       description:
         "Match columns from one system to another. Rename headers, change the order, and remove what you don't need — all before you import.",
       metric: "Header alignment made easy",
@@ -87,8 +86,7 @@ export const toolTranslations: Record<
     },
     "import-validator": {
       name: "Import Validator",
-      summary:
-        "Check if your file is ready to import before you upload it.",
+      summary: "Check if your file is ready to import before you upload it.",
       description:
         "Pick a platform like Shopify or Mailchimp, then run a quick check for missing columns, bad emails, and file size limits — so nothing breaks on upload.",
       metric: "Pre-flight import check",
@@ -119,8 +117,7 @@ export const toolTranslations: Record<
       description:
         "Instant bi-directional binary converter with customizable delimiters, bit-widths, byte breakdown, and Hex/Base64 inspector.",
       metric: "Instant UTF-8 & ASCII converter",
-      seoTitle:
-        "Binary to Text & Text to Binary Converter | FixMyImport",
+      seoTitle: "Binary to Text & Text to Binary Converter | FixMyImport",
       seoDescription:
         "Convert binary to text and text to binary instantly in your browser. Supports UTF-8, ASCII, 8-bit bytes, Hex, Base64, and character breakdown.",
     },
@@ -181,8 +178,7 @@ export const toolTranslations: Record<
     },
     "uuid-generator": {
       name: "UUID / ULID Generator",
-      summary:
-        "Generate random UUID v4, UUID v7, ULID, and NanoIDs in bulk.",
+      summary: "Generate random UUID v4, UUID v7, ULID, and NanoIDs in bulk.",
       description:
         "Batch generate cryptographically secure unique identifiers for database seeding, mock data, and development testing.",
       metric: "Secure batch ID generator",
@@ -291,8 +287,7 @@ export const toolTranslations: Record<
       description:
         "Convertidor binario bidireccional instantáneo con delimitadores configurables, visualización de bytes e inspección Hex/Base64.",
       metric: "Convertidor instantáneo UTF-8 y ASCII",
-      seoTitle:
-        "Convertidor Binario a Texto y Texto a Binario | FixMyImport",
+      seoTitle: "Convertidor Binario a Texto y Texto a Binario | FixMyImport",
       seoDescription:
         "Convierte binario a texto y texto a binario al instante en tu navegador. Compatible con UTF-8, ASCII, bytes de 8 bits, Hex y Base64.",
     },
@@ -303,8 +298,7 @@ export const toolTranslations: Record<
       description:
         "Cambia mayúsculas y minúsculas al instante, cuenta palabras y caracteres, y transforma cadenas para desarrollo.",
       metric: "Conversión veloz de formato de texto",
-      seoTitle:
-        "Conversor de Mayúsculas y Formato de Texto | FixMyImport",
+      seoTitle: "Conversor de Mayúsculas y Formato de Texto | FixMyImport",
       seoDescription:
         "Convierte texto entre mayúsculas, minúsculas, formato título, camelCase, snake_case y kebab-case en tu navegador.",
     },
@@ -432,8 +426,7 @@ export const toolTranslations: Record<
     },
     "import-validator": {
       name: "インポートバリデータ",
-      summary:
-        "アップロード前にCSVがインポート可能かどうかを事前検証します。",
+      summary: "アップロード前にCSVがインポート可能かどうかを事前検証します。",
       description:
         "ShopifyやMailchimpなどの対象サービスを選択し、必須列の不足、メール形式の誤り、ファイルサイズ制限を素早く検証します。",
       metric: "インポート事前検証チェック",
@@ -464,8 +457,7 @@ export const toolTranslations: Record<
       description:
         "区切り文字、ビット幅、バイト詳細、Hex/Base64インスペクタを備えた即時双方向バイナリコンバータ。",
       metric: "高速 UTF-8 & ASCII 変換",
-      seoTitle:
-        "バイナリ テキスト 変換 & テキスト バイナリ 変換 | FixMyImport",
+      seoTitle: "バイナリ テキスト 変換 & テキスト バイナリ 変換 | FixMyImport",
       seoDescription:
         "ブラウザ上でバイナリとテキストを即座に相互変換。UTF-8、ASCII、8ビットバイト、16進数、Base64に対応。",
     },
@@ -476,15 +468,13 @@ export const toolTranslations: Record<
       description:
         "テキストの大文字小文字の変換、文字数・単語数のカウント、開発に適した命名規則への整形を即座に行います。",
       metric: "高速テキストケース変換",
-      seoTitle:
-        "文字ケース変換 & テキストフォーマッタ | FixMyImport",
+      seoTitle: "文字ケース変換 & テキストフォーマッタ | FixMyImport",
       seoDescription:
         "大文字、小文字、キャメルケース、スネークケース、ケバブケースへのテキスト変換をブラウザで即座に実行。",
     },
     "base64-converter": {
       name: "Base64 エンコーダ / デコーダ",
-      summary:
-        "テキスト、画像、ファイルをローカルでBase64形式に相互変換。",
+      summary: "テキスト、画像、ファイルをローカルでBase64形式に相互変換。",
       description:
         "文字列をBase64に即座にエンコード、またはBase64文字列をプレーンテキストや画像、Data URIに復元します。",
       metric: "クライアント側Base64変換",
@@ -494,8 +484,7 @@ export const toolTranslations: Record<
     },
     "json-formatter": {
       name: "JSON 整形 & バリデータ",
-      summary:
-        "エラー箇所の強調表示付きでJSONデータの整形、検証、圧縮を実行。",
+      summary: "エラー箇所の強調表示付きでJSONデータの整形、検証、圧縮を実行。",
       description:
         "乱雑なJSONを貼り付けてインデントを整え、構文エラーを検出し、TypeScriptインターフェースを生成します。",
       metric: "即時JSONフォーマッタ",
@@ -505,8 +494,7 @@ export const toolTranslations: Record<
     },
     "qr-code-generator": {
       name: "QRコード生成ツール",
-      summary:
-        "URL、WiFiパスワード、連絡先カード用のカスタムQRコードを生成。",
+      summary: "URL、WiFiパスワード、連絡先カード用のカスタムQRコードを生成。",
       description:
         "広告なし・オフラインのブラウザ描画で、リンクやWiFi用の高解像度QRコードを作成します。",
       metric: "オフラインQRコード作成",
@@ -776,8 +764,7 @@ export const toolTranslations: Record<
     },
     "import-validator": {
       name: "Import Validator",
-      summary:
-        "Prüfen Sie Ihre CSV vor dem Hochladen auf Importtauglichkeit.",
+      summary: "Prüfen Sie Ihre CSV vor dem Hochladen auf Importtauglichkeit.",
       description:
         "Wählen Sie Plattformen wie Shopify oder Mailchimp und testen Sie auf fehlende Spalten, fehlerhafte E-Mails und Dateigrößenlimits.",
       metric: "Vorab-Importprüfung",
@@ -808,8 +795,7 @@ export const toolTranslations: Record<
       description:
         "Sofortiger bidirektionaler Binärkonverter mit Trennzeichen, Bit-Breiten, Byte-Aufschlüsselung und Hex/Base64-Inspektor.",
       metric: "Sofortiger UTF-8 & ASCII Konverter",
-      seoTitle:
-        "Binär zu Text & Text zu Binär Konverter | FixMyImport",
+      seoTitle: "Binär zu Text & Text zu Binär Konverter | FixMyImport",
       seoDescription:
         "Konvertieren Sie Binärcode in Text und Text in Binärdateien direkt im Browser. Unterstützt UTF-8, ASCII, 8-Bit-Bytes, Hex und Base64.",
     },
@@ -820,8 +806,7 @@ export const toolTranslations: Record<
       description:
         "Textschreibweise sofort ändern, Zeichen und Wörter zählen und Strings für Entwicklungsanforderungen anpassen.",
       metric: "Schnelle Textfall-Konvertierung",
-      seoTitle:
-        "Groß-/Kleinschreibung & Textformatierer | FixMyImport",
+      seoTitle: "Groß-/Kleinschreibung & Textformatierer | FixMyImport",
       seoDescription:
         "Konvertieren Sie Text in Groß-, Kleinbuchstaben, Titelschrift, camelCase, snake_case und kebab-case im Browser.",
     },
@@ -993,8 +978,7 @@ export const toolTranslations: Record<
       description:
         "Alterne a capitalização instantaneamente, conte caracteres e palavras e formate strings para padrões de desenvolvimento.",
       metric: "Conversão rápida de formato de texto",
-      seoTitle:
-        "Formatador de Texto e Maiúsculas/Minúsculas | FixMyImport",
+      seoTitle: "Formatador de Texto e Maiúsculas/Minúsculas | FixMyImport",
       seoDescription:
         "Converta texto entre maiúsculas, minúsculas, formato título, camelCase, snake_case e kebab-case no navegador.",
     },
@@ -1122,7 +1106,8 @@ export const toolTranslations: Record<
     },
     "import-validator": {
       name: "가져오기 유효성 검사기",
-      summary: "파일을 업로드하기 전에 가져오기 준비가 되었는지 미리 검사합니다.",
+      summary:
+        "파일을 업로드하기 전에 가져오기 준비가 되었는지 미리 검사합니다.",
       description:
         "Shopify나 Mailchimp 같은 플랫폼을 선택하고 누락된 컬럼, 잘못된 이메일 형식, 파일 크기 제한을 사전에 신속하게 확인하세요.",
       metric: "가져오기 사전 검사",
@@ -1153,8 +1138,7 @@ export const toolTranslations: Record<
       description:
         "구분 기호, 비트 폭, 바이트 상세 분석 및 Hex/Base64 검사기가 포함된 즉각적인 양방향 바이너리 변환 도구입니다.",
       metric: "초고속 UTF-8 & ASCII 변환기",
-      seoTitle:
-        "바이너리 텍스트 변환기 & 텍스트 바이너리 변환 | FixMyImport",
+      seoTitle: "바이너리 텍스트 변환기 & 텍스트 바이너리 변환 | FixMyImport",
       seoDescription:
         "브라우저에서 바이너리를 텍스트로, 텍스트를 이진수로 즉시 변환하세요. UTF-8, ASCII, 8비트, Hex, Base64 지원.",
     },
@@ -1215,8 +1199,7 @@ export const toolTranslations: Record<
     },
     "uuid-generator": {
       name: "UUID / ULID 대량 생성기",
-      summary:
-        "UUID v4, UUID v7, ULID 및 NanoID를 무작위로 대량 생성합니다.",
+      summary: "UUID v4, UUID v7, ULID 및 NanoID를 무작위로 대량 생성합니다.",
       description:
         "데이터베이스 시딩, 목업 데이터 및 개발 테스트를 위한 암호학적으로 안전한 고유 식별자를 생성합니다.",
       metric: "안전한 대량 ID 생성기",
@@ -1325,8 +1308,7 @@ export const toolTranslations: Record<
       description:
         "Convertitore binario bidirezionale immediato con delimitatori personalizzabili, suddivisione in byte e ispezione Hex/Base64.",
       metric: "Convertitore istantaneo UTF-8 e ASCII",
-      seoTitle:
-        "Convertitore Binario a Testo & Testo a Binario | FixMyImport",
+      seoTitle: "Convertitore Binario a Testo & Testo a Binario | FixMyImport",
       seoDescription:
         "Converti binario in testo e testo in binario istantaneamente nel browser. Supporta UTF-8, ASCII, byte a 8 bit, Hex e Base64.",
     },

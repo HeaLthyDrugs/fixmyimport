@@ -64,7 +64,9 @@ const ogLocale = getOgLocale(currentLang)
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
   </head>
-  <body class="bg-background text-foreground antialiased selection:bg-foreground selection:text-background">
+  <body
+    class="bg-background text-foreground antialiased selection:bg-foreground selection:text-background"
+  >
     <slot />
   </body>
 </html>

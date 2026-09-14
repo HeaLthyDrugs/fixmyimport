@@ -558,6 +558,12 @@ export function CsvWorkbench() {
                 How it works
               </button>
               <a
+                href="#tool-details"
+                className="inline-flex items-center gap-1 text-xs text-muted-foreground transition hover:text-foreground"
+              >
+                Guide &amp; FAQ ↓
+              </a>
+              <a
                 href="/"
                 className="text-xs text-muted-foreground transition hover:text-foreground"
               >
@@ -569,9 +575,9 @@ export function CsvWorkbench() {
           {/* Center content */}
           <div className="flex flex-1 flex-col items-center justify-center gap-5 p-4">
             <div className="space-y-1 text-center">
-              <h1 className="text-2xl font-bold tracking-wide sm:text-3xl">
-                CSV Viewer & Cleaner
-              </h1>
+              <h2 className="text-2xl font-bold tracking-wide sm:text-3xl">
+                CSV Viewer &amp; Cleaner
+              </h2>
               <p className="text-sm text-muted-foreground">
                 Clean, dedupe, and split import-ready CSVs — right in your
                 browser.
@@ -688,13 +694,23 @@ export function CsvWorkbench() {
               </div>
             ) : null}
 
-            <button
-              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground"
-              onClick={() => setHowItWorksOpen(true)}
-            >
-              <RiInformationLine className="size-3.5" />
-              How it works
-            </button>
+            <div className="mt-2 flex items-center gap-4">
+              <button
+                className="inline-flex cursor-pointer items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground"
+                onClick={() => setHowItWorksOpen(true)}
+              >
+                <RiInformationLine className="size-3.5" />
+                How it works
+              </button>
+              <span className="text-border">·</span>
+              <a
+                href="#tool-details"
+                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground"
+              >
+                <span>Read format guide &amp; platform specs</span>
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
           </div>
         </div>
       ) : (

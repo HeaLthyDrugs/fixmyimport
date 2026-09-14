@@ -1,0 +1,198 @@
+---
+import { getToolSeoContent } from "@/data/seo-content/registry"
+import type { ToolSeoContent } from "@/data/seo-content/types"
+import { getLocalizedCatalog } from "@/i18n/tools"
+import type { Lang } from "@/i18n/ui"
+import { getCanonicalUrl } from "@/i18n/utils"
+import DataTable from "./data-table.astro"
+import FaqAccordion from "./faq-accordion.astro"
+import SchemaJsonLd from "./schema-jsonld.astro"
+
+interface Props {
+  toolId: string
+  lang: Lang
+  customContent?: ToolSeoContent
+}
+
+const { toolId, lang, customContent } = Astro.props
+const content = customContent || getToolSeoContent(toolId)
+
+const siteUrl = Astro.site?.toString() || "https://fixmyimport.com"
+const canonicalUrl = getCanonicalUrl(Astro.url, lang, siteUrl)
+
+const allTools = getLocalizedCatalog(lang)
+const relatedTools = allTools.filter((t) =>
+  content.relatedToolIds.includes(t.id)
+)
+---
+
+<section
+  id="tool-details"
+  class="relative bg-background px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
+>
+  <div class="mx-auto max-w-4xl space-y-12 sm:space-y-14">
+    {/* ── 1. SEO Header & Lead ── */}
+    <div class="space-y-4">
+      <h1
+        class="text-2xl leading-snug font-semibold tracking-tight text-foreground sm:text-3xl"
+      >
+        {content.h1}
+      </h1>
+
+      <p
+        class="text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+      >
+        {content.lead}
+      </p>
+    </div>
+
+    {/* ── 2. What Is & How It Works ── */}
+    <div class="space-y-4">
+      <h2
+        class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+      >
+        {content.whatIsTitle}
+      </h2>
+
+      <div
+        class="space-y-3 text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+      >
+        {content.whatIsContent.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      {
+        content.howItWorksTitle && content.howItWorksContent && (
+          <div class="space-y-2.5 pt-2">
+            <h3 class="text-sm font-medium tracking-normal text-foreground sm:text-base">
+              {content.howItWorksTitle}
+            </h3>
+            <ul class="space-y-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+              {content.howItWorksContent.map((item) => (
+                <li class="flex items-start gap-2.5">
+                  <span class="mt-2 size-1 shrink-0 rounded-full bg-foreground/50" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+
+    {/* ── 3. Step-by-Step Guide ── */}
+    <div class="space-y-4">
+      <h2
+        class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+      >
+        {content.stepsTitle}
+      </h2>
+
+      <div
+        class="space-y-3.5 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+      >
+        {
+          content.steps.map((step) => (
+            <p>
+              <strong class="font-medium tracking-normal text-foreground">
+                {step.number}. {step.title}
+              </strong>
+              {" — "}
+              <span>{step.description}</span>
+            </p>
+          ))
+        }
+      </div>
+    </div>
+
+    {/* ── 4. Key Features ── */}
+    <div class="space-y-4">
+      <h2
+        class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+      >
+        {content.featuresTitle}
+      </h2>
+
+      <div
+        class="space-y-3 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+      >
+        {
+          content.features.map((feature) => (
+            <p>
+              <strong class="font-medium tracking-normal text-foreground">
+                {feature.title}
+              </strong>
+              {" — "}
+              <span>{feature.description}</span>
+            </p>
+          ))
+        }
+      </div>
+    </div>
+
+    {/* ── 5. Technical Data Table ── */}
+    {
+      content.table && (
+        <div>
+          <DataTable table={content.table} />
+        </div>
+      )
+    }
+
+    {/* ── 6. Privacy & Security ── */}
+    <div class="space-y-3">
+      <h2
+        class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+      >
+        {content.privacyTitle}
+      </h2>
+      <div
+        class="space-y-3 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+      >
+        {content.privacyContent.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    {/* ── 7. FAQ Accordion ── */}
+    <div>
+      <FaqAccordion faqs={content.faqs} />
+    </div>
+
+    {/* ── 8. Related Tools ── */}
+    {
+      relatedTools.length > 0 && (
+        <div class="space-y-3 pt-2">
+          <h2 class="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+            Related Developer &amp; Data Tools
+          </h2>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted-foreground sm:text-sm">
+            {relatedTools.map((tool, idx) => (
+              <>
+                {idx > 0 && <span class="text-border">·</span>}
+                <a
+                  href={tool.href}
+                  class="font-medium text-foreground/90 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                >
+                  {tool.name}
+                </a>
+              </>
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </div>
+
+  {/* Schema.org Structured Data (FAQ, HowTo, WebApp, Breadcrumbs) */}
+  <SchemaJsonLd
+    type="tool"
+    name={content.h1}
+    description={content.lead}
+    url={canonicalUrl}
+    siteUrl={siteUrl}
+    faqs={content.faqs}
+    category={content.category}
+    steps={content.steps}
+    stepsTitle={content.stepsTitle}
+    features={content.features}
+  />
+</section>

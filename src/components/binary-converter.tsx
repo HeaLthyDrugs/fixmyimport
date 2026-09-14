@@ -165,9 +165,9 @@ export function BinaryConverter() {
               <span>All Tools</span>
             </a>
             <span className="text-border">/</span>
-            <h1 className="text-base font-semibold tracking-wide">
+            <span className="text-base font-semibold tracking-wide">
               Binary &lt;-&gt; Text Converter
-            </h1>
+            </span>
             <Badge
               variant="outline"
               className="text-xs font-medium tracking-wide"
@@ -176,7 +176,13 @@ export function BinaryConverter() {
             </Badge>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <a
+              href="#tool-details"
+              className="hidden text-xs text-muted-foreground transition-colors hover:text-foreground sm:inline-block"
+            >
+              Guide &amp; FAQ ↓
+            </a>
             <Button
               variant="outline"
               size="sm"
@@ -686,45 +692,15 @@ export function BinaryConverter() {
           </div>
         </div>
 
-        {/* Educational Reference / FAQ */}
-        <div className="space-y-4 border border-border/80 bg-card p-6">
-          <h2 className="text-lg font-semibold tracking-wide">
-            How Binary to Text Conversion Works
-          </h2>
-          <div className="grid gap-4 text-sm leading-relaxed text-muted-foreground md:grid-cols-3">
-            <div>
-              <h3 className="mb-1 font-semibold text-foreground">
-                1. Binary &amp; Bytes
-              </h3>
-              <p>
-                Computers store text as sequences of 0s and 1s. Each group of 8
-                bits forms 1 byte (0 to 255). For instance, the letter
-                &apos;A&apos; in ASCII is decimal 65, which is{" "}
-                <code>01000001</code> in binary.
-              </p>
-            </div>
-            <div>
-              <h3 className="mb-1 font-semibold text-foreground">
-                2. UTF-8 &amp; Emojis
-              </h3>
-              <p>
-                Standard ASCII covers 128 characters (1 byte). Modern UTF-8
-                encoding dynamically uses 1 to 4 bytes per character, allowing
-                representation of accents, non-Latin alphabets, symbols, and
-                emojis.
-              </p>
-            </div>
-            <div>
-              <h3 className="mb-1 font-semibold text-foreground">
-                3. Complete Privacy
-              </h3>
-              <p>
-                All conversions take place locally inside your browser using the
-                Web API TextEncoder and TextDecoder. No text or binary data ever
-                leaves your computer.
-              </p>
-            </div>
-          </div>
+        {/* Scroll affordance to SEO Details section */}
+        <div className="flex items-center justify-center pt-2 pb-6">
+          <a
+            href="#tool-details"
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground"
+          >
+            <span>Read UTF-8 &amp; ASCII guide, lookup table &amp; FAQs</span>
+            <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </main>
     </div>

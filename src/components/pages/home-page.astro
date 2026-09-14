@@ -1,13 +1,10 @@
 ---
-import {
-  RiArrowRightUpLine,
-  RiShieldCheckLine,
-  RiFlashlightLine,
-} from "@remixicon/react"
+import { RiArrowRightUpLine } from "@remixicon/react"
 
 import Layout from "@/layouts/main.astro"
 import ToolIcon from "@/components/tool-icon.astro"
 import LanguagePicker from "@/components/language-picker.astro"
+import HomeSeoSection from "@/components/seo/home-seo-section.astro"
 import { type Lang } from "@/i18n/ui"
 import { useTranslations, useTranslatedPath } from "@/i18n/utils"
 import { getLocalizedCatalog } from "@/i18n/tools"
@@ -30,43 +27,34 @@ const utilityTools = localizedCatalog.filter(
 <Layout lang={lang} title={t("site.title")} description={t("site.description")}>
   <main class="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl space-y-12">
-      {/* Hero Header */}
-      <div class="border-b border-border/80 pt-2 pb-8">
+      {/* Header */}
+      <header class="pt-1 pb-2">
         <div
-          class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+          class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
         >
-          <div class="space-y-2">
-            <h1
-              class="font-heading text-3xl font-bold tracking-wide sm:text-4xl lg:text-5xl"
-            >
-              {t("hero.title")}
-            </h1>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between gap-4">
+              <h1
+                class="font-heading text-2xl font-bold tracking-wide text-foreground sm:text-3xl lg:text-4xl"
+              >
+                {t("hero.title")}
+              </h1>
+              <div class="shrink-0 sm:hidden">
+                <LanguagePicker currentLang={lang} variant="select" />
+              </div>
+            </div>
             <p
-              class="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+              class="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
             >
               {t("hero.subtitle")}
             </p>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-0">
-            <span
-              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-3 py-1.5 text-sm font-medium tracking-wide text-muted-foreground"
-            >
-              <RiShieldCheckLine
-                className="size-3.5 text-emerald-600 dark:text-emerald-400"
-              />
-              {t("hero.badge.clientSide")}
-            </span>
-            <span
-              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-3 py-1.5 text-sm font-medium tracking-wide text-muted-foreground"
-            >
-              <RiFlashlightLine className="size-3.5 text-amber-500" />
-              {t("hero.badge.zeroUploads")}
-            </span>
+          <div class="hidden shrink-0 sm:block">
             <LanguagePicker currentLang={lang} variant="select" />
           </div>
         </div>
-      </div>
+      </header>
 
       {/* SECTION 1: CSV & Data Import Tools */}
       <section class="space-y-4">
@@ -176,8 +164,11 @@ const utilityTools = localizedCatalog.filter(
         </div>
       </section>
 
-      {/* Privacy Guarantee Footer */}
-      <footer class="border-t border-border/80 pt-8 pb-12">
+      {/* SEO Educational & Details Section */}
+      <HomeSeoSection lang={lang} />
+
+      {/* Footer */}
+      <footer class="pt-6 pb-12">
         <div
           class="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row"
         >
@@ -191,14 +182,14 @@ const utilityTools = localizedCatalog.filter(
             >
               {t("footer.privacy")}
             </a>
-            <span>&bull;</span>
+            <span class="text-muted-foreground/40">&bull;</span>
             <a
               href={translatePath("/shopify-csv-cleaner")}
               class="transition-colors hover:text-foreground"
             >
               {t("footer.shopify")}
             </a>
-            <span>&bull;</span>
+            <span class="text-muted-foreground/40">&bull;</span>
             <a
               href={translatePath("/mailchimp-csv-too-large")}
               class="transition-colors hover:text-foreground"
@@ -209,7 +200,7 @@ const utilityTools = localizedCatalog.filter(
         </div>
 
         {/* Multi-language selector list */}
-        <div class="mt-6 border-t border-border/50 pt-4">
+        <div class="mt-4">
           <LanguagePicker currentLang={lang} variant="list" />
         </div>
       </footer>

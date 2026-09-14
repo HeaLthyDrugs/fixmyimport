@@ -47,7 +47,10 @@ const translatePath = useTranslatedPath(currentLang)
       </span>
     </div>
   ) : (
-    <nav aria-label="Languages" class={`flex flex-wrap items-center gap-2 text-xs ${className}`}>
+    <nav
+      aria-label="Languages"
+      class={`flex flex-wrap items-center gap-2 text-xs ${className}`}
+    >
       {Object.entries(languages).map(([code, label], index) => {
         const l = code as Lang
         const isCurrent = l === currentLang
@@ -74,12 +77,14 @@ const translatePath = useTranslatedPath(currentLang)
 }
 
 <script>
-  document.querySelectorAll<HTMLSelectElement>("[data-language-picker]").forEach((select) => {
-    select.addEventListener("change", (event) => {
-      const target = event.target as HTMLSelectElement
-      if (target?.value) {
-        window.location.href = target.value
-      }
+  document
+    .querySelectorAll<HTMLSelectElement>("[data-language-picker]")
+    .forEach((select) => {
+      select.addEventListener("change", (event) => {
+        const target = event.target as HTMLSelectElement
+        if (target?.value) {
+          window.location.href = target.value
+        }
+      })
     })
-  })
 </script>

@@ -1,0 +1,131 @@
+---
+import { getHomeSeoContent } from "@/data/seo-content/registry"
+import type { Lang } from "@/i18n/ui"
+import { getCanonicalUrl } from "@/i18n/utils"
+import DataTable from "./data-table.astro"
+import FaqAccordion from "./faq-accordion.astro"
+import SchemaJsonLd from "./schema-jsonld.astro"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const content = getHomeSeoContent()
+
+const siteUrl = Astro.site?.toString() || "https://fixmyimport.com"
+const canonicalUrl = getCanonicalUrl(Astro.url, lang, siteUrl)
+---
+
+<section
+  id="home-details"
+  class="relative bg-background pt-14 pb-16 sm:pt-18 sm:pb-20"
+>
+  <div class="mx-auto max-w-4xl space-y-12 sm:space-y-14">
+    {/* ── 1. SEO Header & Lead ── */}
+    <div class="space-y-3">
+      <h2
+        class="text-xl leading-snug font-semibold tracking-tight text-foreground sm:text-2xl"
+      >
+        {content.h2}
+      </h2>
+
+      <p
+        class="text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+      >
+        {content.lead}
+      </p>
+    </div>
+
+    {/* ── 2. Why Choose FixMyImport ── */}
+    <div class="space-y-3">
+      <h3
+        class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+      >
+        {content.whyTitle}
+      </h3>
+
+      <div
+        class="space-y-3 text-sm leading-relaxed tracking-[0.01em] text-muted-foreground sm:text-[15px]"
+      >
+        {content.whyContent.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+
+    {/* ── 3. Common Data Import Disasters ── */}
+    <div class="space-y-4">
+      <div class="space-y-1">
+        <h3
+          class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+        >
+          {content.commonErrorsTitle}
+        </h3>
+        <p class="text-xs leading-relaxed text-muted-foreground sm:text-sm">
+          Spreadsheet exports rarely work on the first try. Here is how our
+          suite prevents common import failures:
+        </p>
+      </div>
+
+      <div
+        class="space-y-3 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+      >
+        {
+          content.commonErrors.map((error) => (
+            <p>
+              <strong class="font-medium tracking-normal text-foreground">
+                {error.title}
+              </strong>
+              {" — "}
+              <span>{error.desc}</span>{" "}
+              <span class="font-medium text-foreground/90">({error.fix})</span>
+            </p>
+          ))
+        }
+      </div>
+    </div>
+
+    {/* ── 4. Comparison Table ── */}
+    <div>
+      <DataTable table={content.comparisonTable} />
+    </div>
+
+    {/* ── 5. Security & Privacy Guarantee ── */}
+    <div class="space-y-3">
+      <h3
+        class="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+      >
+        {content.securityTitle}
+      </h3>
+      <ul
+        class="space-y-2 text-xs leading-relaxed text-muted-foreground sm:text-sm"
+      >
+        {
+          content.securityPoints.map((point) => (
+            <li class="flex items-start gap-2.5">
+              <span class="mt-2 size-1 shrink-0 rounded-full bg-foreground/50" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {/* ── 6. FAQ Accordion ── */}
+    <div>
+      <FaqAccordion
+        faqs={content.faqs}
+        title="Frequently Asked Questions About FixMyImport"
+      />
+    </div>
+  </div>
+
+  {/* Schema.org Structured Data */}
+  <SchemaJsonLd
+    type="home"
+    name="FixMyImport"
+    description={content.lead}
+    url={canonicalUrl}
+    siteUrl={siteUrl}
+    faqs={content.faqs}
+  />
+</section>

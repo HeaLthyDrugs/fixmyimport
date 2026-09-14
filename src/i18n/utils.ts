@@ -1,10 +1,4 @@
-import {
-  ui,
-  defaultLang,
-  showDefaultLang,
-  languages,
-  type Lang,
-} from "./ui"
+import { ui, defaultLang, showDefaultLang, languages, type Lang } from "./ui"
 
 export function getLangFromUrl(url: URL | string): Lang {
   const pathname = typeof url === "string" ? url : url.pathname

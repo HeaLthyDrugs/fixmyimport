@@ -1,0 +1,160 @@
+---
+import type { SeoFaq, SeoFeature, SeoStep } from "@/data/seo-content/types"
+
+interface Props {
+  type: "tool" | "home"
+  name: string
+  description: string
+  url: string
+  siteUrl?: string
+  faqs?: SeoFaq[]
+  category?: string
+  steps?: SeoStep[]
+  stepsTitle?: string
+  features?: SeoFeature[]
+}
+
+const {
+  type,
+  name,
+  description,
+  url,
+  siteUrl = "https://fixmyimport.com",
+  faqs = [],
+  category = "utilities",
+  steps = [],
+  stepsTitle,
+  features = [],
+} = Astro.props
+
+const schemas: Record<string, unknown>[] = []
+
+if (type === "tool") {
+  // 1. WebApplication Schema
+  const webAppSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name,
+    url,
+    applicationCategory:
+      category === "csv" ? "BusinessApplication" : "DeveloperApplication",
+    operatingSystem: "All",
+    browserRequirements: "Requires JavaScript. Requires HTML5.",
+    isAccessibleForFree: true,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    description,
+    author: {
+      "@type": "Organization",
+      name: "FixMyImport",
+      url: siteUrl,
+    },
+  }
+
+  if (features && features.length > 0) {
+    webAppSchema.featureList = features.map(
+      (f) => `${f.title}: ${f.description}`
+    )
+  }
+
+  schemas.push(webAppSchema)
+
+  // 2. HowTo Schema (for step-by-step instructions)
+  if (steps && steps.length > 0) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: stepsTitle || `How to use ${name}`,
+      description,
+      step: steps.map((s) => ({
+        "@type": "HowToStep",
+        position: s.number,
+        name: s.title,
+        text: s.description,
+        url: `${url}#step-${s.number}`,
+      })),
+    })
+  }
+
+  // 3. BreadcrumbList Schema
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: category === "csv" ? "CSV Tools" : "Developer Tools",
+        item: `${siteUrl}/#${category}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name,
+        item: url,
+      },
+    ],
+  })
+} else {
+  // Homepage schemas
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "FixMyImport",
+    alternateName: ["Fix My Import", "FixMyImport Tools"],
+    url: siteUrl,
+    description,
+    inLanguage: ["en", "es", "ja", "fr", "de", "pt", "ko", "it"],
+    publisher: {
+      "@type": "Organization",
+      name: "FixMyImport",
+      url: siteUrl,
+      logo: `${siteUrl}/favicon.svg`,
+    },
+  })
+
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "FixMyImport",
+    url: siteUrl,
+    logo: `${siteUrl}/favicon.svg`,
+    description:
+      "Free privacy-first browser-based developer and data import tools.",
+  })
+}
+
+// 4. FAQPage Schema (for rich snippet accordion in search results)
+if (faqs && faqs.length > 0) {
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  })
+}
+---
+
+{
+  schemas.map((schema) => (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schema, null, 0)}
+    />
+  ))
+}
