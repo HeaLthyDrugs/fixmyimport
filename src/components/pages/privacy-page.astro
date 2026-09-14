@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/main.astro"
-import LanguagePicker from "@/components/language-picker.astro"
+import SiteNavbar from "@/components/site-navbar.astro"
 import { type Lang } from "@/i18n/ui"
 import { useTranslations, useTranslatedPath } from "@/i18n/utils"
 
@@ -18,18 +18,9 @@ const translatePath = useTranslatedPath(lang)
   title={t("privacy.seoTitle")}
   description={t("privacy.seoDesc")}
 >
-  <main class="w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-    <div class="mx-auto max-w-6xl p-6 sm:p-8">
-      <div class="mb-6 flex items-center justify-between">
-        <a
-          href={translatePath("/")}
-          class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-        >
-          &larr; FixMyImport
-        </a>
-        <LanguagePicker currentLang={lang} variant="select" />
-      </div>
-
+  <SiteNavbar lang={lang} />
+  <main class="w-full px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div class="mx-auto max-w-6xl p-4 sm:p-6">
       <div class="max-w-3xl space-y-6">
         <div class="space-y-3">
           <p

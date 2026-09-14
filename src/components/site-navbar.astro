@@ -1,0 +1,107 @@
+---
+import { RiTableLine, RiSunLine, RiMoonLine } from "@remixicon/react"
+import LanguagePicker from "@/components/language-picker.astro"
+import { type Lang } from "@/i18n/ui"
+import { useTranslations, useTranslatedPath } from "@/i18n/utils"
+
+interface Props {
+  lang: Lang
+  maxWidth?: string
+  className?: string
+}
+
+const { lang, maxWidth = "", className = "" } = Astro.props
+
+const t = useTranslations(lang)
+const translatePath = useTranslatedPath(lang)
+---
+
+<header
+  class={`sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-md transition-colors ${className}`}
+>
+  <nav
+    aria-label="Main navigation"
+    class={`flex h-14 w-full items-center justify-between px-4 sm:px-6 lg:px-8 ${maxWidth}`}
+  >
+    <!-- Left: Brand Logo & Title -->
+    <a
+      href={translatePath("/")}
+      class="group inline-flex items-center gap-2.5 font-semibold tracking-tight text-foreground transition-opacity hover:opacity-85"
+      aria-label="FixMyImport Home"
+    >
+      <div
+        class="flex size-7 items-center justify-center rounded-xs bg-foreground text-background shadow-xs transition-transform duration-150 group-hover:scale-105"
+      >
+        <RiTableLine className="size-4 text-background" />
+      </div>
+      <span
+        class="font-heading text-base font-bold tracking-tight text-foreground"
+      >
+        FixMyImport
+      </span>
+    </a>
+
+    <!-- Right: Navigation Links, Theme Toggle, Language Selector -->
+    <div class="flex items-center gap-2.5 text-xs text-muted-foreground">
+      <a
+        href={translatePath("/about")}
+        class="font-medium transition-colors hover:text-foreground"
+      >
+        {t("footer.about")}
+      </a>
+
+      <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+
+      <a
+        href={translatePath("/contact")}
+        class="font-medium transition-colors hover:text-foreground"
+      >
+        {t("footer.contact")}
+      </a>
+
+      <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+
+      <!-- Theme Toggle Icon Button -->
+      <button
+        type="button"
+        id="navbar-theme-toggle"
+        class="inline-flex cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+        aria-label={t("header.toggleTheme")}
+        title={t("header.toggleTheme")}
+      >
+        <RiSunLine className="hidden size-4 dark:block" />
+        <RiMoonLine className="block size-4 dark:hidden" />
+      </button>
+
+      <span class="text-muted-foreground/40" aria-hidden="true">&bull;</span>
+
+      <!-- Language Selector Icon Button -->
+      <LanguagePicker currentLang={lang} variant="icon" />
+    </div>
+  </nav>
+</header>
+
+<script>
+  function setupNavbarThemeToggle() {
+    const btn = document.getElementById("navbar-theme-toggle")
+    if (!btn) return
+
+    // Avoid duplicate listeners
+    if (btn.hasAttribute("data-theme-listener")) return
+    btn.setAttribute("data-theme-listener", "true")
+
+    btn.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark")
+      if (isDark) {
+        document.documentElement.classList.remove("dark")
+        localStorage.setItem("theme", "light")
+      } else {
+        document.documentElement.classList.add("dark")
+        localStorage.setItem("theme", "dark")
+      }
+    })
+  }
+
+  setupNavbarThemeToggle()
+  document.addEventListener("astro:after-swap", setupNavbarThemeToggle)
+</script>

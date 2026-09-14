@@ -3,7 +3,7 @@ import { RiArrowRightUpLine } from "@remixicon/react"
 
 import Layout from "@/layouts/main.astro"
 import ToolIcon from "@/components/tool-icon.astro"
-import LanguagePicker from "@/components/language-picker.astro"
+import SiteNavbar from "@/components/site-navbar.astro"
 import SiteFooter from "@/components/site-footer.astro"
 import HomeSeoSection from "@/components/seo/home-seo-section.astro"
 import { type Lang } from "@/i18n/ui"
@@ -25,34 +25,22 @@ const utilityTools = localizedCatalog.filter(
 ---
 
 <Layout lang={lang} title={t("site.title")} description={t("site.description")}>
+  <SiteNavbar lang={lang} />
   <main class="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl space-y-12">
-      {/* Header */}
-      <header class="pt-1 pb-2">
-        <div
-          class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <div class="space-y-1">
-            <div class="flex items-center justify-between gap-4">
-              <h1
-                class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
-              >
-                {t("hero.title")}
-              </h1>
-              <div class="shrink-0 sm:hidden">
-                <LanguagePicker currentLang={lang} variant="select" />
-              </div>
-            </div>
-            <p
-              class="max-w-2xl font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
-            >
-              {t("hero.subtitle")}
-            </p>
-          </div>
-
-          <div class="hidden shrink-0 sm:block">
-            <LanguagePicker currentLang={lang} variant="select" />
-          </div>
+      {/* Hero Header */}
+      <header class="pt-2 pb-2">
+        <div class="space-y-2">
+          <h1
+            class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
+          >
+            {t("hero.title")}
+          </h1>
+          <p
+            class="max-w-2xl font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
+          >
+            {t("hero.subtitle")}
+          </p>
         </div>
       </header>
 

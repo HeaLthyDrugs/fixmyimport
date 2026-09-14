@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/main.astro"
-import SiteHeader from "@/components/site-header.astro"
+import SiteNavbar from "@/components/site-navbar.astro"
 import SiteFooter from "@/components/site-footer.astro"
 import { type Lang } from "@/i18n/ui"
 import { useTranslatedPath } from "@/i18n/utils"
@@ -19,13 +19,12 @@ const translatePath = useTranslatedPath(lang)
   description="Transparent overview of how FixMyImport processes CSV files locally in your browser with zero server uploads, no accounts, and strict privacy protection."
 >
   <div class="flex min-h-screen flex-col bg-background text-foreground">
+    <SiteNavbar lang={lang} />
     <main
-      class="mx-auto w-full max-w-4xl flex-1 px-4 pt-8 pb-12 sm:px-6 lg:px-8 sm:pt-10 sm:pb-16"
+      class="mx-auto w-full max-w-4xl flex-1 px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-16 lg:px-8"
     >
-      <SiteHeader lang={lang} />
-
       <!-- Header -->
-      <div class="mt-8 space-y-1.5">
+      <div class="mt-4 space-y-1.5">
         <h1
           class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
         >
@@ -74,8 +73,8 @@ const translatePath = useTranslatedPath(lang)
           </h2>
           <p>
             <strong class="font-semibold text-foreground">
-              You don't need to create an account, log in, or provide any personal
-              information to use FixMyImport.
+              You don't need to create an account, log in, or provide any
+              personal information to use FixMyImport.
             </strong>
           </p>
           <p>
@@ -110,8 +109,8 @@ const translatePath = useTranslatedPath(lang)
             2. Cookies and Local Storage
           </h2>
           <p>
-            FixMyImport does not use invasive cross-site tracking cookies. We use
-            the{" "}
+            FixMyImport does not use invasive cross-site tracking cookies. We
+            use the{" "}
             <code
               class="rounded-xs bg-muted/60 px-1.5 py-0.5 font-mono text-xs text-foreground"
               >localStorage</code

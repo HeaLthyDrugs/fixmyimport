@@ -6,7 +6,7 @@ import { RiGlobalLine } from "@remixicon/react"
 interface Props {
   currentLang?: Lang
   className?: string
-  variant?: "select" | "list" | "minimal"
+  variant?: "select" | "list" | "minimal" | "navbar" | "icon"
 }
 
 const {
@@ -20,7 +20,69 @@ const translatePath = useTranslatedPath(currentLang)
 ---
 
 {
-  variant === "minimal" ? (
+  variant === "icon" ? (
+    <div
+      class={`relative inline-flex items-center justify-center text-muted-foreground transition-colors hover:text-foreground ${className}`}
+      title="Select language"
+    >
+      <label for="language-select-icon" class="sr-only">
+        Select language
+      </label>
+      <RiGlobalLine className="pointer-events-none size-4" />
+      <select
+        id="language-select-icon"
+        aria-label="Select language"
+        data-language-picker
+        class="absolute inset-0 size-full cursor-pointer opacity-0"
+      >
+        {Object.entries(languages).map(([code, label]) => {
+          const l = code as Lang
+          const targetUrl = translatePath(cleanPath, l)
+          return (
+            <option
+              value={targetUrl}
+              selected={l === currentLang}
+              class="bg-background py-1 text-foreground"
+            >
+              {label} ({code.toUpperCase()})
+            </option>
+          )
+        })}
+      </select>
+    </div>
+  ) : variant === "navbar" ? (
+    <div class={`relative inline-flex items-center ${className}`}>
+      <label for="language-select-navbar" class="sr-only">
+        Language
+      </label>
+      <div class="pointer-events-none absolute left-2.5 flex items-center text-muted-foreground">
+        <RiGlobalLine className="size-3.5" />
+      </div>
+      <select
+        id="language-select-navbar"
+        aria-label="Select language"
+        data-language-picker
+        class="h-8 cursor-pointer appearance-none rounded-none border border-border/80 bg-background/60 pr-6 pl-7.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:bg-muted/50 hover:text-foreground focus:border-foreground/40 focus:outline-hidden"
+      >
+        {Object.entries(languages).map(([code, label]) => {
+          const l = code as Lang
+          const targetUrl = translatePath(cleanPath, l)
+          return (
+            <option
+              value={targetUrl}
+              selected={l === currentLang}
+              class="bg-background py-1 text-foreground"
+            >
+              {code.toUpperCase()} &bull; {label}
+            </option>
+          )
+        })}
+      </select>
+      <span class="pointer-events-none absolute right-2 text-[9px] text-muted-foreground/70">
+        &#9662;
+      </span>
+    </div>
+  ) : variant === "minimal" ? (
     <div class={`relative inline-flex items-center ${className}`}>
       <label for="language-select-minimal" class="sr-only">
         Language
@@ -106,14 +168,19 @@ const translatePath = useTranslatedPath(currentLang)
 }
 
 <script>
-  document
-    .querySelectorAll<HTMLSelectElement>("[data-language-picker]")
-    .forEach((select) => {
-      select.addEventListener("change", (event) => {
-        const target = event.target as HTMLSelectElement
-        if (target?.value) {
-          window.location.href = target.value
-        }
+  function setupLanguagePickers() {
+    document
+      .querySelectorAll<HTMLSelectElement>("[data-language-picker]")
+      .forEach((select) => {
+        select.addEventListener("change", (event) => {
+          const target = event.target as HTMLSelectElement
+          if (target?.value) {
+            window.location.href = target.value
+          }
+        })
       })
-    })
+  }
+
+  setupLanguagePickers()
+  document.addEventListener("astro:after-swap", setupLanguagePickers)
 </script>
