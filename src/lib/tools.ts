@@ -103,7 +103,8 @@ export const toolCatalog: ToolDefinition[] = [
     status: "Live",
     icon: "binary-converter",
     category: "utilities",
-    summary: "Convert text to binary (and binary to text) in real time with UTF-8 & ASCII support.",
+    summary:
+      "Convert text to binary (and binary to text) in real time with UTF-8 & ASCII support.",
     description:
       "Instant bi-directional binary converter with customizable delimiters, bit-widths, byte breakdown, and Hex/Base64 inspector.",
     metric: "Instant UTF-8 & ASCII converter",
@@ -119,7 +120,8 @@ export const toolCatalog: ToolDefinition[] = [
     status: "Coming soon",
     icon: "text-case",
     category: "utilities",
-    summary: "Convert text case between UPPERCASE, lowercase, Title Case, camelCase, and snake_case.",
+    summary:
+      "Convert text case between UPPERCASE, lowercase, Title Case, camelCase, and snake_case.",
     description:
       "Instantly change text capitalization, count characters and words, and transform strings into developer-friendly casing.",
     metric: "Fast text case conversion",
@@ -135,7 +137,8 @@ export const toolCatalog: ToolDefinition[] = [
     status: "Coming soon",
     icon: "base64",
     category: "utilities",
-    summary: "Encode and decode text, images, and files into Base64 format locally.",
+    summary:
+      "Encode and decode text, images, and files into Base64 format locally.",
     description:
       "Quickly encode strings to Base64 or decode Base64 strings back to plain text, images, and data URIs without server uploads.",
     metric: "Client-side Base64 converter",
@@ -151,7 +154,8 @@ export const toolCatalog: ToolDefinition[] = [
     status: "Coming soon",
     icon: "json-format",
     category: "utilities",
-    summary: "Format, validate, prettify, and minify JSON data with error highlights.",
+    summary:
+      "Format, validate, prettify, and minify JSON data with error highlights.",
     description:
       "Paste messy JSON to format it with custom indentation, validate syntax errors, and generate TypeScript interfaces in real time.",
     metric: "Instant JSON prettifier",
@@ -167,7 +171,8 @@ export const toolCatalog: ToolDefinition[] = [
     status: "Coming soon",
     icon: "qr-generator",
     category: "utilities",
-    summary: "Generate custom QR codes for URLs, WiFi passwords, and contact cards.",
+    summary:
+      "Generate custom QR codes for URLs, WiFi passwords, and contact cards.",
     description:
       "Create high-resolution QR codes for links, text, and WiFi networks with zero ads and offline client-side rendering.",
     metric: "Offline QR code maker",
@@ -183,7 +188,8 @@ export const toolCatalog: ToolDefinition[] = [
     status: "Coming soon",
     icon: "timestamp",
     category: "utilities",
-    summary: "Convert epoch timestamps to human-readable dates and timezone formats.",
+    summary:
+      "Convert epoch timestamps to human-readable dates and timezone formats.",
     description:
       "Convert seconds and milliseconds to UTC and local date formats, relative time, and ISO 8601 strings.",
     metric: "Epoch & date converter",
@@ -211,4 +217,6 @@ export const toolCatalog: ToolDefinition[] = [
 ]
 
 export const csvTools = toolCatalog.filter((t) => t.category === "csv")
-export const utilityTools = toolCatalog.filter((t) => t.category === "utilities")
+export const utilityTools = toolCatalog.filter(
+  (t) => t.category === "utilities"
+)

@@ -23,12 +23,12 @@ import { csvTools, utilityTools } from "@/lib/tools"
         >
           <div class="space-y-2">
             <h1
-              class="font-heading text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl"
+              class="font-heading text-3xl font-bold tracking-wide sm:text-4xl lg:text-5xl"
             >
               Fix My Import
             </h1>
             <p
-              class="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+              class="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
               A suite of fast, lightweight tools for cleaning messy
               spreadsheets, converting formats, and solving daily developer
@@ -38,7 +38,7 @@ import { csvTools, utilityTools } from "@/lib/tools"
 
           <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-0">
             <span
-              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-3 py-1.5 text-sm font-medium tracking-wide text-muted-foreground"
             >
               <RiShieldCheckLine
                 className="size-3.5 text-emerald-600 dark:text-emerald-400"
@@ -46,7 +46,7 @@ import { csvTools, utilityTools } from "@/lib/tools"
               100% Client-Side
             </span>
             <span
-              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-3 py-1.5 text-sm font-medium tracking-wide text-muted-foreground"
             >
               <RiFlashlightLine className="size-3.5 text-amber-500" />
               Zero Uploads
@@ -58,7 +58,7 @@ import { csvTools, utilityTools } from "@/lib/tools"
       {/* SECTION 1: CSV & Data Import Tools */}
       <section class="space-y-4">
         <h2
-          class="font-heading text-lg font-semibold tracking-tight text-foreground"
+          class="font-heading text-xl font-semibold tracking-wide text-foreground sm:text-2xl"
         >
           CSV &amp; Import Tools
         </h2>
@@ -88,10 +88,10 @@ import { csvTools, utilityTools } from "@/lib/tools"
                   </div>
 
                   <div class="space-y-1.5">
-                    <h3 class="font-heading text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
+                    <h3 class="font-heading text-base font-semibold tracking-wide text-foreground transition-colors group-hover:text-foreground">
                       {tool.name}
                     </h3>
-                    <p class="text-xs leading-relaxed text-muted-foreground">
+                    <p class="text-sm leading-relaxed text-muted-foreground">
                       {tool.description}
                     </p>
                   </div>
@@ -105,7 +105,7 @@ import { csvTools, utilityTools } from "@/lib/tools"
       {/* SECTION 2: Developer & Everyday Utilities */}
       <section class="space-y-4">
         <h2
-          class="font-heading text-lg font-semibold tracking-tight text-foreground"
+          class="font-heading text-xl font-semibold tracking-wide text-foreground sm:text-2xl"
         >
           Developer &amp; Everyday Utilities
         </h2>
@@ -135,10 +135,10 @@ import { csvTools, utilityTools } from "@/lib/tools"
                   </div>
 
                   <div class="space-y-1.5">
-                    <h3 class="font-heading text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
+                    <h3 class="font-heading text-base font-semibold tracking-wide text-foreground transition-colors group-hover:text-foreground">
                       {tool.name}
                     </h3>
-                    <p class="text-xs leading-relaxed text-muted-foreground">
+                    <p class="text-sm leading-relaxed text-muted-foreground">
                       {tool.description}
                     </p>
                   </div>
@@ -152,7 +152,7 @@ import { csvTools, utilityTools } from "@/lib/tools"
       {/* Privacy Guarantee Footer */}
       <footer class="border-t border-border/80 pt-8 pb-12">
         <div
-          class="flex flex-col items-center justify-between gap-4 text-xs text-muted-foreground sm:flex-row"
+          class="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground sm:flex-row"
         >
           <p>
             &copy; {new Date().getFullYear()} FixMyImport. Built for local, privacy-first

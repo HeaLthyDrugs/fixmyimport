@@ -546,7 +546,7 @@ export function CsvWorkbench() {
         <div className="flex min-h-dvh flex-col bg-background">
           {/* Mini header */}
           <div className="flex shrink-0 items-center justify-between border-b border-border/40 px-4 py-2.5">
-            <span className="text-sm font-semibold tracking-tight">
+            <span className="text-sm font-semibold tracking-wide">
               CSV Import Cleaner
             </span>
             <div className="flex items-center gap-3">
@@ -569,7 +569,7 @@ export function CsvWorkbench() {
           {/* Center content */}
           <div className="flex flex-1 flex-col items-center justify-center gap-5 p-4">
             <div className="space-y-1 text-center">
-              <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
+              <h1 className="text-2xl font-bold tracking-wide sm:text-3xl">
                 CSV Viewer & Cleaner
               </h1>
               <p className="text-sm text-muted-foreground">
@@ -708,7 +708,7 @@ export function CsvWorkbench() {
             <div className="flex min-w-0 items-center gap-2">
               <a
                 href="/"
-                className="shrink-0 text-xs font-semibold tracking-tight text-foreground transition hover:text-primary"
+                className="shrink-0 text-sm font-semibold tracking-wide text-foreground transition hover:text-primary"
               >
                 CSV Import Cleaner
               </a>
