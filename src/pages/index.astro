@@ -3,8 +3,6 @@ import {
   RiArrowRightUpLine,
   RiShieldCheckLine,
   RiFlashlightLine,
-  RiDatabase2Line,
-  RiToolsLine,
 } from "@remixicon/react"
 
 import Layout from "@/layouts/main.astro"
@@ -19,23 +17,37 @@ import { csvTools, utilityTools } from "@/lib/tools"
   <main class="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl space-y-12">
       {/* Hero Header */}
-      <div class="border-b border-border/80 pb-8 pt-2">
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div class="border-b border-border/80 pt-2 pb-8">
+        <div
+          class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+        >
           <div class="space-y-2">
-            <h1 class="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl font-heading">
+            <h1
+              class="font-heading text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl"
+            >
               Fix My Import
             </h1>
-            <p class="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              A suite of fast, lightweight tools for cleaning messy spreadsheets, converting formats, and solving daily developer tasks — all processed locally in your browser.
+            <p
+              class="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+            >
+              A suite of fast, lightweight tools for cleaning messy
+              spreadsheets, converting formats, and solving daily developer
+              tasks — all processed locally in your browser.
             </p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-0">
-            <span class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground">
-              <RiShieldCheckLine className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span
+              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+            >
+              <RiShieldCheckLine
+                className="size-3.5 text-emerald-600 dark:text-emerald-400"
+              />
               100% Client-Side
             </span>
-            <span class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground">
+            <span
+              class="inline-flex items-center gap-1.5 border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+            >
               <RiFlashlightLine className="size-3.5 text-amber-500" />
               Zero Uploads
             </span>
@@ -45,24 +57,11 @@ import { csvTools, utilityTools } from "@/lib/tools"
 
       {/* SECTION 1: CSV & Data Import Tools */}
       <section class="space-y-4">
-        <div class="flex items-center justify-between border-b border-border/60 pb-3">
-          <div class="flex items-center gap-2.5">
-            <div class="border border-border/80 bg-primary/10 p-1.5 text-primary-foreground dark:text-primary">
-              <RiDatabase2Line className="size-4" />
-            </div>
-            <div>
-              <h2 class="text-lg font-semibold tracking-tight text-foreground font-heading">
-                CSV &amp; Import Tools
-              </h2>
-              <p class="text-xs text-muted-foreground">
-                Clean, dedupe, map columns, and split large spreadsheets before uploading to Shopify, Mailchimp, or CRMs.
-              </p>
-            </div>
-          </div>
-          <span class="hidden sm:inline-block text-xs font-mono text-muted-foreground">
-            {csvTools.length} tools
-          </span>
-        </div>
+        <h2
+          class="font-heading text-lg font-semibold tracking-tight text-foreground"
+        >
+          CSV &amp; Import Tools
+        </h2>
 
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {
@@ -73,51 +72,29 @@ import { csvTools, utilityTools } from "@/lib/tools"
               return (
                 <Component
                   href={isLive ? tool.href : undefined}
-                  class={`group flex flex-col justify-between border border-border/70 bg-card p-5 shadow-xs transition duration-200 ${
+                  class={`group flex flex-col justify-start border border-border/80 bg-card p-5 shadow-xs transition-all duration-200 ${
                     isLive
-                      ? "hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-md cursor-pointer"
-                      : "opacity-85"
+                      ? "cursor-pointer hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-sm"
+                      : "cursor-default opacity-60"
                   }`}
                 >
-                  <div>
-                    <div class="mb-4 flex items-start justify-between gap-3">
-                      <div class="border border-border/60 bg-muted/40 p-2.5 text-foreground transition-colors group-hover:border-foreground/30">
-                        <ToolIcon name={tool.icon} className="size-6" />
-                      </div>
-                      <div class="flex items-center gap-2">
-                        {!isLive ? (
-                          <span class="rounded-none border border-border bg-muted/70 px-2 py-0.5 text-[11px] font-medium text-muted-foreground font-mono">
-                            Coming soon
-                          </span>
-                        ) : (
-                          <span class="inline-flex items-center gap-1 text-xs font-medium text-foreground">
-                            <span class="size-1.5 rounded-full bg-emerald-500"></span>
-                            <span class="text-[11px] font-mono text-muted-foreground">Live</span>
-                            <RiArrowRightUpLine className="size-4 text-muted-foreground transition group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                          </span>
-                        )}
-                      </div>
+                  <div class="mb-3.5 flex items-start justify-between gap-3">
+                    <div class="flex size-10 items-center justify-center border border-border/80 bg-muted/40 text-foreground transition-colors group-hover:border-foreground/30 group-hover:bg-muted/70">
+                      <ToolIcon name={tool.icon} className="size-5" />
                     </div>
-
-                    <div class="space-y-2">
-                      <h3 class="text-base font-semibold tracking-tight text-foreground group-hover:text-primary-foreground dark:group-hover:text-primary transition-colors font-heading">
-                        {tool.name}
-                      </h3>
-                      <p class="text-xs leading-relaxed text-muted-foreground">
-                        {tool.description}
-                      </p>
-                    </div>
+                    {isLive && (
+                      <RiArrowRightUpLine className="size-4 text-muted-foreground/60 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                    )}
                   </div>
 
-                  {tool.tags && tool.tags.length > 0 && (
-                    <div class="mt-4 flex flex-wrap gap-1.5 pt-3 border-t border-border/40">
-                      {tool.tags.map((tag) => (
-                        <span class="border border-border/50 bg-muted/30 px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <div class="space-y-1.5">
+                    <h3 class="font-heading text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
+                      {tool.name}
+                    </h3>
+                    <p class="text-xs leading-relaxed text-muted-foreground">
+                      {tool.description}
+                    </p>
+                  </div>
                 </Component>
               )
             })
@@ -126,25 +103,12 @@ import { csvTools, utilityTools } from "@/lib/tools"
       </section>
 
       {/* SECTION 2: Developer & Everyday Utilities */}
-      <section class="space-y-4 pt-4">
-        <div class="flex items-center justify-between border-b border-border/60 pb-3">
-          <div class="flex items-center gap-2.5">
-            <div class="border border-border/80 bg-primary/10 p-1.5 text-primary-foreground dark:text-primary">
-              <RiToolsLine className="size-4" />
-            </div>
-            <div>
-              <h2 class="text-lg font-semibold tracking-tight text-foreground font-heading">
-                Developer &amp; Everyday Utilities
-              </h2>
-              <p class="text-xs text-muted-foreground">
-                Small, essential daily tools for developers, designers, and general users without popups or tracking.
-              </p>
-            </div>
-          </div>
-          <span class="hidden sm:inline-block text-xs font-mono text-muted-foreground">
-            {utilityTools.length} tools
-          </span>
-        </div>
+      <section class="space-y-4">
+        <h2
+          class="font-heading text-lg font-semibold tracking-tight text-foreground"
+        >
+          Developer &amp; Everyday Utilities
+        </h2>
 
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {
@@ -155,51 +119,29 @@ import { csvTools, utilityTools } from "@/lib/tools"
               return (
                 <Component
                   href={isLive ? tool.href : undefined}
-                  class={`group flex flex-col justify-between border border-border/70 bg-card p-5 shadow-xs transition duration-200 ${
+                  class={`group flex flex-col justify-start border border-border/80 bg-card p-5 shadow-xs transition-all duration-200 ${
                     isLive
-                      ? "hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-md cursor-pointer"
-                      : "opacity-85"
+                      ? "cursor-pointer hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-sm"
+                      : "cursor-default opacity-60"
                   }`}
                 >
-                  <div>
-                    <div class="mb-4 flex items-start justify-between gap-3">
-                      <div class="border border-border/60 bg-muted/40 p-2.5 text-foreground transition-colors group-hover:border-foreground/30">
-                        <ToolIcon name={tool.icon} className="size-6" />
-                      </div>
-                      <div class="flex items-center gap-2">
-                        {!isLive ? (
-                          <span class="rounded-none border border-border bg-muted/70 px-2 py-0.5 text-[11px] font-medium text-muted-foreground font-mono">
-                            Coming soon
-                          </span>
-                        ) : (
-                          <span class="inline-flex items-center gap-1 text-xs font-medium text-foreground">
-                            <span class="size-1.5 rounded-full bg-emerald-500"></span>
-                            <span class="text-[11px] font-mono text-muted-foreground">Live</span>
-                            <RiArrowRightUpLine className="size-4 text-muted-foreground transition group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                          </span>
-                        )}
-                      </div>
+                  <div class="mb-3.5 flex items-start justify-between gap-3">
+                    <div class="flex size-10 items-center justify-center border border-border/80 bg-muted/40 text-foreground transition-colors group-hover:border-foreground/30 group-hover:bg-muted/70">
+                      <ToolIcon name={tool.icon} className="size-5" />
                     </div>
-
-                    <div class="space-y-2">
-                      <h3 class="text-base font-semibold tracking-tight text-foreground group-hover:text-primary-foreground dark:group-hover:text-primary transition-colors font-heading">
-                        {tool.name}
-                      </h3>
-                      <p class="text-xs leading-relaxed text-muted-foreground">
-                        {tool.description}
-                      </p>
-                    </div>
+                    {isLive && (
+                      <RiArrowRightUpLine className="size-4 text-muted-foreground/60 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                    )}
                   </div>
 
-                  {tool.tags && tool.tags.length > 0 && (
-                    <div class="mt-4 flex flex-wrap gap-1.5 pt-3 border-t border-border/40">
-                      {tool.tags.map((tag) => (
-                        <span class="border border-border/50 bg-muted/30 px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <div class="space-y-1.5">
+                    <h3 class="font-heading text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground">
+                      {tool.name}
+                    </h3>
+                    <p class="text-xs leading-relaxed text-muted-foreground">
+                      {tool.description}
+                    </p>
+                  </div>
                 </Component>
               )
             })
@@ -209,20 +151,29 @@ import { csvTools, utilityTools } from "@/lib/tools"
 
       {/* Privacy Guarantee Footer */}
       <footer class="border-t border-border/80 pt-8 pb-12">
-        <div class="flex flex-col items-center justify-between gap-4 sm:flex-row text-xs text-muted-foreground">
+        <div
+          class="flex flex-col items-center justify-between gap-4 text-xs text-muted-foreground sm:flex-row"
+        >
           <p>
-            &copy; {new Date().getFullYear()} FixMyImport. Built for local, privacy-first data processing.
+            &copy; {new Date().getFullYear()} FixMyImport. Built for local, privacy-first
+            data processing.
           </p>
           <div class="flex items-center gap-4">
-            <a href="/privacy" class="hover:text-foreground transition-colors">
+            <a href="/privacy" class="transition-colors hover:text-foreground">
               Privacy Policy
             </a>
             <span>&bull;</span>
-            <a href="/shopify-csv-cleaner" class="hover:text-foreground transition-colors">
+            <a
+              href="/shopify-csv-cleaner"
+              class="transition-colors hover:text-foreground"
+            >
               Shopify Cleaner
             </a>
             <span>&bull;</span>
-            <a href="/mailchimp-csv-too-large" class="hover:text-foreground transition-colors">
+            <a
+              href="/mailchimp-csv-too-large"
+              class="transition-colors hover:text-foreground"
+            >
               Mailchimp Splitter
             </a>
           </div>
