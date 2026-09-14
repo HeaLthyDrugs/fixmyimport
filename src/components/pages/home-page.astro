@@ -28,21 +28,7 @@ const utilityTools = localizedCatalog.filter(
   <SiteNavbar lang={lang} />
   <main class="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl space-y-12">
-      {/* Hero Header */}
-      <header class="pt-2 pb-2">
-        <div class="space-y-2">
-          <h1
-            class="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl"
-          >
-            {t("hero.title")}
-          </h1>
-          <p
-            class="max-w-2xl font-editorial text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {t("hero.subtitle")}
-          </p>
-        </div>
-      </header>
+      <h1 class="sr-only">{t("hero.title")}</h1>
 
       {/* SECTION 1: CSV & Data Import Tools */}
       <section class="space-y-4">
