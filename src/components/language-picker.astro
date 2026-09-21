@@ -62,7 +62,7 @@ const translatePath = useTranslatedPath(currentLang)
         id="language-select-navbar"
         aria-label="Select language"
         data-language-picker
-        class="h-8 cursor-pointer appearance-none rounded-none border border-border/80 bg-background/60 pr-6 pl-7.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:bg-muted/50 hover:text-foreground focus:border-foreground/40 focus:outline-hidden"
+        class="h-8 cursor-pointer appearance-none rounded-2xl border border-border/80 bg-background/60 pr-6 pl-7.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:bg-muted/50 hover:text-foreground focus:border-foreground/40 focus:outline-hidden"
       >
         {Object.entries(languages).map(([code, label]) => {
           const l = code as Lang
@@ -121,7 +121,7 @@ const translatePath = useTranslatedPath(currentLang)
         aria-label="Select language"
         data-language-picker
         onchange="if (this.value) window.location.href = this.value"
-        class="cursor-pointer appearance-none rounded-none border border-border bg-muted/40 py-1 pr-6 pl-2 text-xs font-medium tracking-wide text-foreground transition-colors hover:border-foreground/30 hover:bg-muted/70 focus:outline-hidden"
+        class="cursor-pointer appearance-none rounded-xl border border-border bg-muted/40 py-1 pr-6 pl-2 text-xs font-medium tracking-wide text-foreground transition-colors hover:border-foreground/30 hover:bg-muted/70 focus:outline-hidden"
       >
         {Object.entries(languages).map(([code, label]) => {
           const l = code as Lang
