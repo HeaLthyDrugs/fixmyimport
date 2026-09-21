@@ -546,9 +546,19 @@ export function CsvWorkbench() {
         <div className="flex min-h-dvh flex-col bg-background">
           {/* Mini header */}
           <div className="flex shrink-0 items-center justify-between border-b border-border/40 px-4 py-2.5">
-            <span className="font-heading text-sm font-semibold tracking-tight">
-              CSV Import Cleaner
-            </span>
+            <a
+              href="/"
+              className="inline-flex items-center gap-2 font-heading text-sm font-semibold tracking-tight text-foreground transition hover:opacity-85"
+            >
+              <img
+                src="/logo/logo.png"
+                alt="FixMyImport"
+                width={20}
+                height={20}
+                className="size-5 object-contain"
+              />
+              <span>CSV Import Cleaner</span>
+            </a>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setHowItWorksOpen(true)}
@@ -724,9 +734,16 @@ export function CsvWorkbench() {
             <div className="flex min-w-0 items-center gap-2">
               <a
                 href="/"
-                className="shrink-0 font-heading text-sm font-semibold tracking-tight text-foreground transition hover:text-primary"
+                className="inline-flex shrink-0 items-center gap-2 font-heading text-sm font-semibold tracking-tight text-foreground transition hover:opacity-85"
               >
-                CSV Import Cleaner
+                <img
+                  src="/logo/logo.png"
+                  alt="FixMyImport"
+                  width={20}
+                  height={20}
+                  className="size-5 object-contain"
+                />
+                <span className="hidden sm:inline">CSV Import Cleaner</span>
               </a>
               <div className="flex min-w-0 items-center gap-1.5 rounded-md border border-border/80 bg-muted/40 px-2 py-0.5 text-xs">
                 <span className="max-w-[200px] truncate font-medium text-foreground sm:max-w-[320px]">

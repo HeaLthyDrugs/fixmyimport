@@ -1,5 +1,5 @@
 ---
-import { RiTableLine, RiSunLine, RiMoonLine } from "@remixicon/react"
+import { RiSunLine, RiMoonLine } from "@remixicon/react"
 import LanguagePicker from "@/components/language-picker.astro"
 import { type Lang } from "@/i18n/ui"
 import { useTranslations, useTranslatedPath } from "@/i18n/utils"
@@ -29,11 +29,13 @@ const translatePath = useTranslatedPath(lang)
       class="group inline-flex items-center gap-2.5 font-semibold tracking-tight text-foreground transition-opacity hover:opacity-85"
       aria-label="FixMyImport Home"
     >
-      <div
-        class="flex size-7 items-center justify-center rounded-xs bg-foreground text-background shadow-xs transition-transform duration-150 group-hover:scale-105"
-      >
-        <RiTableLine className="size-4 text-background" />
-      </div>
+      <img
+        src="/logo/logo.png"
+        alt="FixMyImport"
+        width="28"
+        height="28"
+        class="size-7 object-contain drop-shadow-xs transition-transform duration-150 group-hover:scale-105"
+      />
       <span
         class="font-heading text-base font-bold tracking-tight text-foreground"
       >

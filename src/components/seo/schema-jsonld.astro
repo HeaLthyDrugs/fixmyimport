@@ -28,6 +28,7 @@ const {
 } = Astro.props
 
 const schemas: Record<string, unknown>[] = []
+const normalizedSiteUrl = siteUrl.replace(/\/+$/, "")
 
 if (type === "tool") {
   // 1. WebApplication Schema
@@ -51,6 +52,7 @@ if (type === "tool") {
       "@type": "Organization",
       name: "FixMyImport",
       url: siteUrl,
+      logo: `${normalizedSiteUrl}/logo/logo.png`,
     },
   }
 
@@ -118,7 +120,7 @@ if (type === "tool") {
       "@type": "Organization",
       name: "FixMyImport",
       url: siteUrl,
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${normalizedSiteUrl}/logo/logo.png`,
     },
   })
 
@@ -127,7 +129,7 @@ if (type === "tool") {
     "@type": "Organization",
     name: "FixMyImport",
     url: siteUrl,
-    logo: `${siteUrl}/favicon.svg`,
+    logo: `${normalizedSiteUrl}/logo/logo.png`,
     description:
       "Free privacy-first browser-based developer and data import tools.",
   })
@@ -153,6 +155,7 @@ if (faqs && faqs.length > 0) {
 {
   schemas.map((schema) => (
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(schema, null, 0)}
     />

@@ -25,9 +25,17 @@ const translatePath = useTranslatedPath(lang)
       <div class="mb-6 flex items-center justify-between">
         <a
           href={translatePath("/")}
-          class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          class="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
-          &larr; FixMyImport
+          <span class="transition-transform group-hover:-translate-x-0.5">&larr;</span>
+          <img
+            src="/logo/logo.png"
+            alt="FixMyImport"
+            width="20"
+            height="20"
+            class="size-5 object-contain"
+          />
+          <span class="font-heading font-semibold text-foreground">FixMyImport</span>
         </a>
         <LanguagePicker currentLang={lang} variant="select" />
       </div>

@@ -161,6 +161,13 @@ export function BinaryConverter() {
               href="/"
               className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
+              <img
+                src="/logo/logo.png"
+                alt="FixMyImport"
+                width={20}
+                height={20}
+                className="size-5 object-contain"
+              />
               <RiArrowLeftLine className="size-4" />
               <span>All Tools</span>
             </a>

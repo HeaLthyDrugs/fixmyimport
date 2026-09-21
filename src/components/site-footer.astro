@@ -1,5 +1,4 @@
 ---
-import { RiTableLine } from "@remixicon/react"
 import LanguagePicker from "@/components/language-picker.astro"
 import { type Lang } from "@/i18n/ui"
 import { useTranslations, useTranslatedPath } from "@/i18n/utils"
@@ -28,11 +27,13 @@ const currentYear = new Date().getFullYear()
         href={translatePath("/")}
         class="group inline-flex items-center gap-1.5 font-semibold tracking-tight text-foreground transition-colors hover:opacity-80"
       >
-        <div
-          class="flex size-4.5 items-center justify-center rounded-xs bg-muted text-foreground"
-        >
-          <RiTableLine className="size-3 text-foreground" />
-        </div>
+        <img
+          src="/logo/logo.png"
+          alt="FixMyImport"
+          width="18"
+          height="18"
+          class="size-4.5 object-contain"
+        />
         <span class="font-heading text-xs font-bold tracking-tight"
           >FixMyImport</span
         >
